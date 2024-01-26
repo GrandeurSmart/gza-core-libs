@@ -1,6 +1,6 @@
 # Changelog
 
-## [18.9.0](https://github.com/GrandeurSmart/gza-core-libs/compare/v18.8.0...v18.9.0) (2024-01-07)
+## [1.0.1](https://github.com/GrandeurSmart/gza-core-libs/compare/v18.8.0...v18.9.0) (2024-01-07)
 
 
 ### Features
