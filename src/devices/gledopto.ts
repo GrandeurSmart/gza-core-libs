@@ -170,7 +170,7 @@ const gledoptoExtend = {
 };
 
 const configureReadModelID: Configure = async (device, coordinatorEndpoint, logger) => {
-    // https://github.com/Koenkk/zigbee-herdsman-converters/issues/3016#issuecomment-1027726604
+    // https://github.com/GrandeurSmart/gza-core-libs/issues/3016#issuecomment-1027726604
     const endpoint = device.endpoints[0];
     const oldModel = device.modelID;
     const newModel = (await endpoint.read('genBasic', ['modelId'])).modelId;
@@ -348,7 +348,7 @@ const definitions: Definition[] = [
         extend: gledoptoExtend.light_onoff_brightness_colortemp_color(),
         exposes: [e.light_brightness_colorxy().withEndpoint('rgb'), e.light_brightness_colortemp([158, 495]).withEndpoint('cct')],
         // Only enable disableDefaultResponse for the second fingerprint:
-        // https://github.com/Koenkk/zigbee-herdsman-converters/issues/1315#issuecomment-645331185
+        // https://github.com/GrandeurSmart/gza-core-libs/issues/1315#issuecomment-645331185
         meta: {disableDefaultResponse: (entity) => !!entity.getDevice().getEndpoint(12)},
         endpoint: (device) => {
             return {rgb: 11, cct: 15};

@@ -97,7 +97,7 @@ const definitions: Definition[] = [
             await endpoint.configureReporting('msIlluminanceMeasurement', payload);
             const payloadPressure = [{
                 // 0 = measuredValue, override dataType from int16 to uint16
-                // https://github.com/Koenkk/zigbee-herdsman/pull/191/files?file-filters%5B%5D=.ts#r456569398
+                // https://github.com/Koenkk/gza-core/pull/191/files?file-filters%5B%5D=.ts#r456569398
                 attribute: {ID: 0, type: 33}, minimumReportInterval: 2, maximumReportInterval: constants.repInterval.HOUR,
                 reportableChange: 3}];
             await endpoint.configureReporting('msPressureMeasurement', payloadPressure);

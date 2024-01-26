@@ -49,7 +49,7 @@ function getDataValue(dpValue: any) {
     case dataTypes.string:
         // eslint-disable-next-line
         let dataString = '';
-        // Don't use .map here, doesn't work: https://github.com/Koenkk/zigbee-herdsman-converters/pull/1799/files#r530377091
+        // Don't use .map here, doesn't work: https://github.com/GrandeurSmart/gza-core-libs/pull/1799/files#r530377091
         for (let i = 0; i < dpValue.data.length; ++i) {
             dataString += String.fromCharCode(dpValue.data[i]);
         }
@@ -67,14 +67,14 @@ function getTypeName(dpValue: any) {
 }
 
 function logUnexpectedDataPoint(where: string, msg: KeyValueAny, dpValue: any, meta: KeyValueAny) {
-    meta.logger.warn(`zigbee-herdsman-converters:${where}: Received unexpected Tuya DataPoint #${
+    meta.logger.warn(`gza-core-libs:${where}: Received unexpected Tuya DataPoint #${
         dpValue.dp} from ${meta.device.ieeeAddr} with raw data '${JSON.stringify(dpValue)}': type='${
         msg.type}', datatype='${getTypeName(dpValue)}', value='${
         getDataValue(dpValue)}', known DP# usage: ${JSON.stringify(getDataPointNames(dpValue))}`);
 }
 
 function logUnexpectedDataType(where: any, msg: any, dpValue: any, meta: any, expectedDataType?: any) {
-    meta.logger.warn(`zigbee-herdsman-converters:${where}: Received Tuya DataPoint #${
+    meta.logger.warn(`gza-core-libs:${where}: Received Tuya DataPoint #${
         dpValue.dp} with unexpected datatype from ${meta.device.ieeeAddr} with raw data '${
         JSON.stringify(dpValue)}': type='${msg.type}', datatype='${
         getTypeName(dpValue)}' (instead of '${expectedDataType}'), value='${
@@ -243,7 +243,7 @@ function convertRawToCycleTimer(value: any) {
 
 
 function logDataPoint(where: string, msg: KeyValueAny, dpValue: any, meta: any) {
-    meta.logger.info(`zigbee-herdsman-converters:${where}: Received Tuya DataPoint #${
+    meta.logger.info(`gza-core-libs:${where}: Received Tuya DataPoint #${
         dpValue.dp} from ${meta.device.ieeeAddr} with raw data '${JSON.stringify(dpValue)}': type='${
         msg.type}', datatype='${getTypeName(dpValue)}', value='${
         getDataValue(dpValue)}', known DP# usage: ${JSON.stringify(getDataPointNames(dpValue))}`);
@@ -481,20 +481,20 @@ function logUnexpectedDataValue(where: string, msg: KeyValueAny, dpValue: any, m
     expectedMinValue:any=null, expectedMaxValue:any=null) {
     if (expectedMinValue === null) {
         if (expectedMaxValue === null) {
-            meta.logger.warn(`zigbee-herdsman-converters:${where}: Received Tuya DataPoint #${dpValue.dp
+            meta.logger.warn(`gza-core-libs:${where}: Received Tuya DataPoint #${dpValue.dp
             } with invalid value ${getDataValue(dpValue)} for ${valueKind} from ${meta.device.ieeeAddr}`);
         } else {
-            meta.logger.warn(`zigbee-herdsman-converters:${where}: Received Tuya DataPoint #${dpValue.dp
+            meta.logger.warn(`gza-core-libs:${where}: Received Tuya DataPoint #${dpValue.dp
             } with invalid value ${getDataValue(dpValue)} for ${valueKind} from ${meta.device.ieeeAddr
             } which is higher than the expected maximum of ${expectedMaxValue}`);
         }
     } else {
         if (expectedMaxValue === null) {
-            meta.logger.warn(`zigbee-herdsman-converters:${where}: Received Tuya DataPoint #${dpValue.dp
+            meta.logger.warn(`gza-core-libs:${where}: Received Tuya DataPoint #${dpValue.dp
             } with invalid value ${getDataValue(dpValue)} for ${valueKind} from ${meta.device.ieeeAddr
             } which is lower than the expected minimum of ${expectedMinValue}`);
         } else {
-            meta.logger.warn(`zigbee-herdsman-converters:${where}: Received Tuya DataPoint #${dpValue.dp
+            meta.logger.warn(`gza-core-libs:${where}: Received Tuya DataPoint #${dpValue.dp
             } with invalid value ${getDataValue(dpValue)} for ${valueKind} from ${meta.device.ieeeAddr
             } which is outside the expected range from ${expectedMinValue} to ${expectedMaxValue}`);
         }
@@ -1025,7 +1025,7 @@ const dataPoints = {
 function firstDpValue(msg: any, meta: any, converterName: any) {
     const dpValues = msg.data.dpValues;
     for (let index = 1; index < dpValues.length; index++) {
-        meta.logger.debug(`zigbee-herdsman-converters:${converterName}: Additional DP #${
+        meta.logger.debug(`gza-core-libs:${converterName}: Additional DP #${
             dpValues[index].dp} with data ${JSON.stringify(dpValues[index])} will be ignored! ` +
             'Use a for loop in the fromZigbee converter (see ' +
             'https://www.zigbee2mqtt.io/advanced/support-new-devices/02_support_new_tuya_devices.html)');
@@ -1088,7 +1088,7 @@ const tuyaGetDataValue = (dataType: any, data: any) => {
     case dataTypes.string:
         // eslint-disable-next-line
         let dataString = '';
-        // Don't use .map here, doesn't work: https://github.com/Koenkk/zigbee-herdsman-converters/pull/1799/files#r530377091
+        // Don't use .map here, doesn't work: https://github.com/GrandeurSmart/gza-core-libs/pull/1799/files#r530377091
         for (let i = 0; i < data.length; ++i) {
             dataString += String.fromCharCode(data[i]);
         }
@@ -1279,7 +1279,7 @@ const fromZigbee1 = {
                     result.battery = value;
                     break;
                 default:
-                    meta.logger.warn(`zigbee-herdsman-converters:TS0222 Unrecognized DP #${dp} with data ${JSON.stringify(dpValue)}`);
+                    meta.logger.warn(`gza-core-libs:TS0222 Unrecognized DP #${dp} with data ${JSON.stringify(dpValue)}`);
                 }
             }
             return result;
@@ -1343,7 +1343,7 @@ const fromZigbee1 = {
             const value = getDataValue(dpValue);
             if (dp === 4) return {battery: value};
             else {
-                meta.logger.debug(`zigbee-herdsman-converters:ZM35HQ: NOT RECOGNIZED DP #${dp} with data ${JSON.stringify(dpValue)}`);
+                meta.logger.debug(`gza-core-libs:ZM35HQ: NOT RECOGNIZED DP #${dp} with data ${JSON.stringify(dpValue)}`);
             }
         },
     } satisfies Fz.Converter,
@@ -1387,7 +1387,7 @@ const fromZigbee1 = {
                     break;
                 }
                 default:
-                    meta.logger.debug(`zigbee-herdsman-converters:SA12IZL: NOT RECOGNIZED DP #${
+                    meta.logger.debug(`gza-core-libs:SA12IZL: NOT RECOGNIZED DP #${
                         dp} with data ${JSON.stringify(dpValue)}`);
                 }
             }
@@ -1432,7 +1432,7 @@ const fromZigbee1 = {
                     break;
                 }
                 default:
-                    meta.logger.debug(`zigbee-herdsman-converters:Woox Smoke Detector: NOT RECOGNIZED DP #${
+                    meta.logger.debug(`gza-core-libs:Woox Smoke Detector: NOT RECOGNIZED DP #${
                         dp} with data ${JSON.stringify(dpValue)}`);
                 }
             }
@@ -1453,7 +1453,7 @@ const fromZigbee1 = {
             case 101:
                 return {battery: value};
             default:
-                meta.logger.warn(`zigbee-herdsman-converters:WooxR7060: Unrecognized DP #${
+                meta.logger.warn(`gza-core-libs:WooxR7060: Unrecognized DP #${
                     dp} with data ${JSON.stringify(dpValue)}`);
             }
         },
@@ -1480,7 +1480,7 @@ const fromZigbee1 = {
                 result = {led_state: value};
                 break;
             default:
-                meta.logger.debug(`zigbee-herdsman-converters:hpsz: NOT RECOGNIZED DP #${
+                meta.logger.debug(`gza-core-libs:hpsz: NOT RECOGNIZED DP #${
                     dp} with data ${JSON.stringify(dpValue)}`);
             }
             return result;
@@ -1732,7 +1732,7 @@ const fromZigbee1 = {
                 case 0: // auto
                     return {system_mode: 'auto', away_mode: 'OFF', preset: 'schedule'};
                 default:
-                    meta.logger.warn('zigbee-herdsman-converters:zsThermostat: ' +
+                    meta.logger.warn('gza-core-libs:zsThermostat: ' +
                         `preset ${value} is not recognized.`);
                     break;
                 }
@@ -1764,7 +1764,7 @@ const fromZigbee1 = {
                 ret.away_preset_days = (value[6]<<8)+value[7];
                 return ret;
             default:
-                meta.logger.warn(`zigbee-herdsman-converters:zsThermostat: Unrecognized DP #${dp} with data ${JSON.stringify(dpValue)}`);
+                meta.logger.warn(`gza-core-libs:zsThermostat: Unrecognized DP #${dp} with data ${JSON.stringify(dpValue)}`);
             }
         },
     } satisfies Fz.Converter,
@@ -1836,7 +1836,7 @@ const fromZigbee1 = {
             case dataPoints.alectoSilence:
                 return {silence: value};
             default:
-                meta.logger.warn(`zigbee-herdsman-converters:tuya_alecto_smoke: Unrecognized ` +
+                meta.logger.warn(`gza-core-libs:tuya_alecto_smoke: Unrecognized ` +
                     `DP #${ dp} with data ${JSON.stringify(msg.data)}`);
             }
         },
@@ -3915,7 +3915,7 @@ const fromZigbee1 = {
             case dataPoints.bacFanMode:
                 return {fan_mode: fanModes[value]};
             default: // DataPoint 17 is unknown
-                meta.logger.debug(`zigbee-herdsman-converters:Moes BHT-002: Unrecognized DP #${
+                meta.logger.debug(`gza-core-libs:Moes BHT-002: Unrecognized DP #${
                     dp} with data ${JSON.stringify(dpValue)}`);
             }
         },
@@ -3985,7 +3985,7 @@ const fromZigbee1 = {
                 return {programming_mode: pMode.join('  ')};
             }
             default:
-                meta.logger.debug(`zigbee-herdsman-converters:moesS_thermostat: NOT RECOGNIZED DP #${
+                meta.logger.debug(`gza-core-libs:moesS_thermostat: NOT RECOGNIZED DP #${
                     dp} with data ${JSON.stringify(dpValue)}`);
             }
         },
@@ -4029,7 +4029,7 @@ const fromZigbee1 = {
             case dataPoints.tuyaSahkFormaldehyd:
                 return {formaldehyd: value};
             default:
-                meta.logger.warn(`zigbee-herdsman-converters:TuyaSmartAirBox: Unrecognized DP #${
+                meta.logger.warn(`gza-core-libs:TuyaSmartAirBox: Unrecognized DP #${
                     dp} with data ${JSON.stringify(dpValue)}`);
             }
         },
@@ -4047,7 +4047,7 @@ const fromZigbee1 = {
             case dataPoints.tuyaSabCOalarm:
                 return {carbon_monoxide: value ? 'OFF' : 'ON'};
             default:
-                meta.logger.warn(`zigbee-herdsman-converters:TuyaSmartAirBox: Unrecognized DP #${
+                meta.logger.warn(`gza-core-libs:TuyaSmartAirBox: Unrecognized DP #${
                     dp} with data ${JSON.stringify(dpValue)}`);
             }
         },
@@ -4097,7 +4097,7 @@ const fromZigbee1 = {
             case dataPoints.connecteMaxProtectTemp:
                 return {max_temperature_protection: value};
             default:
-                meta.logger.warn(`zigbee-herdsman-converters:connecte_thermostat: Unrecognized DP #${
+                meta.logger.warn(`gza-core-libs:connecte_thermostat: Unrecognized DP #${
                     dp} with data ${JSON.stringify(dpValue)}`);
             }
         },
@@ -4143,7 +4143,7 @@ const fromZigbee1 = {
                 if (thermostatScheduleMode.hasOwnProperty(value)) {
                     return {schedule_mode: thermostatScheduleMode[value]};
                 } else {
-                    meta.logger.warn('zigbee-herdsman-converters:SaswellThermostat: ' +
+                    meta.logger.warn('gza-core-libs:SaswellThermostat: ' +
                         `Unknown schedule mode ${value}`);
                 }
                 break;
@@ -4222,7 +4222,7 @@ const fromZigbee1 = {
             case dataPoints.saswellAntiScaling:
                 return {anti_scaling: value ? 'ON' : 'OFF'};
             default:
-                meta.logger.warn(`zigbee-herdsman-converters:SaswellThermostat: Unrecognized DP #${
+                meta.logger.warn(`gza-core-libs:SaswellThermostat: Unrecognized DP #${
                     dp} with data ${JSON.stringify(dpValue)}`);
             }
         },
@@ -4259,13 +4259,13 @@ const fromZigbee1 = {
                         result.system_mode = 'off';
                         break;
                     default:
-                        meta.logger.warn('zigbee-herdsman-converters:evanell_thermostat: ' +
+                        meta.logger.warn('gza-core-libs:evanell_thermostat: ' +
                           `Mode ${value} is not recognized.`);
                         break;
                     }
                     break;
                 default:
-                    meta.logger.warn(`zigbee-herdsman-converters:evanell_thermostat: NOT RECOGNIZED ` +
+                    meta.logger.warn(`gza-core-libs:evanell_thermostat: NOT RECOGNIZED ` +
                       `DP #${dpValue.dp} with data ${JSON.stringify(dpValue)}`);
                 }
             }
@@ -4309,7 +4309,7 @@ const fromZigbee1 = {
                 case 2: // auto
                     return {system_mode: 'auto', away_mode: 'OFF', preset: 'none'};
                 default:
-                    meta.logger.warn('zigbee-herdsman-converters:eTopThermostat: ' +
+                    meta.logger.warn('gza-core-libs:eTopThermostat: ' +
                         `preset ${value} is not recognized.`);
                     break;
                 }
@@ -4317,7 +4317,7 @@ const fromZigbee1 = {
             case dataPoints.runningState:
                 return {running_state: value ? 'heat' : 'idle'};
             default:
-                meta.logger.warn(`zigbee-herdsman-converters:eTopThermostat: Unrecognized DP #${
+                meta.logger.warn(`gza-core-libs:eTopThermostat: Unrecognized DP #${
                     dp} with data ${JSON.stringify(dpValue)}`);
             }
         },
@@ -4426,7 +4426,7 @@ const fromZigbee1 = {
             case dataPoints.weekFormat: // Week select 0 - 5 days, 1 - 6 days, 2 - 7 days
                 return {week: thermostatWeekFormat[value]};
             default: // The purpose of the dps 17 & 19 is still unknown
-                console.log(`zigbee-herdsman-converters:tuyaThermostat: Unrecognized DP #${
+                console.log(`gza-core-libs:tuyaThermostat: Unrecognized DP #${
                     dp} with data ${JSON.stringify(dpValue)}`);
             }
         },
@@ -4440,7 +4440,7 @@ const fromZigbee1 = {
             if (dpValue.dp === dataPoints.state) {
                 return {state: value ? 'ON': 'OFF'};
             } else if (meta.device.manufacturerName === '_TZE200_swaamsoy') {
-                // https://github.com/Koenkk/zigbee-herdsman-converters/pull/3004
+                // https://github.com/GrandeurSmart/gza-core-libs/pull/3004
                 if (dpValue.dp === 2) {
                     if (value < 10) {
                         logUnexpectedDataValue('tuya_dimmer', msg, dpValue, meta, 'brightness', 10, 1000);
@@ -4542,7 +4542,7 @@ const fromZigbee1 = {
                     result.vibration = Boolean(value);
                     break;
                 default:
-                    meta.logger.warn(`zigbee-herdsman-converters:tuya_smart_vibration_sensor: NOT RECOGNIZED ` +
+                    meta.logger.warn(`gza-core-libs:tuya_smart_vibration_sensor: NOT RECOGNIZED ` +
                         `DP #${dpValue.dp} with data ${JSON.stringify(dpValue)}`);
                 }
             }
@@ -4567,7 +4567,7 @@ const fromZigbee1 = {
                     // This reports a garage door status (open, closed), but it is very naive and misleading
                     break;
                 default:
-                    meta.logger.debug(`zigbee-herdsman-converters:matsee_garage_door_opener: NOT RECOGNIZED ` +
+                    meta.logger.debug(`gza-core-libs:matsee_garage_door_opener: NOT RECOGNIZED ` +
                         `DP #${dpValue.dp} with data ${JSON.stringify(dpValue)}`);
                 }
             }
@@ -4862,7 +4862,7 @@ const fromZigbee1 = {
                 case 2: // down_delete
                     return {border: 'down_delete'};
                 default:
-                    meta.logger.warn('zigbee-herdsman-converters:ZM_AM_02: ' +
+                    meta.logger.warn('gza-core-libs:ZM_AM_02: ' +
                     `Mode ${value} is not recognized.`);
                     break;
                 }
@@ -4886,7 +4886,7 @@ const fromZigbee1 = {
                 case 1: // night
                     return {mode: 'night'};
                 default:
-                    meta.logger.warn('zigbee-herdsman-converters:ZM_AM_02: ' +
+                    meta.logger.warn('gza-core-libs:ZM_AM_02: ' +
                         `Mode ${value} is not recognized.`);
                     break;
                 }
@@ -4910,7 +4910,7 @@ const fromZigbee1 = {
             if (dp === 1) return {contact: value === true ? false : true};
             if (dp === 2) return {battery: value};
             else {
-                meta.logger.debug(`zigbee-herdsman-converters:TM081: NOT RECOGNIZED DP #${dp} with data ${JSON.stringify(dpValue)}`);
+                meta.logger.debug(`gza-core-libs:TM081: NOT RECOGNIZED DP #${dp} with data ${JSON.stringify(dpValue)}`);
             }
         },
     } satisfies Fz.Converter,
@@ -5007,7 +5007,7 @@ const fromZigbee1 = {
                     result.illuminance = value;
                     break;
                 default:
-                    meta.logger.debug(`zigbee-herdsman-converters:ZG204ZL_lms: NOT RECOGNIZED DP #${
+                    meta.logger.debug(`gza-core-libs:ZG204ZL_lms: NOT RECOGNIZED DP #${
                         dp} with data ${JSON.stringify(dpValue)}`);
                 }
             }
@@ -5074,7 +5074,7 @@ const fromZigbee1 = {
             case dataPoints.tthBattery:
                 return {battery: value};
             default:
-                meta.logger.warn(`zigbee-herdsman-converters:maa_tuya_temp_sensor: NOT RECOGNIZED ` +
+                meta.logger.warn(`gza-core-libs:maa_tuya_temp_sensor: NOT RECOGNIZED ` +
                     `DP #${dp} with data ${JSON.stringify(dpValue)}`);
             }
         },
@@ -5134,7 +5134,7 @@ const fromZigbee1 = {
                     result.humidity_report_interval = value;
                     break;
                 default:
-                    meta.logger.warn(`zigbee-herdsman-converters:nous_lcd_temperature_humidity_sensor: NOT RECOGNIZED ` +
+                    meta.logger.warn(`gza-core-libs:nous_lcd_temperature_humidity_sensor: NOT RECOGNIZED ` +
                         `DP #${dp} with data ${JSON.stringify(dpValue)}`);
                 }
             }
@@ -5158,7 +5158,7 @@ const fromZigbee1 = {
             case dataPoints.thitIlluminanceLux:
                 return {illuminance_lux: value};
             default:
-                meta.logger.warn(`zigbee-herdsman-converters:tuya_illuminance_temperature_humidity_sensor: NOT RECOGNIZED ` +
+                meta.logger.warn(`gza-core-libs:tuya_illuminance_temperature_humidity_sensor: NOT RECOGNIZED ` +
                     `DP #${dp} with data ${JSON.stringify(dpValue)}`);
             }
         },
@@ -5184,7 +5184,7 @@ const fromZigbee1 = {
                     return {illuminance_lux: value};
                 default:
                     meta.logger.warn(
-                        `zigbee-herdsman-converters:tuya_illuminance_sensor: NOT RECOGNIZED ` +
+                        `gza-core-libs:tuya_illuminance_sensor: NOT RECOGNIZED ` +
                       `DP #${dp} with data ${JSON.stringify(dpValue)}`,
                     );
                 }
@@ -5272,7 +5272,7 @@ const fromZigbee1 = {
             case dataPoints.hyAlarm: // [16] [0]
                 return {alarm: (value > 0) ? true : false};
             default: // The purpose of the codes 17 & 19 are still unknown
-                meta.logger.warn(`zigbee-herdsman-converters:hy_thermostat: Unrecognized DP #${
+                meta.logger.warn(`gza-core-libs:hy_thermostat: Unrecognized DP #${
                     dp} with data ${JSON.stringify(dpValue)}`);
             }
         },
@@ -5439,7 +5439,7 @@ const fromZigbee1 = {
         options: [exposes.options.invert_cover()],
         convert: (model, msg, publish, options, meta) => {
             // Protocol description
-            // https://github.com/Koenkk/zigbee-herdsman-converters/issues/1159#issuecomment-614659802
+            // https://github.com/GrandeurSmart/gza-core-libs/issues/1159#issuecomment-614659802
 
             const result: KeyValueAny = {};
 
@@ -5547,7 +5547,7 @@ const fromZigbee1 = {
                     result.battery = value;
                     break;
                 default:
-                    meta.logger.debug(`zigbee-herdsman-converters:wls100z_water_leak:` +
+                    meta.logger.debug(`gza-core-libs:wls100z_water_leak:` +
                         `NOT RECOGNIZED DP #${dpValue.dp} with data ${JSON.stringify(dpValue)}`);
                 }
             }
@@ -5622,7 +5622,7 @@ const fromZigbee1 = {
                 return {timer: value / 60};
             }
             default: {
-                meta.logger.debug(`zigbee-herdsman-converters:FrankeverValve: NOT RECOGNIZED DP ` +
+                meta.logger.debug(`gza-core-libs:FrankeverValve: NOT RECOGNIZED DP ` +
                     `#${dp} with data ${JSON.stringify(dpValue)}`);
             }
             }
@@ -5643,7 +5643,7 @@ const fromZigbee1 = {
             case dataPoints.wooxSmokeTest:
                 return {smoke: value};
             default:
-                meta.logger.warn(`zigbee-herdsman-converters:tuya_smoke: Unrecognized DP #${ dp} with data ${JSON.stringify(dpValue)}`);
+                meta.logger.warn(`gza-core-libs:tuya_smoke: Unrecognized DP #${ dp} with data ${JSON.stringify(dpValue)}`);
             }
         },
     } satisfies Fz.Converter,
@@ -5689,7 +5689,7 @@ const fromZigbee1 = {
             case dataPoints.dinrailPowerMeterVoltage:
                 return {voltage: value/10};
             default:
-                meta.logger.debug(`zigbee-herdsman-converters:TuyaDinRailSwitch: NOT RECOGNIZED DP ` +
+                meta.logger.debug(`gza-core-libs:TuyaDinRailSwitch: NOT RECOGNIZED DP ` +
                     `#${dp} with data ${JSON.stringify(dpValue)}`);
             }
 
@@ -5776,7 +5776,7 @@ const fromZigbee1 = {
                 return tresult;
             }
             default: {
-                meta.logger.debug(`zigbee-herdsman-converters:RTXZVG1Valve: NOT RECOGNIZED DP ` +
+                meta.logger.debug(`gza-core-libs:RTXZVG1Valve: NOT RECOGNIZED DP ` +
                     `#${dp} with data ${JSON.stringify(dpValue)}`);
             }
             }
@@ -5973,7 +5973,7 @@ const fromZigbee1 = {
                     break;
                 }
             default:
-                meta.logger.warn(`zigbee-herdsman-converters:javis_microwave_sensor: NOT RECOGNIZED ` +
+                meta.logger.warn(`gza-core-libs:javis_microwave_sensor: NOT RECOGNIZED ` +
                     `DP #${dp} with data ${JSON.stringify(dpValue)}`);
             }
         },
@@ -6124,7 +6124,7 @@ const toZigbee1 = {
         options: [exposes.options.invert_cover()],
         convertSet: async (entity, key, value: any, meta) => {
             // Protocol description
-            // https://github.com/Koenkk/zigbee-herdsman-converters/issues/1159#issuecomment-614659802
+            // https://github.com/GrandeurSmart/gza-core-libs/issues/1159#issuecomment-614659802
 
             if (key === 'position') {
                 if (value >= 0 && value <= 100) {
@@ -6620,7 +6620,7 @@ const toZigbee2 = {
                 await sendDataPointBool(entity, dataPoints.alectoSilence, value);
                 break;
             default: // Unknown key
-                throw new Error(`zigbee-herdsman-converters:tuya_alecto_smoke: Unhandled key ${key}`);
+                throw new Error(`gza-core-libs:tuya_alecto_smoke: Unhandled key ${key}`);
             }
         },
     } satisfies Tz.Converter,
@@ -6797,7 +6797,7 @@ const toZigbee2 = {
         key: ['program'],
         convertSet: async (entity, key, value: any, meta) => {
             if (!meta.state.program) {
-                meta.logger.warn(`zigbee-herdsman-converters:Moes BHT-002: existing program state not set.`);
+                meta.logger.warn(`gza-core-libs:Moes BHT-002: existing program state not set.`);
                 return;
             }
 

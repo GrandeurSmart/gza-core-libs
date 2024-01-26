@@ -9,7 +9,7 @@ import * as reporting from '../lib/reporting';
 import {repInterval} from '../lib/constants';
 import * as utils from '../lib/utils';
 import * as globalStore from '../lib/store';
-import * as zigbeeHerdsman from 'zigbee-herdsman/dist';
+import * as zigbeeHerdsman from 'gza-core/dist';
 import {postfixWithEndpointName, precisionRound, isObject, replaceInArray} from '../lib/utils';
 import {onOff, LightArgs, light as lightDontUse} from '../lib/modernExtend';
 import * as semver from 'semver';

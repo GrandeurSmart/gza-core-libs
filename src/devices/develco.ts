@@ -429,7 +429,7 @@ const definitions: Definition[] = [
 
             try {
                 // Some don't support these attributes
-                // https://github.com/Koenkk/zigbee-herdsman-converters/issues/974#issuecomment-621465038
+                // https://github.com/GrandeurSmart/gza-core-libs/issues/974#issuecomment-621465038
                 await reporting.readEletricalMeasurementMultiplierDivisors(endpoint);
                 await reporting.rmsVoltage(endpoint);
                 await reporting.rmsCurrent(endpoint);
@@ -450,7 +450,7 @@ const definitions: Definition[] = [
         onEvent: async (type, data, device) => {
             if (type === 'message' && data.type === 'attributeReport' && data.cluster === 'seMetering' && data.data['divisor']) {
                 // Device sends wrong divisor (512) while it should be fixed to 1000
-                // https://github.com/Koenkk/zigbee-herdsman-converters/issues/3066
+                // https://github.com/GrandeurSmart/gza-core-libs/issues/3066
                 data.endpoint.saveClusterAttributeKeyValue('seMetering', {divisor: 1000, multiplier: 1});
             }
         },

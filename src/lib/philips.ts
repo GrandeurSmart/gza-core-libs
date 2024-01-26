@@ -4,7 +4,7 @@ import * as exposes from './exposes';
 import tz from '../converters/toZigbee';
 import * as libColor from './color';
 import * as utils from './utils';
-import {Zcl} from 'zigbee-herdsman';
+import {Zcl} from 'gza-core';
 import * as globalStore from './store';
 import {Fz, KeyValue, KeyValueAny, Tz} from './types';
 import * as modernExtend from './modernExtend';

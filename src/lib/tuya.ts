@@ -112,7 +112,7 @@ function getDataValue(dpValue: Tuya.DpValue) {
     case dataTypes.number:
         return convertBufferToNumber(dpValue.data);
     case dataTypes.string:
-        // Don't use .map here, doesn't work: https://github.com/Koenkk/zigbee-herdsman-converters/pull/1799/files#r530377091
+        // Don't use .map here, doesn't work: https://github.com/GrandeurSmart/gza-core-libs/pull/1799/files#r530377091
         for (let i = 0; i < dpValue.data.length; ++i) {
             dataString += String.fromCharCode(dpValue.data[i]);
         }
@@ -187,8 +187,8 @@ export async function onEventSetTime(type: OnEventType, data: KeyValue, device: 
             await endpoint.command('manuSpecificTuya', 'mcuSyncTime', payload, {});
         } catch (error) {
             // endpoint.command can throw an error which needs to
-            // be caught or the zigbee-herdsman may crash
-            // Debug message is handled in the zigbee-herdsman
+            // be caught or the gza-core may crash
+            // Debug message is handled in the gza-core
         }
     }
 }
@@ -223,8 +223,8 @@ export async function onEventSetLocalTime(type: OnEventType, data: KeyValue, dev
             await endpoint.command('manuSpecificTuya', 'mcuSyncTime', payload, {});
         } catch (error) {
             // endpoint.command can throw an error which needs to
-            // be caught or the zigbee-herdsman may crash
-            // Debug message is handled in the zigbee-herdsman
+            // be caught or the gza-core may crash
+            // Debug message is handled in the gza-core
         }
     }
 }

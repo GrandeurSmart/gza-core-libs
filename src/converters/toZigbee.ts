@@ -6,7 +6,7 @@ import * as utils from '../lib/utils';
 import * as light from '../lib/light';
 import * as legacy from '../lib/legacy';
 import * as exposes from '../lib/exposes';
-import {Zcl} from 'zigbee-herdsman';
+import {Zcl} from 'gza-core';
 
 const manufacturerOptions = {
     sunricher: {manufacturerCode: Zcl.ManufacturerCode.SHENZHEN_SUNRICH},
@@ -592,7 +592,7 @@ const converters2 = {
 
             // Zigbee officially expects 'open' to be 0 and 'closed' to be 100 whereas
             // HomeAssistant etc. work the other way round.
-            // For zigbee-herdsman-converters: open = 100, close = 0
+            // For gza-core-libs: open = 100, close = 0
             await entity.command(
                 'closuresWindowCovering',
                 isPosition ? 'goToLiftPercentage' : 'goToTiltPercentage',
@@ -1068,7 +1068,7 @@ const converters2 = {
                 if (meta.state.hasOwnProperty('brightness') && meta.state.state === 'ON') {
                     // The light's current level gets clobbered in two cases:
                     //   1. when 'Off' has a transition, in which case it is really 'MoveToLevelWithOnOff'
-                    //      https://github.com/Koenkk/zigbee-herdsman-converters/issues/1073
+                    //      https://github.com/GrandeurSmart/gza-core-libs/issues/1073
                     //   2. when 'OnLevel' is set: "If OnLevel is not defined, set the CurrentLevel to the stored level."
                     //      https://github.com/Koenkk/zigbee2mqtt/issues/2850#issuecomment-580365633
                     // We need to remember current brightness in case the next 'On' does not provide it. `meta` is not reliable
@@ -2587,9 +2587,9 @@ const converters2 = {
 
                 if (!['ZNCLDJ11LM', 'ZNJLBL01LM', 'ZNCLBL01LM'].includes(meta.mapped.model)) {
                     // The code below is originally added for ZNCLDJ11LM (Koenkk/zigbee2mqtt#4585).
-                    // However, in Koenkk/zigbee-herdsman-converters#4039 it was replaced by reading
+                    // However, in GrandeurSmart/gza-core-libs#4039 it was replaced by reading
                     // directly from currentPositionLiftPercentage, so that device is excluded.
-                    // For ZNJLBL01LM, in Koenkk/zigbee-herdsman-converters#4163 the position is read
+                    // For ZNJLBL01LM, in GrandeurSmart/gza-core-libs#4163 the position is read
                     // through onEvent each time the motor stops, so it becomes redundant, and the
                     // device is excluded.
                     // The code is left here to avoid breaking compatibility, ideally all devices using
@@ -3481,7 +3481,7 @@ const converters2 = {
             );
 
             // As the device reports the incorrect divisor, we need to set it here
-            // https://github.com/Koenkk/zigbee-herdsman-converters/issues/974#issuecomment-604347303
+            // https://github.com/GrandeurSmart/gza-core-libs/issues/974#issuecomment-604347303
             // Values for norwegian_han and aidon_meter have not been been checked
             endpoint.saveClusterAttributeKeyValue('haElectricalMeasurement', {
                 acVoltageMultiplier: 1,
@@ -4030,7 +4030,7 @@ const converters2 = {
             case 'alarm_humidity_min': {
                 // await entity.write('manuSpecificTuya_2', {[key]: value});
                 // instead write as custom attribute to override incorrect herdsman dataType from uint16 to int16
-                // https://github.com/Koenkk/zigbee-herdsman/blob/v0.13.191/src/zcl/definition/cluster.ts#L4235
+                // https://github.com/Koenkk/gza-core/blob/v0.13.191/src/zcl/definition/cluster.ts#L4235
                 const keyToAttributeLookup = {'alarm_temperature_max': 0xD00A, 'alarm_temperature_min': 0xD00B,
                     'alarm_humidity_max': 0xD00D, 'alarm_humidity_min': 0xD00E};
                 const payload = {[keyToAttributeLookup[key]]: {value: value, type: 0x29}};
@@ -4047,7 +4047,7 @@ const converters2 = {
         convertSet: async (entity, key, value, meta) => {
             const options = {
                 // Don't send a manufacturerCode (otherwise set in herdsman):
-                // https://github.com/Koenkk/zigbee-herdsman-converters/pull/2827
+                // https://github.com/GrandeurSmart/gza-core-libs/pull/2827
                 // @ts-expect-error
                 manufacturerCode: null,
                 ...utils.getOptions(meta.mapped, entity),
@@ -4211,7 +4211,7 @@ const converters2 = {
                      *
                      * Currently no devices seem to support this, so always fallback to XY conversion. In the future if a device
                      * supports this, or other features get added this the following commit contains an implementation:
-                     * https://github.com/Koenkk/zigbee-herdsman-converters/pull/1837/commits/c22175b946b83230ce4e711c2a3796cf2029e78f
+                     * https://github.com/GrandeurSmart/gza-core-libs/pull/1837/commits/c22175b946b83230ce4e711c2a3796cf2029e78f
                      *
                      * Conversion to XY is allowed according to the ZCL:
                      * `Since there is a direct relation between ColorTemperatureMireds and XY,

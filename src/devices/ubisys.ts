@@ -6,7 +6,7 @@ import * as ota from '../lib/ota';
 import * as utils from '../lib/utils';
 import * as reporting from '../lib/reporting';
 import * as constants from '../lib/constants';
-import {Zcl} from 'zigbee-herdsman';
+import {Zcl} from 'gza-core';
 import {Definition, Fz, OnEventType, Tz, OnEventData, Zh, KeyValue, KeyValueAny} from '../lib/types';
 import {ubisysModernExtend} from '../lib/ubisys';
 const e = exposes.presets;
@@ -16,7 +16,7 @@ const manufacturerOptions = {
     /*
      * Ubisys doesn't accept a manufacturerCode on some commands
      * This bug has been reported, but it has not been fixed:
-     * https://github.com/Koenkk/zigbee-herdsman/issues/52
+     * https://github.com/Koenkk/gza-core/issues/52
      */
     ubisys: {manufacturerCode: Zcl.ManufacturerCode.UBISYS},
     // @ts-expect-error

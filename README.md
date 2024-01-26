@@ -1,7 +1,7 @@
-[![NPM](https://nodei.co/npm/zigbee-herdsman-converters.png)](https://nodei.co/npm/zigbee-herdsman-converters/)
+[![NPM](https://nodei.co/npm/gza-core-libs.png)](https://nodei.co/npm/gza-core-libs/)
 
-# zigbee-herdsman-converters
-Collection of device converters to be used with zigbee-herdsman.
+# gza-core-libs
+Collection of device converters to be used with gza-core.
 
 ## Breaking changes
 18.0.0

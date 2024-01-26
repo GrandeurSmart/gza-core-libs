@@ -53,7 +53,7 @@ const definitions: Definition[] = [
         },
         onEvent: async (type, data, device) => {
             // This device doesn't support reporting correctly.
-            // https://github.com/Koenkk/zigbee-herdsman-converters/pull/1270
+            // https://github.com/GrandeurSmart/gza-core-libs/pull/1270
             const endpoint = device.getEndpoint(1);
             if (type === 'stop') {
                 clearInterval(globalStore.getValue(device, 'interval'));

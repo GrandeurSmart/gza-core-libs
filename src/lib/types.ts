@@ -4,11 +4,11 @@ import type {
     Device as ZHDevice,
     Endpoint as ZHEndpoint,
     Group as ZHGroup,
-} from 'zigbee-herdsman/dist/controller/model';
+} from 'gza-core/dist/controller/model';
 import type {
     FrameControl,
     ZclHeader as ZHZclHeader,
-} from 'zigbee-herdsman/dist/zcl';
+} from 'gza-core/dist/zcl';
 
 import * as exposes from './exposes';
 

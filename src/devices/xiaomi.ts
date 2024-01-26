@@ -162,7 +162,7 @@ const fzLocal = {
                         // with the correct version from the heartbeat.
                         // This is not reflected in the frontend unless the device is reconfigured
                         // or the whole service restarted.
-                        // See https://github.com/Koenkk/zigbee-herdsman-converters/pull/5363#discussion_r1081477047
+                        // See https://github.com/GrandeurSmart/gza-core-libs/pull/5363#discussion_r1081477047
                         // @ts-expect-error
                         meta.device.softwareBuildID = heartbeat.firmware_version;
                         delete heartbeat.firmware_version;
@@ -189,10 +189,10 @@ const fzLocal = {
                 case 0x00ff: // 4e:27:49:bb:24:b6:30:dd:74:de:53:76:89:44:c4:81
                 case 0x027c: // 0x00
                 case 0x0280: // 0x00/0x01
-                    meta.logger.debug(`zigbee-herdsman-converters:aqara_trv: Unhandled key ${key} = ${value}`);
+                    meta.logger.debug(`gza-core-libs:aqara_trv: Unhandled key ${key} = ${value}`);
                     break;
                 default:
-                    meta.logger.warn(`zigbee-herdsman-converters:aqara_trv: Unknown key ${key} = ${value}`);
+                    meta.logger.warn(`gza-core-libs:aqara_trv: Unknown key ${key} = ${value}`);
                 }
             });
             return result;
@@ -263,20 +263,20 @@ const fzLocal = {
                         break;
                     case 0x080007d1: // ? 64
                     case 0x0d090055: // ? 00
-                        meta.logger.warn(`zigbee-herdsman-converters:aqara_feeder: Unhandled attribute ${attr} = ${val}`);
+                        meta.logger.warn(`gza-core-libs:aqara_feeder: Unhandled attribute ${attr} = ${val}`);
                         break;
                     default:
-                        meta.logger.warn(`zigbee-herdsman-converters:aqara_feeder: Unknown attribute ${attr} = ${val}`);
+                        meta.logger.warn(`gza-core-libs:aqara_feeder: Unknown attribute ${attr} = ${val}`);
                     }
                     break;
                 }
                 case 0x00ff: // 80:13:58:91:24:33:20:24:58:53:44:07:05:97:75:17
                 case 0x0007: // 00:00:00:00:1d:b5:a6:ed
                 case 0x00f7: // 05:21:14:00:0d:23:21:25:00:00:09:21:00:01
-                    meta.logger.debug(`zigbee-herdsman-converters:aqara_feeder: Unhandled key ${key} = ${value}`);
+                    meta.logger.debug(`gza-core-libs:aqara_feeder: Unhandled key ${key} = ${value}`);
                     break;
                 default:
-                    meta.logger.warn(`zigbee-herdsman-converters:aqara_feeder: Unknown key ${key} = ${value}`);
+                    meta.logger.warn(`gza-core-libs:aqara_feeder: Unknown key ${key} = ${value}`);
                 }
             });
             return result;
@@ -518,7 +518,7 @@ const tzLocal = {
                 break;
             }
             default: // Unknown key
-                meta.logger.warn(`zigbee-herdsman-converters:aqara_trv: Unhandled key ${key}`);
+                meta.logger.warn(`gza-core-libs:aqara_trv: Unhandled key ${key}`);
             }
         },
         convertGet: async (entity, key, meta) => {
@@ -601,7 +601,7 @@ const tzLocal = {
                 sendAttr(0x0e5f0055, value, 4);
                 break;
             default: // Unknown key
-                meta.logger.warn(`zigbee-herdsman-converters:aqara_feeder: Unhandled key ${key}`);
+                meta.logger.warn(`gza-core-libs:aqara_feeder: Unhandled key ${key}`);
             }
             return {state: {[key]: value}};
         },
@@ -2206,9 +2206,9 @@ const definitions: Definition[] = [
 
             // Not all plugs support electricity measurements:
             // - https://github.com/Koenkk/zigbee2mqtt/issues/6861
-            // - https://github.com/Koenkk/zigbee-herdsman-converters/issues/1050#issuecomment-673111969
+            // - https://github.com/GrandeurSmart/gza-core-libs/issues/1050#issuecomment-673111969
             // Voltage and current are not supported:
-            // - https://github.com/Koenkk/zigbee-herdsman-converters/issues/1050
+            // - https://github.com/GrandeurSmart/gza-core-libs/issues/1050
             try {
                 await reporting.bind(endpoint, coordinatorEndpoint, ['haElectricalMeasurement']);
                 await endpoint.read('haElectricalMeasurement', ['acPowerMultiplier', 'acPowerDivisor']);
@@ -2268,8 +2268,8 @@ const definitions: Definition[] = [
             device.skipTimeResponse = true;
             // According to the Zigbee the genTime.time should be the seconds since 1 January 2020 UTC
             // However the device expects this to be the seconds since 1 January in the local time zone.
-            // Disable the responses of zigbee-herdsman and respond here instead.
-            // https://github.com/Koenkk/zigbee-herdsman-converters/pull/2843#issuecomment-888532667
+            // Disable the responses of gza-core and respond here instead.
+            // https://github.com/GrandeurSmart/gza-core-libs/pull/2843#issuecomment-888532667
             if (type === 'message' && data.type === 'read' && data.cluster === 'genTime') {
                 const oneJanuary2000 = new Date('January 01, 2000 00:00:00 UTC+00:00').getTime();
                 const secondsUTC = Math.round(((new Date()).getTime() - oneJanuary2000) / 1000);

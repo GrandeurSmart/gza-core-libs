@@ -23,7 +23,7 @@ const definitions: Definition[] = [
             await reporting.bind(endpoint2, coordinatorEndpoint, ['genOnOff', 'seMetering']);
 
             // Device doesn't respond to divisor read, set it here
-            // https://github.com/Koenkk/zigbee-herdsman-converters/pull/1096
+            // https://github.com/GrandeurSmart/gza-core-libs/pull/1096
             endpoint2.saveClusterAttributeKeyValue('seMetering', {
                 divisor: 100000,
                 multiplier: 1,

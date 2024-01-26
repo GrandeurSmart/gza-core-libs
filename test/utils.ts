@@ -2,7 +2,7 @@ import {findByDevice} from '../src/index';
 import * as utils from '../src/lib/utils';
 import {Zh, Logger, DefinitionMeta, Fz, Definition} from '../src/lib/types';
 import tz from '../src/converters/toZigbee';
-import { Device } from 'zigbee-herdsman/dist/controller/model';
+import { Device } from 'gza-core/dist/controller/model';
 
 interface MockEndpointArgs {ID?: number, inputClusters?: string[], outputClusters?: string[], attributes?: {[s: string]: {[s: string]: unknown}}}
 

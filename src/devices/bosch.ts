@@ -1,5 +1,5 @@
 import {onOff} from '../lib/modernExtend';
-import {Zcl} from 'zigbee-herdsman';
+import {Zcl} from 'gza-core';
 import * as exposes from '../lib/exposes';
 import fz from '../converters/fromZigbee';
 import tz from '../converters/toZigbee';

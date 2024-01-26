@@ -1,10 +1,10 @@
 import { Definition } from '../src/lib/types';
 import fz from '../src/converters/fromZigbee'
-import * as zh from 'zigbee-herdsman/dist';
+import * as zh from 'gza-core/dist';
 import { repInterval } from '../src/lib/constants';
 import {assertDefintion, AssertDefinitionArgs, mockDevice, reportingItem} from './utils';
 import { findByDevice, generateExternalDefinitionSource } from '../src';
-import Device from 'zigbee-herdsman/dist/controller/model/device';
+import Device from 'gza-core/dist/controller/model/device';
 
 const assertGeneratedDefinition = async (args: AssertDefinitionArgs & {externalDefintionSource?: string}) => {
     const getDefinition = async (device: Device): Promise<Definition> => findByDevice(device, true);
@@ -100,7 +100,7 @@ describe('GenerateDefinition', () => {
                 ],
             },
             externalDefintionSource: `
-const {temperature, onOff} = require('zigbee-herdsman-converters/lib/modernExtend');
+const {temperature, onOff} = require('gza-core-libs/lib/modernExtend');
 
 const definition = {
     zigbeeModel: ['combo'],
@@ -139,7 +139,7 @@ module.exports = definition;
             ]},
             configureReporting: {},
             externalDefintionSource: `
-const {light} = require('zigbee-herdsman-converters/lib/modernExtend');
+const {light} = require('gza-core-libs/lib/modernExtend');
 
 const definition = {
     zigbeeModel: ['combo'],
@@ -178,7 +178,7 @@ module.exports = definition;
             ]},
             configureReporting: {},
             externalDefintionSource: `
-const {light} = require('zigbee-herdsman-converters/lib/modernExtend');
+const {light} = require('gza-core-libs/lib/modernExtend');
 
 const definition = {
     zigbeeModel: ['combo'],
@@ -218,7 +218,7 @@ module.exports = definition;
             ]},
             configureReporting: [],
             externalDefintionSource: `
-const {philipsLight} = require('zigbee-herdsman-converters/lib/philips');
+const {philipsLight} = require('gza-core-libs/lib/philips');
 
 const definition = {
     zigbeeModel: ['combo'],
@@ -268,7 +268,7 @@ module.exports = definition;
                 ['seMetering', [reportingItem('currentSummDelivered', 10, 65000, [0, 100])]],
             ]},
             externalDefintionSource: `
-const {onOff, electricityMeter} = require('zigbee-herdsman-converters/lib/modernExtend');
+const {onOff, electricityMeter} = require('gza-core-libs/lib/modernExtend');
 
 const definition = {
     zigbeeModel: ['combo'],

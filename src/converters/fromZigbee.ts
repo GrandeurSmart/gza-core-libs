@@ -1569,7 +1569,7 @@ const converters1 = {
             const result: KeyValueAny = {};
             // Zigbee officially expects 'open' to be 0 and 'closed' to be 100 whereas
             // HomeAssistant etc. work the other way round.
-            // For zigbee-herdsman-converters: open = 100, close = 0
+            // For gza-core-libs: open = 100, close = 0
             // ubisys J1 will report 255 if lift or tilt positions are not known, so skip that.
             const metaInvert = model.meta && model.meta.coverInverted;
             const invert = metaInvert ? !options.invert_cover : options.invert_cover;
@@ -2216,7 +2216,7 @@ const converters1 = {
                 buttonMapping = {1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6'};
             }
             const button = buttonMapping ? `${buttonMapping[msg.endpoint.ID]}_` : '';
-            // Since it is a non standard ZCL command, no default response is send from zigbee-herdsman
+            // Since it is a non standard ZCL command, no default response is send from gza-core
             // Send the defaultResponse here, otherwise the second button click delays.
             // https://github.com/Koenkk/zigbee2mqtt/issues/8149
             msg.endpoint.defaultResponse(0xfd, 0, 6, msg.data[1]).catch((error) => {});
@@ -2228,7 +2228,7 @@ const converters1 = {
         type: 'raw',
         convert: (model, msg, publish, options, meta) => {
             if (hasAlreadyProcessedMessage(msg, model, msg.data[1])) return;
-            // Since it is a non standard ZCL command, no default response is send from zigbee-herdsman
+            // Since it is a non standard ZCL command, no default response is send from gza-core
             // Send the defaultResponse here, otherwise the second button click delays.
             // https://github.com/Koenkk/zigbee2mqtt/issues/8149
             msg.endpoint.defaultResponse(0xfd, 0, 6, msg.data[1]).catch((error) => {});
@@ -3984,7 +3984,7 @@ const converters1 = {
             if ((model.model === 'ZNCLDJ12LM' || model.model === 'ZNCLDJ14LM') &&
               msg.type === 'attributeReport' && [0, 2].includes(msg.data['presentValue'])) {
                 // Incorrect reports from the device, ignore (re-read by onEvent of ZNCLDJ12LM and ZNCLDJ14LM)
-                // https://github.com/Koenkk/zigbee-herdsman-converters/pull/1427#issuecomment-663862724
+                // https://github.com/GrandeurSmart/gza-core-libs/pull/1427#issuecomment-663862724
                 return;
             }
 
@@ -4472,7 +4472,7 @@ const converters1 = {
             const result: KeyValueAny = {};
             const timeCoverSetMiddle = 60;
 
-            // https://github.com/Koenkk/zigbee-herdsman-converters/pull/1336
+            // https://github.com/GrandeurSmart/gza-core-libs/pull/1336
             // Need to add time_close and time_open in your configuration.yaml after friendly_name (and set your time)
             if (options.hasOwnProperty('time_close') && options.hasOwnProperty('time_open')) {
                 if (!globalStore.hasValue(msg.endpoint, 'position')) {
@@ -5644,7 +5644,7 @@ const converters1 = {
                 action = lookup[msg.data[3]];
             }
 
-            // Since it is a non standard ZCL command, no default response is send from zigbee-herdsman
+            // Since it is a non standard ZCL command, no default response is send from gza-core
             // Send the defaultResponse here, otherwise the second button click delays.
             // https://github.com/Koenkk/zigbee2mqtt/issues/8149
             msg.endpoint.defaultResponse(msg.data[2], 0, 6, msg.data[1]).catch((error) => {});
@@ -5990,7 +5990,7 @@ const converters2 = {
             if (meta.device.dateCode === '20160120') {
                 // Cannot use metering, divisor/multiplier is not according to ZCL.
                 // https://github.com/Koenkk/zigbee2mqtt/issues/2233
-                // https://github.com/Koenkk/zigbee-herdsman-converters/issues/915
+                // https://github.com/GrandeurSmart/gza-core-libs/issues/915
 
                 const result: KeyValueAny = {};
                 if (msg.data.hasOwnProperty('instantaneousDemand')) {
@@ -6103,7 +6103,7 @@ const converters2 = {
         type: ['attributeReport', 'readResponse'],
         convert: async (model, msg, publish, options, meta) => {
             // also trigger movement, because there is no illuminance without movement
-            // https://github.com/Koenkk/zigbee-herdsman-converters/issues/1925
+            // https://github.com/GrandeurSmart/gza-core-libs/issues/1925
             msg.data.occupancy = 1;
             const payload = await converters1.occupancy_with_timeout.convert(model, msg, publish, options, meta) as KeyValueAny;
             if (payload) {

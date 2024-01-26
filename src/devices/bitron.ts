@@ -5,7 +5,7 @@ import tz from '../converters/toZigbee';
 import * as reporting from '../lib/reporting';
 const e = exposes.presets;
 const ea = exposes.access;
-import {Zcl} from 'zigbee-herdsman';
+import {Zcl} from 'gza-core';
 import {onOff, light} from '../lib/modernExtend';
 import {KeyValueAny, Fz, Tz, Definition} from '../lib/types';
 

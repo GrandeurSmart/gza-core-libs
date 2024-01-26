@@ -74,7 +74,7 @@ const definitions: Definition[] = [
             await reporting.bind(endpoint, coordinatorEndpoint, ['msTemperatureMeasurement', 'msRelativeHumidity']);
             await reporting.temperature(endpoint);
             // configureReporting.humidity(endpoint); not needed and fails
-            // https://github.com/Koenkk/zigbee-herdsman-converters/issues/1312
+            // https://github.com/GrandeurSmart/gza-core-libs/issues/1312
         },
         exposes: [e.temperature(), e.humidity()],
     },

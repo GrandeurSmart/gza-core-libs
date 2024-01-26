@@ -4,7 +4,7 @@ import tz from '../converters/toZigbee';
 import * as reporting from '../lib/reporting';
 import {Extend, Definition, Fz, Reporting, Tz} from 'src/lib/types';
 import {getFromLookup} from '../lib/utils';
-import {KeyValue} from 'zigbee-herdsman/dist/controller/tstype';
+import {KeyValue} from 'gza-core/dist/controller/tstype';
 import * as m from '../lib/modernExtend';
 const e = exposes.presets;
 const ea = exposes.access;
@@ -25,7 +25,7 @@ const lockExtend = (meta={}, lockStateOptions: Reporting.Override=null, binds=['
             try {
                 await reporting.batteryAlarmState(endpoint);
             } catch (e) {
-                // Fails for some: https://github.com/Koenkk/zigbee-herdsman-converters/pull/5414
+                // Fails for some: https://github.com/GrandeurSmart/gza-core-libs/pull/5414
             }
         },
     };
@@ -75,7 +75,7 @@ const fzLocal = {
             try {
                 await msg.endpoint.read('manuSpecificAssaDoorLock', ['batteryLevel']);
             } catch (error) {
-                meta.logger.warn(`zigbee-herdsman-converters:Yale Lock: failed to read lock attributes`);
+                meta.logger.warn(`gza-core-libs:Yale Lock: failed to read lock attributes`);
             }
             return result;
         },

@@ -15,7 +15,7 @@ export function readColorAttributes(entity: Zh.Endpoint | Zh.Group, meta: Tz.Met
       * `supportsHueAndSaturation` indicates support for currentHue and currentSaturation
       * `supportsEnhancedHue` indicates support for enhancedCurrentHue
       *
-      * e.g. IKEA Tådfri LED1624G9 only supports XY (https://github.com/Koenkk/zigbee-herdsman-converters/issues/1340)
+      * e.g. IKEA Tådfri LED1624G9 only supports XY (https://github.com/GrandeurSmart/gza-core-libs/issues/1340)
       *
       * Additionally when we get a "get payload", only request the fields included.
      */

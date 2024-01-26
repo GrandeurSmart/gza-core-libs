@@ -1,7 +1,7 @@
 {
-  "name": "zigbee-herdsman-converters",
+  "name": "gza-core-libs",
   "version": "18.9.0",
-  "description": "Collection of device converters to be used with zigbee-herdsman",
+  "description": "Collection of device converters to be used with gza-core",
   "main": "index.js",
   "types": "index.d.ts",
   "files": [
@@ -16,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Koenkk/zigbee-herdsman-converters.git"
+    "url": "git+https://github.com/GrandeurSmart/gza-core-libs.git"
   },
   "keywords": [
     "xiaomi",
@@ -38,16 +38,16 @@
   "author": "Koen Kanters",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Koenkk/zigbee-herdsman-converters/issues"
+    "url": "https://github.com/GrandeurSmart/gza-core-libs/issues"
   },
-  "homepage": "https://github.com/Koenkk/zigbee-herdsman-converters",
+  "homepage": "https://github.com/GrandeurSmart/gza-core-libs",
   "dependencies": {
     "axios": "^1.6.5",
     "buffer-crc32": "^0.2.13",
     "https-proxy-agent": "^7.0.2",
     "semver": "^7.5.4",
     "tar-stream": "^3.1.6",
-    "zigbee-herdsman": "^0.30.0"
+    "gza-core": "^0.30.0"
   },
   "devDependencies": {
     "@types/buffer-crc32": "^0.2.4",

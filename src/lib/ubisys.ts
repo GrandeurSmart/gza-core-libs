@@ -1,7 +1,7 @@
 import {Fz, Tz, ModernExtend} from './types';
 import {presets as e, access as ea} from './exposes';
 import {numeric, NumericArgs, setupConfigureForReporting, ReportingConfigWithoutAttribute} from './modernExtend';
-import {Zcl} from 'zigbee-herdsman';
+import {Zcl} from 'gza-core';
 
 export const ubisysModernExtend = {
     localTemperatureOffset: (args?: Partial<NumericArgs>) => numeric({

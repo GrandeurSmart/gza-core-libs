@@ -179,7 +179,7 @@ export const numericAttributes2Payload = async (msg: Fz.Message, meta: Fz.Meta, 
             if (['WXCJKG11LM', 'WXCJKG12LM', 'WXCJKG13LM', 'MCCGQ14LM', 'GZCGQ01LM', 'JY-GZ-01AQ', 'CTP-R01'].includes(model.model)) {
                 // The temperature value is constant 25 °C and does not change, so we ignore it
                 // https://github.com/Koenkk/zigbee2mqtt/issues/11126
-                // https://github.com/Koenkk/zigbee-herdsman-converters/pull/3585
+                // https://github.com/GrandeurSmart/gza-core-libs/pull/3585
                 // https://github.com/Koenkk/zigbee2mqtt/issues/13253
             } else {
                 assertNumber(value);
@@ -676,7 +676,7 @@ export const numericAttributes2Payload = async (msg: Fz.Message, meta: Fz.Meta, 
             if (['ZNCLBL01LM'].includes(model.model)) {
                 // This is the "target_state" attribute, which takes the following values: 0: 'OPEN', 1: 'CLOSE', 2: 'STOP'.
                 // It is not used because the values 0 and 1 are not always reported.
-                // https://github.com/Koenkk/zigbee-herdsman-converters/pull/4307
+                // https://github.com/GrandeurSmart/gza-core-libs/pull/4307
             }
             break;
         case '1057':

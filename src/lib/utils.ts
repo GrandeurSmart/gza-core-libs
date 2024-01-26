@@ -1,5 +1,5 @@
 import * as globalStore from './store';
-import {Zcl} from 'zigbee-herdsman';
+import {Zcl} from 'gza-core';
 import {Definition, Fz, KeyValue, KeyValueAny, Logger, Publish, Tz, Zh} from './types';
 import {Feature, Numeric} from './exposes';
 
@@ -522,7 +522,7 @@ export function printNumbersAsHexSequence(numbers: number[], hexLength: number) 
  * @returns {(level: string, message: string) => void}
  */
 export const createLogger = (logger: Logger, vendor: string, key: string) => (level: 'debug' | 'info' | 'warn' | 'error', message: string) => {
-    logger[level](`zigbee-herdsman-converters:${vendor}:${key}: ${message}`);
+    logger[level](`gza-core-libs:${vendor}:${key}: ${message}`);
 };
 
 // eslint-disable-next-line

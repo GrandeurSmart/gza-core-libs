@@ -2,7 +2,7 @@ import * as modernExtend from './modernExtend';
 import {isObject} from './utils';
 import {Tz, Fz, KeyValue} from '../lib/types';
 import * as utils from '../lib/utils';
-import {Zcl} from 'zigbee-herdsman';
+import {Zcl} from 'gza-core';
 import * as ota from '../lib/ota';
 
 const manufacturerOptions = {manufacturerCode: Zcl.ManufacturerCode.OSRAM};

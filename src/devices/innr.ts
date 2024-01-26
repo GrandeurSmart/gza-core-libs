@@ -678,7 +678,7 @@ const definitions: Definition[] = [
             onOff(),
             electricityMeter({current: {divisor: 1000}, voltage: {divisor: 1}, power: {divisor: 1}, energy: {divisor: 100}}),
             // Device looses reporting config on power cycle
-            // https://github.com/Koenkk/zigbee-herdsman-converters/issues/6747
+            // https://github.com/GrandeurSmart/gza-core-libs/issues/6747
             reconfigureReportingsOnDeviceAnnounce(),
         ],
     },

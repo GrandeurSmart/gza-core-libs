@@ -1,8 +1,8 @@
-import {Cluster} from 'zigbee-herdsman/dist/zcl/tstype';
+import {Cluster} from 'gza-core/dist/zcl/tstype';
 import {Definition, ModernExtend, Zh} from './types';
 import {getClusterAttributeValue} from './utils';
 import * as m from './modernExtend';
-import * as zh from 'zigbee-herdsman/dist';
+import * as zh from 'gza-core/dist';
 import {philipsLight} from './philips';
 
 interface GeneratedExtend {extend: ModernExtend, source: string, lib?: string}
@@ -18,7 +18,7 @@ function generateSource(device: Zh.Device, generatedExtend: GeneratedExtend[]): 
     });
 
     const importsStr = Object.entries(imports)
-        .map((e) => `const {${e[1].join(', ')}} = require('zigbee-herdsman-converters/lib/${e[0]}');`).join('\n');
+        .map((e) => `const {${e[1].join(', ')}} = require('gza-core-libs/lib/${e[0]}');`).join('\n');
 
     return `${importsStr}
 

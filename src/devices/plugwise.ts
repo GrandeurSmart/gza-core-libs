@@ -6,7 +6,7 @@ import * as reporting from '../lib/reporting';
 import * as utils from '../lib/utils';
 const e = exposes.presets;
 const ea = exposes.access;
-import * as zigbeeHerdsman from 'zigbee-herdsman/dist';
+import * as zigbeeHerdsman from 'gza-core/dist';
 
 const manufacturerOptions = {manufacturerCode: zigbeeHerdsman.Zcl.ManufacturerCode.PLUGWISE_BV};
 

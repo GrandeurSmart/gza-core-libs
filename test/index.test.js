@@ -162,7 +162,7 @@ describe('index.js', () => {
     });
 
     it('Find by device when fingerprint has zigbeeModel of other definition', async () => {
-        // https://github.com/Koenkk/zigbee-herdsman-converters/issues/1449
+        // https://github.com/GrandeurSmart/gza-core-libs/issues/1449
         const endpoints = [
             {ID: 1, profileID: 260, deviceID: 1026, inputClusters: [0,3,1280,1], outputClusters: [3]},
         ];
@@ -181,7 +181,7 @@ describe('index.js', () => {
     });
 
     it('Find by device when fingerprint has zigbeeModel of other definition shouldn\'t match when fingerprint doesn\t match', async () => {
-        // https://github.com/Koenkk/zigbee-herdsman-converters/issues/1449
+        // https://github.com/GrandeurSmart/gza-core-libs/issues/1449
         const endpoints = [
             {ID: 1, profileID: 260, deviceID: 770, inputClusters: [0,3,1026,1029,1], outputClusters: [3]},
         ];
@@ -564,7 +564,7 @@ describe('index.js', () => {
         const files = fs.readdirSync('src/devices');
         for (const file of files) {
             const content = fs.readFileSync(`src/devices/${file}`, {encoding: 'utf-8'});
-            expect(content).not.toContain(`require('zigbee-herdsman-converters`);
+            expect(content).not.toContain(`require('gza-core-libs`);
         }
     });
 
