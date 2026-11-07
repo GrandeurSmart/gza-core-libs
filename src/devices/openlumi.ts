@@ -1,26 +1,29 @@
-import {Definition} from '../lib/types';
-import * as exposes from '../lib/exposes';
-import fz from '../converters/fromZigbee';
-import * as constants from '../lib/constants';
-import * as reporting from '../lib/reporting';
-const e = exposes.presets;
+import * as m from "../lib/modernExtend";
+import type {DefinitionWithExtend} from "../lib/types";
 
-const definitions: Definition[] = [
+export const definitions: DefinitionWithExtend[] = [
     {
-        zigbeeModel: ['openlumi.gw_router.jn5169'],
-        model: 'GWRJN5169',
-        vendor: 'OpenLumi',
-        description: '[Lumi Router (JN5169)](https://github.com/igo-r/Lumi-Router-JN5169)',
-        fromZigbee: [fz.ignore_basic_report, fz.device_temperature],
-        toZigbee: [],
-        configure: async (device, coordinatorEndpoint, logger) => {
-            const endpoint = device.getEndpoint(1);
-            await reporting.bind(endpoint, coordinatorEndpoint, ['genDeviceTempCfg']);
-            await reporting.deviceTemperature(endpoint, {min: constants.repInterval.MINUTE, max: constants.repInterval.MINUTES_5});
-        },
-        exposes: [e.device_temperature()],
+        zigbeeModel: ["openlumi.gw_router.dgnwg05lm"],
+        model: "LR-DGNWG05LM",
+        vendor: "OpenLumi",
+        description: "Lumi Router (for Xiaomi DGNWG05LM)",
+        version: "0.0.1",
+        extend: [m.deviceTemperature({reporting: {min: "5_MINUTES", max: "1_HOUR", change: 1}})],
+    },
+    {
+        zigbeeModel: ["openlumi.gw_router.zhwg11lm"],
+        model: "LR-ZHWG11LM",
+        vendor: "OpenLumi",
+        description: "Lumi Router (for Aqara ZHWG11LM)",
+        version: "0.0.1",
+        extend: [m.deviceTemperature({reporting: {min: "5_MINUTES", max: "1_HOUR", change: 1}})],
+    },
+    // Legacy unified firmware for DGNWG05LM and ZHWG11LM; kept for backward-compatible detection.
+    {
+        zigbeeModel: ["openlumi.gw_router.jn5169"],
+        model: "GWRJN5169",
+        vendor: "OpenLumi",
+        description: "Lumi Router (outdated firmware, update required)",
+        extend: [m.deviceTemperature()],
     },
 ];
-
-export default definitions;
-module.exports = definitions;
