@@ -32,7 +32,7 @@ byte for byte by grandeursmart-zigbee-automation `gza/build_libs.py`:
 The build script is `gza/build_libs.py` in grandeursmart-zigbee-automation, a private GrandeurSmart repository (GS team access): `python3 gza/build_libs.py /tmp/gza-build` (Python 3.9+, Node.js 24 on PATH).
 
 - Pinned base image: `koenkk/zigbee2mqtt@sha256:f09106ecf103a8ab33cf96cae9d7eee56f1da0000682fa754cab37f02b530910` (linux/arm64).
-- Expected result: sha256 `c9a8ded13afece5cac46b5f43b46ae739f0738bbb7f264436c40a13ef1bcfcfa` (the script prints MATCH).
+- Expected result: sha256 `904b2bbd51cb67cc130f07596f543745bf3d833ba65c2f2b18c4290b1eb9fbd5` (the script prints MATCH).
 
 This branch is the matching source, for review and provenance.
 
