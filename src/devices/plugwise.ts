@@ -493,7 +493,7 @@ export const definitions: DefinitionWithExtend[] = [
         description: "Tom thermostatic radiator valve",
         extend: [plugwiseExtend.plugwiseHvacThermostatCluster()],
         fromZigbee: [fz.temperature, fz.battery, fzLocal.plugwise_radiator_valve],
-        // system_mode and occupied_heating_setpoint is not supported: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation.io/pull/1666
+        // system_mode and occupied_heating_setpoint is not supported: https://github.com/Koenkk/zigbee2mqtt.io/pull/1666
         toZigbee: [
             tz.thermostat_pi_heating_demand,
             tzLocal.plugwise_valve_position,

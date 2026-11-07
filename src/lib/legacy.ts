@@ -46,7 +46,7 @@ function getDataValue(dpValue: any) {
         case dataTypes.value:
             return convertMultiByteNumberPayloadToSingleDecimalNumber(dpValue.data);
         case dataTypes.string:
-            // Don't use .map here, doesn't work: https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/1799/files#r530377091
+            // Don't use .map here, doesn't work: https://github.com/GrandeurSmart/gza-core-libs/pull/1799/files#r530377091
             for (let i = 0; i < dpValue.data.length; ++i) {
                 dataString += String.fromCharCode(dpValue.data[i]);
             }
@@ -2489,7 +2489,7 @@ const fromZigbee = {
                 return {state: value ? "ON" : "OFF"};
             }
             if (meta.device.manufacturerName === "_TZE200_swaamsoy") {
-                // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/3004
+                // https://github.com/GrandeurSmart/gza-core-libs/pull/3004
                 if (dpValue.dp === 2) {
                     if (value < 10) {
                         logUnexpectedDataValue("tuya_dimmer", msg, dpValue, meta, "brightness", 10, 1000);
@@ -3073,7 +3073,7 @@ const fromZigbee = {
             let fixedValue = null;
             switch (dp) {
                 case dataPoints.coverPosition: {
-                    // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/11408
+                    // https://github.com/GrandeurSmart/gza-core-libs/pull/11408
                     if (value >= 100 && value <= 127) {
                         fixedValue = 100;
                     } else if (value > 127 || value < 0) {
@@ -3504,7 +3504,7 @@ const fromZigbee = {
         options: [exposes.options.invert_cover()],
         convert: (model, msg, publish, options, meta) => {
             // Protocol description
-            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/1159#issuecomment-614659802
+            // https://github.com/GrandeurSmart/gza-core-libs/issues/1159#issuecomment-614659802
 
             const result: KeyValueAny = {};
 
@@ -4100,7 +4100,7 @@ const toZigbee1 = {
         // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
         convertSet: async (entity, key, value: any, meta) => {
             // Protocol description
-            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/1159#issuecomment-614659802
+            // https://github.com/GrandeurSmart/gza-core-libs/issues/1159#issuecomment-614659802
 
             if (key === "position") {
                 if (value >= 0 && value <= 100) {

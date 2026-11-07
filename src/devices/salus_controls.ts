@@ -52,7 +52,7 @@ const fzLocal = {
             if (meta.device.dateCode === "20160120") {
                 // Cannot use metering, divisor/multiplier is not according to ZCL.
                 // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/2233
-                // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/915
+                // https://github.com/GrandeurSmart/gza-core-libs/issues/915
 
                 const result: KeyValueAny = {};
                 if (msg.data.instantaneousDemand !== undefined) {

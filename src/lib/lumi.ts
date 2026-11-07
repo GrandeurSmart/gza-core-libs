@@ -251,7 +251,7 @@ export const numericAttributes2Payload = async (
                 ) {
                     // The temperature value is constant 25 °C and does not change, so we ignore it
                     // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/11126
-                    // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/3585
+                    // https://github.com/GrandeurSmart/gza-core-libs/pull/3585
                     // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/13253
                 } else {
                     assertNumber(value);
@@ -539,7 +539,7 @@ export const numericAttributes2Payload = async (
                 if (["RTCGQ14LM"].includes(model.model)) {
                     payload.trigger_indicator = value === 1;
                 } else if (["ZNCLBL01LM"].includes(model.model)) {
-                    // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/11911
+                    // https://github.com/GrandeurSmart/gza-core-libs/pull/11911
                     const value1057 = typeof dataObject["1057"] === "number" ? dataObject["1057"] : undefined;
                     const storedRunning = globalStore.getValue(msg.endpoint, ZNCLBL01LM_RUNNING_STORE_KEY, undefined);
                     const payloadRunning = value1057 !== undefined && value1057 < 2;
@@ -903,7 +903,7 @@ export const numericAttributes2Payload = async (
                 if (["ZNCLBL01LM"].includes(model.model)) {
                     // This is the "target_state" attribute, which takes the following values: 0: 'OPEN', 1: 'CLOSE', 2: 'STOP'.
                     // It is not used because the values 0 and 1 are not always reported.
-                    // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/4307
+                    // https://github.com/GrandeurSmart/gza-core-libs/pull/4307
                 }
                 break;
             case "1057":
@@ -920,7 +920,7 @@ export const numericAttributes2Payload = async (
                         globalStore.clearValue(msg.endpoint, ZNCLBL01LM_TERMINAL_POSITION_STORE_KEY);
                     }
 
-                    // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/11911
+                    // https://github.com/GrandeurSmart/gza-core-libs/pull/11911
                     if (!payload.running && previousRunning !== false) {
                         // After stop, read the final position.
                         // Attr 107 can still be stale near the end.
@@ -7394,7 +7394,7 @@ export const fromZigbee = {
                             // with the correct version from the heartbeat.
                             // This is not reflected in the frontend unless the device is reconfigured
                             // or the whole service restarted.
-                            // See https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/5363#discussion_r1081477047
+                            // See https://github.com/GrandeurSmart/gza-core-libs/pull/5363#discussion_r1081477047
                             // @ts-expect-error ignore
                             meta.device.softwareBuildID = heartbeat.firmware_version;
                             delete heartbeat.firmware_version;
@@ -7409,7 +7409,7 @@ export const fromZigbee = {
                     case 0x0276: {
                         const buffer = value as Buffer;
                         // Buffer is empty first message after pairing
-                        // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/7128
+                        // https://github.com/GrandeurSmart/gza-core-libs/issues/7128
                         if (buffer.length) {
                             const schedule = trv.decodeSchedule(buffer);
                             result.schedule_settings = trv.stringifySchedule(schedule);
@@ -7564,7 +7564,7 @@ export const fromZigbee = {
         convert: (model, msg, publish, options, meta) => {
             if (model.model === "ZNCLDJ12LM" && msg.type === "attributeReport" && [0, 2].includes(msg.data.presentValue)) {
                 // Incorrect reports from the device, ignore (re-read by onEvent of ZNCLDJ12LM)
-                // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/1427#issuecomment-663862724
+                // https://github.com/GrandeurSmart/gza-core-libs/pull/1427#issuecomment-663862724
                 return;
             }
 
@@ -7773,7 +7773,7 @@ export const fromZigbee = {
         type: ["attributeReport", "readResponse"],
         convert: (model, msg, publish, options, meta) => {
             // also trigger movement, because there is no illuminance without movement
-            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/1925
+            // https://github.com/GrandeurSmart/gza-core-libs/issues/1925
             const newMsg = {...msg, type: "attributeReport" as const, data: {occupancy: 1}};
             const payload = fz.occupancy_with_timeout.convert(model, newMsg, publish, options, meta) as KeyValueAny;
             if (payload) {

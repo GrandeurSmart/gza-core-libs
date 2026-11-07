@@ -313,7 +313,7 @@ export const definitions: DefinitionWithExtend[] = [
             m.identify(),
             sengledLight({color: false}),
             // The Sengled E13-A21 smart bulb will not report instantaneous demand unless the reporting min is set to 5 seconds or lower.
-            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/8123
+            // https://github.com/GrandeurSmart/gza-core-libs/pull/8123
             m.electricityMeter({cluster: "metering", power: {min: 5}, energy: {min: 5}}),
             m.deviceAddCustomCluster("manuSpecificSengledMotionSensor", {
                 name: "manuSpecificSengledMotionSensor",

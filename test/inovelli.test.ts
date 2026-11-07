@@ -327,7 +327,7 @@ describe("Inovelli toZigbee converters", () => {
             expect(result).toBeUndefined();
         });
 
-        // Regression test for https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/11698
+        // Regression test for https://github.com/GrandeurSmart/gza-core-libs/issues/11698
         it("convertSet should write all matching keys from meta.message in one batched payload", async () => {
             const {device, definition} = await setupVZM31();
             const converter = findTzConverter(definition, "defaultLevelLocal");

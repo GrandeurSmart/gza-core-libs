@@ -190,7 +190,7 @@ const fzLocal = {
             const result: KeyValueAny = {};
             const timeCoverSetMiddle = 60;
 
-            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/1336
+            // https://github.com/GrandeurSmart/gza-core-libs/pull/1336
             // Need to add time_close and time_open in your configuration.yaml after friendly_name (and set your time)
             if (options.time_close != null && options.time_open != null) {
                 if (!globalStore.hasValue(msg.endpoint, "position")) {

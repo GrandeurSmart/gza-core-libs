@@ -168,7 +168,7 @@ describe("ZHC", () => {
     });
 
     it("finds definition by fingerprint for mismatching zigbeeModel in firmware", async () => {
-        // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/1449
+        // https://github.com/GrandeurSmart/gza-core-libs/issues/1449
         const device1 = mockDevice(
             {
                 modelID: "TH01",

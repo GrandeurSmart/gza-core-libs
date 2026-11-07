@@ -219,7 +219,7 @@ export async function setupAttributes<Cl extends string | number, Custom extends
             for (const chunk of chunks) {
                 try {
                     // Don't fail configuration if reading this attribute fails
-                    // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/7074
+                    // https://github.com/GrandeurSmart/gza-core-libs/pull/7074
                     await endpoint.read<Cl, Custom>(
                         cluster,
                         // @ts-expect-error too dynamic to properly type
@@ -542,7 +542,7 @@ export function deviceTemperature(args: Partial<NumericArgs<"genDeviceTempCfg">>
         cluster: "genDeviceTempCfg",
         attribute: "currentTemperature",
         // Attribute does not support reporting according to the spec
-        // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/12199
+        // https://github.com/GrandeurSmart/gza-core-libs/issues/12199
         reporting: false, // {min: "5_MINUTES", max: "1_HOUR", change: 1},
         description: "Temperature of the device",
         unit: "°C",

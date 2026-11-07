@@ -35,7 +35,7 @@ python3 grandeursmart-zigbee-automation/gza/build_libs.py /tmp/gza-build    # Py
 ```
 
 - Pinned base image: `koenkk/zigbee2mqtt@sha256:f09106ecf103a8ab33cf96cae9d7eee56f1da0000682fa754cab37f02b530910` (linux/arm64).
-- Expected result: sha256 `22665cd9a42e6d5a9f97d0c4deb5423ca2b60f8484bd4c81ccdf5e0b3a65c91a` (the script prints MATCH).
+- Expected result: sha256 `b8a05f2befcb65224c00d1b3480349c48a929bdef51488c893a84faa90dc1b4b` (the script prints MATCH).
 
 This branch is the matching source, for review and provenance.
 

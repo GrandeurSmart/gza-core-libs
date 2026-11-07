@@ -1096,7 +1096,7 @@ export const definitions: DefinitionWithExtend[] = [
             develcoModernExtend.addCustomClusterManuSpecificDevelcoIasZone(),
             develcoModernExtend.readGenBasicPrimaryVersions(),
             // Prevent excessive reports
-            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/10081
+            // https://github.com/GrandeurSmart/gza-core-libs/pull/10081
             develcoModernExtend.temperature({reporting: {min: 60, max: 3600, change: 100}}),
             m.illuminance({reporting: {min: 300, max: 3600, change: 100}}),
             m.battery({

@@ -31,7 +31,7 @@ const extend = {
     configureReadModelID: (): ModernExtend => {
         const configure: Configure[] = [
             async (device, coordinatorEndpoint, definition) => {
-                // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/3016#issuecomment-1027726604
+                // https://github.com/GrandeurSmart/gza-core-libs/issues/3016#issuecomment-1027726604
                 const endpoint = device.endpoints[0];
                 const oldModel = device.modelID;
                 const newModel = (await endpoint.read("genBasic", ["modelId"])).modelId;

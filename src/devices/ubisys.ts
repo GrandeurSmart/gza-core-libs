@@ -26,7 +26,7 @@ const manufacturerOptions = {
     /*
      * Ubisys doesn't accept a manufacturerCode on some commands
      * This bug has been reported, but it has not been fixed:
-     * https://github.com/GrandeurSmart/zigbee-herdsman/issues/52
+     * https://github.com/GrandeurSmart/gza-core/issues/52
      */
     ubisys: {manufacturerCode: Zcl.ManufacturerCode.UBISYS_TECHNOLOGIES_GMBH},
     // @ts-expect-error ignore

@@ -319,10 +319,10 @@ describe("lib/tuya", () => {
 
         it.each([
             // captured on TS0601 / _TZE284_x8diwkqb, 68.783 A was reported as 3.247 A
-            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/12927
+            // https://github.com/GrandeurSmart/gza-core-libs/issues/12927
             {voltage: 1196, current: 68783, power: 8216, expected: {voltage_l1: 119.6, current_l1: 68.783, power_l1: 8216}},
             // captured on TS0601 / _TZE284_x8diwkqb with a 5.5 kW and a 7.5 kW heater running
-            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/12927
+            // https://github.com/GrandeurSmart/gza-core-libs/issues/12927
             {voltage: 1190, current: 69610, power: 8270, expected: {voltage_l1: 119, current_l1: 69.61, power_l1: 8270}},
             {voltage: 1195, current: 65951, power: 7867, expected: {voltage_l1: 119.5, current_l1: 65.951, power_l1: 7867}},
             // just past the wrap point, previously reported as 0.0 A / 0.001 A
@@ -333,7 +333,7 @@ describe("lib/tuya", () => {
         });
 
         it("keeps current consistent with power and voltage under high load", () => {
-            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/12927
+            // https://github.com/GrandeurSmart/gza-core-libs/issues/12927
             const {voltage_l1, current_l1, power_l1} = decode("l1", 1190, 69610, 8270) as Record<string, number>;
             expect(power_l1).toBeCloseTo(voltage_l1 * current_l1, -2);
         });

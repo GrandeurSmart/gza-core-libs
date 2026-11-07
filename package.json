@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GrandeurSmart/zigbee-herdsman-converters.git"
+    "url": "git+https://github.com/GrandeurSmart/gza-core-libs.git"
   },
   "keywords": [
     "aqara",
@@ -40,9 +40,9 @@
   "author": "Koen Kanters",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues"
+    "url": "https://github.com/GrandeurSmart/gza-core-libs/issues"
   },
-  "homepage": "https://github.com/GrandeurSmart/zigbee-herdsman-converters",
+  "homepage": "https://github.com/GrandeurSmart/gza-core-libs",
   "dependencies": {
     "iconv-lite": "^0.7.3",
     "semver": "^7.8.5",

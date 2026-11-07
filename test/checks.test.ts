@@ -156,7 +156,7 @@ describe("Check definitions", () => {
                     !COLORTEMP_RANGE_MISSING_ALLOWED.includes(definition.model)
                 ) {
                     throw new Error(
-                        `'${definition.model}' is missing color temp range, see https://github.com/GrandeurSmart/grandeursmart-zigbee-automation.io/blob/develop/docs/how_tos/how_to_support_new_devices.md#31-retrieving-color-temperature-range-only-required-for-lights-which-support-color-temperature`,
+                        `'${definition.model}' is missing color temp range, see https://github.com/Koenkk/zigbee2mqtt.io/blob/develop/docs/how_tos/how_to_support_new_devices.md#31-retrieving-color-temperature-range-only-required-for-lights-which-support-color-temperature`,
                     );
                 }
             }

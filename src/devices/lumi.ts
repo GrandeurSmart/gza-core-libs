@@ -2291,9 +2291,9 @@ export const definitions: DefinitionWithExtend[] = [
 
             // Not all plugs support electricity measurements:
             // - https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6861
-            // - https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/1050#issuecomment-673111969
+            // - https://github.com/GrandeurSmart/gza-core-libs/issues/1050#issuecomment-673111969
             // Voltage and current are not supported:
-            // - https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/1050
+            // - https://github.com/GrandeurSmart/gza-core-libs/issues/1050
             try {
                 await reporting.bind(endpoint, coordinatorEndpoint, ["haElectricalMeasurement"]);
                 await endpoint.read("haElectricalMeasurement", ["acPowerMultiplier", "acPowerDivisor"]);
@@ -5150,7 +5150,7 @@ export const definitions: DefinitionWithExtend[] = [
             lumiChildLock({description: "Disables the socket 1 button", endpointName: "1"}),
             lumiChildLock({description: "Disables the socket 2 button", endpointName: "2"}),
             // access is STATE_SET rather than the default ALL: reading this attribute back was reported to
-            // fail on this device, see https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/11123
+            // fail on this device, see https://github.com/GrandeurSmart/gza-core-libs/pull/11123
             lumiOverloadProtection({valueMax: 3250, access: "STATE_SET"}),
             lumiLedIndicator(),
             lumiFlipIndicatorLight(),

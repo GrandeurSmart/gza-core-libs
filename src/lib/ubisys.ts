@@ -551,7 +551,7 @@ export const ubisysModernExtend = {
             name: "manuSpecificUbisysDeviceSetup",
             ID: 0xfc00,
             // XXX: once we moved all manuSpecific ones out of zh, we should revisit this
-            // Doesn't use manufacturerCode: https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/4412
+            // Doesn't use manufacturerCode: https://github.com/GrandeurSmart/gza-core-libs/pull/4412
             attributes: {
                 inputConfigurations: {name: "inputConfigurations", ID: 0x0000, type: Zcl.DataType.ARRAY, write: true},
                 inputActions: {name: "inputActions", ID: 0x0001, type: Zcl.DataType.ARRAY, write: true},

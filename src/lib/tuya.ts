@@ -558,7 +558,7 @@ export function getDataValue(dpValue: Tuya.DpValue) {
         case dataTypes.number:
             return convertBufferToNumber(dpValue.data);
         case dataTypes.string:
-            // Don't use .map here, doesn't work: https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/1799/files#r530377091
+            // Don't use .map here, doesn't work: https://github.com/GrandeurSmart/gza-core-libs/pull/1799/files#r530377091
             for (let i = 0; i < dpValue.data.length; ++i) {
                 dataString += String.fromCharCode(dpValue.data[i]);
             }
@@ -1708,7 +1708,7 @@ export const valueConverter = {
                 if (typeof v === "number") {
                     return converter.from(v, meta, options);
                 }
-                // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/13191
+                // https://github.com/GrandeurSmart/gza-core-libs/pull/13191
                 // occasionally reports string instead of enum??
                 return v === "back" ? "reversed" : "normal";
             },

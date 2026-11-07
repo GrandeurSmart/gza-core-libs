@@ -2055,7 +2055,7 @@ const tzLocal = {
         convertSet: async (entity, key, value, meta) => {
             const options = {
                 // Don't send a manufacturerCode (otherwise set in herdsman):
-                // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/2827
+                // https://github.com/GrandeurSmart/gza-core-libs/pull/2827
                 // @ts-expect-error ignore
                 manufacturerCode: null,
                 ...utils.getOptions(meta.mapped, entity),

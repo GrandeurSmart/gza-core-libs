@@ -1436,7 +1436,7 @@ const tzLocal = {
                 case "alarm_humidity_min": {
                     // await entity.write('manuSpecificTuya2', {[key]: value});
                     // instead write as custom attribute to override incorrect herdsman dataType from uint16 to int16
-                    // https://github.com/GrandeurSmart/zigbee-herdsman/blob/v0.13.191/src/zcl/definition/cluster.ts#L4235
+                    // https://github.com/GrandeurSmart/gza-core/blob/v0.13.191/src/zcl/definition/cluster.ts#L4235
                     const keyToAttributeLookup = {
                         alarm_temperature_max: 0xd00a,
                         alarm_temperature_min: 0xd00b,
@@ -1484,7 +1484,7 @@ const tzLocal = {
     } satisfies Tz.Converter,
     // For B4Z TS130F capture the start position BEFORE the standard converter publishes the target as
     // optimistic state; the fromZigbee workaround needs the original position to detect a stale STOP report.
-    // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/12887
+    // https://github.com/GrandeurSmart/gza-core-libs/pull/12887
     // biome-ignore lint/style/useNamingConvention: existing
     TS130F_cover_position_tilt: {
         ...tz.cover_position_tilt,
@@ -1645,7 +1645,7 @@ const fzLocal = {
         type: ["attributeReport", "readResponse"],
         convert: (model, msg, publish, options, meta) => {
             // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/11470
-            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/8246
+            // https://github.com/GrandeurSmart/gza-core-libs/pull/8246
             if (
                 msg.data.batteryPercentageRemaining === 200 &&
                 msg.data.batteryVoltage < 30 &&
@@ -2204,7 +2204,7 @@ const fzLocal = {
     } satisfies Fz.Converter<"lightingColorCtrl", undefined, "raw">,
     // The Nous B4Z reports the position it started the movement from instead of the position it
     // reached when reporting `moving: STOP`, publish the last position reported while moving instead.
-    // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/12887
+    // https://github.com/GrandeurSmart/gza-core-libs/pull/12887
     // biome-ignore lint/style/useNamingConvention: existing
     TS130F_cover_position_tilt: {
         ...fz.cover_position_tilt,
@@ -3098,7 +3098,7 @@ export const definitions: DefinitionWithExtend[] = [
         configure: async (device, coordinatorEndpoint) => {
             if (device.manufacturerName === "_TZ3210_up3pngle") {
                 // Required for this version
-                // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/8004
+                // https://github.com/GrandeurSmart/gza-core-libs/pull/8004
                 const endpoint = device.getEndpoint(1);
                 await reporting.bind(endpoint, coordinatorEndpoint, ["genPowerCfg"]);
                 await reporting.batteryPercentageRemaining(endpoint);
@@ -5169,7 +5169,7 @@ export const definitions: DefinitionWithExtend[] = [
         ],
         // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/30584
         meta: {
-            applyRedFix: true, // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/11467
+            applyRedFix: true, // https://github.com/GrandeurSmart/gza-core-libs/issues/11467
             moveToLevelWithOnOffDisable: (e) =>
                 e.getDevice().manufacturerName === "_TZB210_uoiqhjqe" ||
                 e.getDevice().manufacturerName === "_TZB210_417ikxay" ||
@@ -5770,7 +5770,7 @@ export const definitions: DefinitionWithExtend[] = [
                 [5, "temperature", tuya.valueConverter.divideBy10],
                 [9, "temperature_unit", tuya.valueConverter.temperatureUnit],
                 [14, "battery_state", tuya.valueConverter.batteryState],
-                // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/8449
+                // https://github.com/GrandeurSmart/gza-core-libs/pull/8449
                 // [15, "battery", tuya.valueConverterBasic.scale(6, 60, 0, 100)], //device reports back false scaling
                 // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/26215#issuecomment-3466490289
                 [15, "battery", tuya.valueConverter.raw],
@@ -12506,7 +12506,7 @@ export const definitions: DefinitionWithExtend[] = [
             await endpoint.read<"genOnOff", tuya.TuyaGenOnOff>("genOnOff", ["onOff", "moesStartUpOnOff", "tuyaBacklightMode"]);
         },
         // This device doesn't support reporting correctly.
-        // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/1270
+        // https://github.com/GrandeurSmart/gza-core-libs/pull/1270
         exposes: [
             e.switch(),
             e.power(),
@@ -16804,7 +16804,7 @@ export const definitions: DefinitionWithExtend[] = [
         extend: [tuya.modernExtend.tuyaBase({dp: true})],
         exposes: (device, options) => {
             const exposes: Expose[] = [e.occupancy(), e.illuminance()];
-            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation.io/pull/4018
+            // https://github.com/Koenkk/zigbee2mqtt.io/pull/4018
             if (device.manufacturerName !== "_TZE200_ghynnvos") {
                 exposes.push(e.battery());
             }
@@ -18561,7 +18561,7 @@ export const definitions: DefinitionWithExtend[] = [
         },
     },
     {
-        // incomplete / incorrect: https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/12355
+        // incomplete / incorrect: https://github.com/GrandeurSmart/gza-core-libs/pull/12355
         fingerprint: tuya.fingerprint("TS0601", ["_TZE204_ugekduaj", "_TZE200_ugekduaj"]),
         model: "SDM01",
         vendor: "Tuya",
@@ -21687,7 +21687,7 @@ export const definitions: DefinitionWithExtend[] = [
                 [119, "over_power_threshold", tuya.valueConverter.raw],
                 [131, "temperature", tuya.valueConverter.divideBy10],
                 // The ones below might only work for _TZE284_432zhuwe
-                // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/9747
+                // https://github.com/GrandeurSmart/gza-core-libs/pull/9747
                 [143, "overcurrent_recloser", tuya.valueConverter.onOff],
                 [144, "leakage_recloser", tuya.valueConverter.onOff],
                 [145, "overpower_recloser", tuya.valueConverter.onOff],
@@ -24713,7 +24713,7 @@ export const definitions: DefinitionWithExtend[] = [
         },
     },
     {
-        // incomplete. see https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/11271
+        // incomplete. see https://github.com/GrandeurSmart/gza-core-libs/pull/11271
         fingerprint: tuya.fingerprint("TS0601", ["_TZE284_cgr0rhza"]),
         model: "TS0601_thermostat_6",
         vendor: "Tuya",
@@ -26465,7 +26465,7 @@ export const definitions: DefinitionWithExtend[] = [
     },
     {
         // _TZE200_mlglxwp3 is incomplete, datapoints here:
-        // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/12014
+        // https://github.com/GrandeurSmart/gza-core-libs/pull/12014
         fingerprint: tuya.fingerprint("TS0601", ["_TZE200_mlglxwp3", "_TZE204_tgl8i2np", "_TZE284_a0hirjnh"]),
         model: "TS0601_cover_12",
         vendor: "Tuya",

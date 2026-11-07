@@ -722,7 +722,7 @@ export const definitions: DefinitionWithExtend[] = [
         extend: [
             tuya.modernExtend.tuyaBase({dp: true}),
             // Besides dp, also uses standard illuminance cluster
-            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/10897
+            // https://github.com/GrandeurSmart/gza-core-libs/issues/10897
             m.illuminance({reporting: false}),
         ],
         exposes: [

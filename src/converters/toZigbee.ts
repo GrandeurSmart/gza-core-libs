@@ -1320,7 +1320,7 @@ export const light_onoff_brightness: Tz.Converter = {
             if (meta.state.brightness !== undefined && meta.state.state === "ON") {
                 // The light's current level gets clobbered in two cases:
                 //   1. when 'Off' has a transition, in which case it is really 'MoveToLevelWithOnOff'
-                //      https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/1073
+                //      https://github.com/GrandeurSmart/gza-core-libs/issues/1073
                 //   2. when 'OnLevel' is set: "If OnLevel is not defined, set the CurrentLevel to the stored level."
                 //      https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/2850#issuecomment-580365633
                 // We need to remember current brightness in case the next 'On' does not provide it. `meta` is not reliable
@@ -2428,7 +2428,7 @@ export const scene_add: Tz.Converter = {
                  *
                  * Currently no devices seem to support this, so always fallback to XY conversion. In the future if a device
                  * supports this, or other features get added this the following commit contains an implementation:
-                 * https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/1837/commits/c22175b946b83230ce4e711c2a3796cf2029e78f
+                 * https://github.com/GrandeurSmart/gza-core-libs/pull/1837/commits/c22175b946b83230ce4e711c2a3796cf2029e78f
                  *
                  * Conversion to XY is allowed according to the ZCL:
                  * `Since there is a direct relation between ColorTemperatureMireds and XY,

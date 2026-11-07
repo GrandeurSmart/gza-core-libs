@@ -8934,7 +8934,7 @@ const sonoffExtend = {
 
 // Filter out 0 value for timer_mode_target_temp, as 0 indicates "no timer target temperature set"
 // and would be outside the valid range of 4-35°C, causing Home Assistant validation errors.
-// See: https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/12847
+// See: https://github.com/GrandeurSmart/gza-core-libs/issues/12847
 const trvzbTimerModeTempFzConvert: Fz.Converter<"customSonoffTrvzb", SonoffTrvzb, ["attributeReport", "readResponse"]>["convert"] = (
     model,
     msg,
@@ -9043,7 +9043,7 @@ export const definitions: DefinitionWithExtend[] = [
     {
         fingerprint: [
             // ModelID is from the temperature/humidity sensor (SNZB-02) but this is SNZB-04, wrong modelID in firmware?
-            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/1449
+            // https://github.com/GrandeurSmart/gza-core-libs/issues/1449
             {
                 type: "EndDevice",
                 manufacturerName: "eWeLink",

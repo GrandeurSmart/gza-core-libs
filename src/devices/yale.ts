@@ -189,7 +189,7 @@ const lockExtend = (meta = {}, lockStateOptions: Reporting.Override | false = nu
                 try {
                     await reporting.batteryAlarmState(endpoint);
                 } catch {
-                    // Fails for some: https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/5414
+                    // Fails for some: https://github.com/GrandeurSmart/gza-core-libs/pull/5414
                 }
             },
         ],
