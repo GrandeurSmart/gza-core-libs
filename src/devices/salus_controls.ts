@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as constants from "../lib/constants";
@@ -51,8 +51,8 @@ const fzLocal = {
         convert: (model, msg, publish, options, meta) => {
             if (meta.device.dateCode === "20160120") {
                 // Cannot use metering, divisor/multiplier is not according to ZCL.
-                // https://github.com/Koenkk/zigbee2mqtt/issues/2233
-                // https://github.com/Koenkk/zigbee-herdsman-converters/issues/915
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/2233
+                // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/915
 
                 const result: KeyValueAny = {};
                 if (msg.data.instantaneousDemand !== undefined) {

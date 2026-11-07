@@ -1,5 +1,5 @@
-import {Zcl} from "zigbee-herdsman";
-import type {Cluster, ZclArray} from "zigbee-herdsman/dist/zspec/zcl/definition/tstype";
+import {Zcl} from "gza-core";
+import type {Cluster, ZclArray} from "gza-core/dist/zspec/zcl/definition/tstype";
 
 import * as tz from "../converters/toZigbee";
 import {repInterval} from "../lib/constants";

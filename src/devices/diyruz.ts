@@ -1,5 +1,5 @@
-import {Zcl} from "zigbee-herdsman";
-import type {ConfigureReportingItem} from "zigbee-herdsman/dist/controller/model/endpoint";
+import {Zcl} from "gza-core";
+import type {ConfigureReportingItem} from "gza-core/dist/controller/model/endpoint";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as ptvo from "../devices/custom_devices_diy";

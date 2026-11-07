@@ -154,7 +154,7 @@ export const fzLocal = {
             }
 
             // Handle lock capabilities (if present). These are standard closuresDoorLock
-            // attributes, so zigbee-herdsman keys them by name, not by attribute ID.
+            // attributes, so gza-core keys them by name, not by attribute ID.
             if (msg.data.numOfPinUsersSupported !== undefined) {
                 attributes.num_pin_users = msg.data.numOfPinUsersSupported;
             }

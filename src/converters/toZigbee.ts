@@ -1,5 +1,5 @@
-import {Zcl} from "zigbee-herdsman";
-import type {TClusterCommandPayload} from "zigbee-herdsman/dist/zspec/zcl/definition/clusters-types";
+import {Zcl} from "gza-core";
+import type {TClusterCommandPayload} from "gza-core/dist/zspec/zcl/definition/clusters-types";
 import * as libColor from "../lib/color";
 import * as constants from "../lib/constants";
 import * as exposes from "../lib/exposes";
@@ -594,7 +594,7 @@ export const warning: Tz.Converter = {
 
         // biome-ignore lint/suspicious/noImplicitAnyLet: ignored using `--suppress`
         let info;
-        // https://github.com/Koenkk/zigbee2mqtt/issues/8310 some devices require the info to be reversed.
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/8310 some devices require the info to be reversed.
         if (Array.isArray(meta.mapped)) throw new Error("Not supported for groups");
         // SIRZB-110/111 require all-zero info byte to reliably stop the siren.
         if (values.mode === "stop" && ["SIRZB-110", "SIRZB-111"].includes(meta.mapped.model)) {
@@ -694,7 +694,7 @@ export const cover_position_tilt: Tz.Converter = {
 
         // Zigbee officially expects 'open' to be 0 and 'closed' to be 100 whereas
         // HomeAssistant etc. work the other way round.
-        // For zigbee-herdsman-converters: open = 100, close = 0
+        // For gza-core-libs: open = 100, close = 0
         await entity.command(
             "closuresWindowCovering",
             isPosition ? "goToLiftPercentage" : "goToTiltPercentage",
@@ -1320,9 +1320,9 @@ export const light_onoff_brightness: Tz.Converter = {
             if (meta.state.brightness !== undefined && meta.state.state === "ON") {
                 // The light's current level gets clobbered in two cases:
                 //   1. when 'Off' has a transition, in which case it is really 'MoveToLevelWithOnOff'
-                //      https://github.com/Koenkk/zigbee-herdsman-converters/issues/1073
+                //      https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/1073
                 //   2. when 'OnLevel' is set: "If OnLevel is not defined, set the CurrentLevel to the stored level."
-                //      https://github.com/Koenkk/zigbee2mqtt/issues/2850#issuecomment-580365633
+                //      https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/2850#issuecomment-580365633
                 // We need to remember current brightness in case the next 'On' does not provide it. `meta` is not reliable
                 // here, as it will get clobbered too if reporting is configured.
                 globalStore.putValue(entity, "brightness", meta.state.brightness);
@@ -2428,13 +2428,13 @@ export const scene_add: Tz.Converter = {
                  *
                  * Currently no devices seem to support this, so always fallback to XY conversion. In the future if a device
                  * supports this, or other features get added this the following commit contains an implementation:
-                 * https://github.com/Koenkk/zigbee-herdsman-converters/pull/1837/commits/c22175b946b83230ce4e711c2a3796cf2029e78f
+                 * https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/1837/commits/c22175b946b83230ce4e711c2a3796cf2029e78f
                  *
                  * Conversion to XY is allowed according to the ZCL:
                  * `Since there is a direct relation between ColorTemperatureMireds and XY,
                  *  color temperature, if supported, is stored as XY in the scenes table.`
                  *
-                 * See https://github.com/Koenkk/zigbee2mqtt/issues/4926#issuecomment-735947705
+                 * See https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/4926#issuecomment-735947705
                  */
                 const [colorTempMin, colorTempMax] = light.findColorTempRange(entity);
                 val = light.clampColorTemp(val, colorTempMin, colorTempMax);

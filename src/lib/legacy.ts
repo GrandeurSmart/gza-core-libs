@@ -46,7 +46,7 @@ function getDataValue(dpValue: any) {
         case dataTypes.value:
             return convertMultiByteNumberPayloadToSingleDecimalNumber(dpValue.data);
         case dataTypes.string:
-            // Don't use .map here, doesn't work: https://github.com/Koenkk/zigbee-herdsman-converters/pull/1799/files#r530377091
+            // Don't use .map here, doesn't work: https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/1799/files#r530377091
             for (let i = 0; i < dpValue.data.length; ++i) {
                 dataString += String.fromCharCode(dpValue.data[i]);
             }
@@ -93,7 +93,7 @@ function getDataPointNames(dpValue: any) {
 const coverStateOverride: KeyValueAny = {
     // Contains all covers which differentiate from the default enum states
     // Use manufacturerName to identify device!
-    // https://github.com/Koenkk/zigbee2mqtt/issues/5596#issuecomment-759408189
+    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/5596#issuecomment-759408189
     // biome-ignore lint/style/useNamingConvention: ignored using `--suppress`
     _TZE200_rddyvrci: {close: 1, open: 2, stop: 0},
     // biome-ignore lint/style/useNamingConvention: ignored using `--suppress`
@@ -509,7 +509,7 @@ function logUnexpectedDataValue(
 // Contains all covers which need their position inverted by default
 // Default is 100 = open, 0 = closed; Devices listed here will use 0 = open, 100 = closed instead
 // Use manufacturerName to identify device!
-// Don't invert _TZE200_cowvfni3: https://github.com/Koenkk/zigbee2mqtt/issues/6043
+// Don't invert _TZE200_cowvfni3: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6043
 const coverPositionInvert = [
     "_TZE200_wmcdj3aq",
     "_TZE200_nogaemzt",
@@ -1945,7 +1945,7 @@ const fromZigbee = {
                     } else {
                         temperature = value & (1 << 15) ? value - (1 << 16) + 1 : value;
                         if (!["_TZE200_ztvwu4nk", "_TZE200_ye5jkfsb", "_TZE284_ye5jkfsb"].includes(meta.device.manufacturerName)) {
-                            // https://github.com/Koenkk/zigbee2mqtt/issues/11980
+                            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/11980
                             temperature = temperature / 10;
                         }
                     }
@@ -2070,7 +2070,7 @@ const fromZigbee = {
                 // DP2: Smart Air Box: co2, Smart Air Housekeeper: MP25
                 case dataPoints.tuyaSabCO2:
                     if (["_TZE200_dwcarsat", "_TZE204_dwcarsat"].includes(meta.device.manufacturerName)) {
-                        // Ignore: https://github.com/Koenkk/zigbee2mqtt/issues/11033#issuecomment-1109808552
+                        // Ignore: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/11033#issuecomment-1109808552
                         // There are a lot of "strange" big values, so if the value is bigger than the range of the sensor, discard
                         // According to the manual of the device, the valid range is 0-1000 ug/m3
                         if (value > 1000) return;
@@ -2489,7 +2489,7 @@ const fromZigbee = {
                 return {state: value ? "ON" : "OFF"};
             }
             if (meta.device.manufacturerName === "_TZE200_swaamsoy") {
-                // https://github.com/Koenkk/zigbee-herdsman-converters/pull/3004
+                // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/3004
                 if (dpValue.dp === 2) {
                     if (value < 10) {
                         logUnexpectedDataValue("tuya_dimmer", msg, dpValue, meta, "brightness", 10, 1000);
@@ -3073,7 +3073,7 @@ const fromZigbee = {
             let fixedValue = null;
             switch (dp) {
                 case dataPoints.coverPosition: {
-                    // https://github.com/Koenkk/zigbee-herdsman-converters/pull/11408
+                    // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/11408
                     if (value >= 100 && value <= 127) {
                         fixedValue = 100;
                     } else if (value > 127 || value < 0) {
@@ -3504,7 +3504,7 @@ const fromZigbee = {
         options: [exposes.options.invert_cover()],
         convert: (model, msg, publish, options, meta) => {
             // Protocol description
-            // https://github.com/Koenkk/zigbee-herdsman-converters/issues/1159#issuecomment-614659802
+            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/1159#issuecomment-614659802
 
             const result: KeyValueAny = {};
 
@@ -4100,7 +4100,7 @@ const toZigbee1 = {
         // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
         convertSet: async (entity, key, value: any, meta) => {
             // Protocol description
-            // https://github.com/Koenkk/zigbee-herdsman-converters/issues/1159#issuecomment-614659802
+            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/1159#issuecomment-614659802
 
             if (key === "position") {
                 if (value >= 0 && value <= 100) {
@@ -4623,7 +4623,7 @@ const toZigbee2 = {
                     await sendDataPointBool(entity, dataPoints.alectoSilence, value);
                     break;
                 default: // Unknown key
-                    throw new Error(`zigbee-herdsman-converters:tuya_alecto_smoke: Unhandled key ${key}`);
+                    throw new Error(`gza-core-libs:tuya_alecto_smoke: Unhandled key ${key}`);
             }
         },
     } satisfies Tz.Converter,
@@ -5041,7 +5041,7 @@ const toZigbee2 = {
     tuya_dimmer_state: {
         key: ["state"],
         convertSet: async (entity, key, value, meta) => {
-            // Always use same transid as tuya_dimmer_level (https://github.com/Koenkk/zigbee2mqtt/issues/6366)
+            // Always use same transid as tuya_dimmer_level (https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6366)
             await sendDataPointBool(entity, dataPoints.state, value === "ON", "dataRequest", 1);
         },
     } satisfies Tz.Converter,
@@ -5097,7 +5097,7 @@ const toZigbee2 = {
                     throw new Error("Dimmer brightness is out of range 0..254");
                 }
             }
-            // Always use same transid as tuya_dimmer_state (https://github.com/Koenkk/zigbee2mqtt/issues/6366)
+            // Always use same transid as tuya_dimmer_state (https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6366)
             await sendDataPointValue(entity, dp, newValue, "dataRequest", 1);
         },
     } satisfies Tz.Converter,

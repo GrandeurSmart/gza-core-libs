@@ -1,6 +1,6 @@
 import assert from "node:assert";
-import {Zcl} from "zigbee-herdsman";
-import type {TFoundationPayload} from "zigbee-herdsman/dist/zspec/zcl/definition/clusters-types";
+import {Zcl} from "gza-core";
+import type {TFoundationPayload} from "gza-core/dist/zspec/zcl/definition/clusters-types";
 import * as fromZigbee from "./converters/fromZigbee";
 import * as toZigbee from "./converters/toZigbee";
 import * as exposesLib from "./lib/exposes";
@@ -642,7 +642,7 @@ function isFingerprintMatch(fingerprint: Fingerprint, device: Zh.Device): boolea
 }
 
 // Can be used to handle events for devices which are not fully paired yet (no modelID).
-// Example usecase: https://github.com/Koenkk/zigbee2mqtt/issues/2399#issuecomment-570583325
+// Example usecase: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/2399#issuecomment-570583325
 export function onEvent(event: OnEvent.Event): Promise<void> {
     if (event.type === "stop") {
         return;

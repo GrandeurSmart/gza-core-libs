@@ -1,7 +1,7 @@
 import {Buffer} from "node:buffer";
-import {Zcl} from "zigbee-herdsman";
-import {DataType} from "zigbee-herdsman/dist/zspec/zcl";
-import type {TPartialClusterAttributes} from "zigbee-herdsman/dist/zspec/zcl/definition/clusters-types";
+import {Zcl} from "gza-core";
+import {DataType} from "gza-core/dist/zspec/zcl";
+import type {TPartialClusterAttributes} from "gza-core/dist/zspec/zcl/definition/clusters-types";
 import * as fz from "../converters/fromZigbee";
 import {repInterval} from "../lib/constants";
 import * as exposes from "../lib/exposes";
@@ -34,7 +34,7 @@ const local = {
                         .getEndpoint(1)
                         .read<"liXeePrivate", LiXeePrivate>("liXeePrivate", ["linkyMode", "currentTarif"], {manufacturerCode: null})
                         .catch((e) => {
-                            // https://github.com/Koenkk/zigbee2mqtt/issues/11674
+                            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/11674
                             logger.warning(`Failed to read Zigbee attributes during startup: ${e}`, NS);
                         });
                 }
@@ -1937,7 +1937,7 @@ export const definitions: DefinitionWithExtend[] = [
             ]);
 
             await endpoint.read<"liXeePrivate", LiXeePrivate>("liXeePrivate", ["linkyMode", "currentTarif"], {manufacturerCode: null}).catch((e) => {
-                // https://github.com/Koenkk/zigbee2mqtt/issues/11674
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/11674
                 logger.warning(`Failed to read Zigbee attributes during configure: ${e}`, NS);
             });
 
@@ -2038,7 +2038,7 @@ export const definitions: DefinitionWithExtend[] = [
                                 // Split array by chunks
                                 for (i = 0, j = targ.length; i < j; i += measurement_poll_chunk) {
                                     await endpoint.read(cluster, targ.slice(i, i + measurement_poll_chunk), {manufacturerCode: null}).catch((e) => {
-                                        // https://github.com/Koenkk/zigbee2mqtt/issues/11674
+                                        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/11674
                                         logger.warning(
                                             `Failed to read Zigbee attributes during poll. If you see many of these messages, try reducing 'Measurement poll chunk'. ${e}`,
                                             NS,

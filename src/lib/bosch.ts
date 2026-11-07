@@ -1,5 +1,5 @@
-import {Zcl, ZSpec} from "zigbee-herdsman";
-import type {SendPolicy} from "zigbee-herdsman/dist/controller/tstype";
+import {Zcl, ZSpec} from "gza-core";
+import type {SendPolicy} from "gza-core/dist/controller/tstype";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as exposes from "../lib/exposes";
@@ -52,7 +52,7 @@ export const manufacturerOptions = {
 export const boschGeneralExtend = {
     /** Some devices now use a different name for some custom clusters than
      * originally used. This can lead to issues like those described in
-     * https://github.com/Koenkk/zigbee2mqtt/issues/28806. To prevent that
+     * https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/28806. To prevent that
      * we have to make sure that all attributes of the renamed cluster are
      * available when using "getEndpoint().getClusterAttributeValue()". */
     handleRenamedCustomCluster: (oldClusterName: string, newClusterName: string): ModernExtend => {
@@ -4229,7 +4229,7 @@ export const boschThermostatExtend = {
     },
     raWeeklySchedule: (): ModernExtend => {
         // The thermostat stores and runs 10 transitions per day, more than its numberOfDailyTrans
-        // attribute advertises. 10 is also the most zigbee-herdsman accepts in one command.
+        // attribute advertises. 10 is also the most gza-core accepts in one command.
         const maxTransitions = 10;
         const minSetpoint = 5;
         const maxSetpoint = 30;
@@ -4381,7 +4381,7 @@ export const boschThermostatExtend = {
             throw new Error(`${day.name}: no weekly schedule received after ${readAttempts} attempts (${lastError})${writeNote}!`);
         };
 
-        // The thermostat often stores a day but acknowledges it too late, which zigbee-herdsman reports as a
+        // The thermostat often stores a day but acknowledges it too late, which gza-core reports as a
         // failed delivery. Only a rejection by the thermostat is an error here, the read-back decides the rest.
         const sendDay = async (endpoint: Zh.Endpoint, day: Day, transitions: Transition[], options: KeyValue) => {
             let response: KeyValue;

@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 
 import * as m from "../lib/modernExtend";
 import type {Configure, DefinitionExposesFunction, DefinitionWithExtend, DummyDevice, Expose, ModernExtend, Zh} from "../lib/types";

@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as exposes from "./exposes";
 import {logger} from "./logger";
 import {deviceAddCustomCluster} from "./modernExtend";

@@ -1,5 +1,5 @@
-import {Zcl} from "zigbee-herdsman";
-import type {ClusterOrRawAttributeKeys, ClusterOrRawAttributes, TCustomCluster} from "zigbee-herdsman/dist/controller/tstype";
+import {Zcl} from "gza-core";
+import type {ClusterOrRawAttributeKeys, ClusterOrRawAttributes, TCustomCluster} from "gza-core/dist/controller/tstype";
 import type {Light, Numeric} from "./exposes";
 import {logger} from "./logger";
 import * as globalStore from "./store";
@@ -239,7 +239,7 @@ export function getEndpointName(msg: Fz.Message<any, any, any>, definition: Defi
 
 // biome-ignore lint/suspicious/noExplicitAny: generic
 export function postfixWithEndpointName(value: string, msg: Fz.Message<any, any, any>, definition: Definition, meta: Fz.Meta) {
-    // Prevent breaking change https://github.com/Koenkk/zigbee2mqtt/issues/13451
+    // Prevent breaking change https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/13451
     if (!meta) {
         logger.warning("No meta passed to postfixWithEndpointName, update your external converter!", NS);
         // @ts-expect-error ignore
@@ -509,7 +509,7 @@ export function getTransition(entity: Zh.Endpoint | Zh.Group, key: string, meta:
          * When setting both brightness and color temperature with a transition, the brightness is skipped
          * for IKEA TRADFRI bulbs.
          * To workaround this we skip the transition for the brightness as it is applied first.
-         * https://github.com/Koenkk/zigbee2mqtt/issues/1810
+         * https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/1810
          */
         if (key === "brightness" && (message.color != null || message.color_temp != null)) {
             return {time: 0, specified: false};

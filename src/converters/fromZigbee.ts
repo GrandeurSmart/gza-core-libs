@@ -502,7 +502,7 @@ export const humidity: Fz.Converter<"msRelativeHumidity", undefined, ["attribute
         const humidity = msg.data.measuredValue / 100.0;
         const property = postfixWithEndpointName("humidity", msg, model, meta);
 
-        // https://github.com/Koenkk/zigbee2mqtt/issues/798
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/798
         // Sometimes the sensor publishes non-realistic vales, it should only publish message
         // in the 0 - 100 range, don't produce messages beyond these values.
         if (humidity >= 0 && humidity <= 100) {
@@ -582,7 +582,7 @@ export const occupancy_with_timeout: Fz.Converter<"msOccupancySensing", undefine
     convert: (model, msg, publish, options, meta) => {
         if (msg.data.occupancy !== 1) {
             // In case of 0 no occupancy is reported.
-            // https://github.com/Koenkk/zigbee2mqtt/issues/467
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/467
             return;
         }
 
@@ -990,7 +990,7 @@ export const on_off_skip_duplicate_transaction: Fz.Converter<"genOnOff", undefin
     convert: (model, msg, publish, options, meta) => {
         // Device sends multiple messages with the same transactionSequenceNumber,
         // prevent that multiple messages get send.
-        // https://github.com/Koenkk/zigbee2mqtt/issues/3687
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/3687
         if (msg.data.onOff !== undefined && !hasAlreadyProcessedMessage(msg, model)) {
             const payload: KeyValueAny = {};
             const property = postfixWithEndpointName("state", msg, model, meta);
@@ -1774,7 +1774,7 @@ export const cover_position_tilt: Fz.Converter<"closuresWindowCovering", undefin
         const result: KeyValueAny = {};
         // Zigbee officially expects 'open' to be 0 and 'closed' to be 100 whereas
         // HomeAssistant etc. work the other way round.
-        // For zigbee-herdsman-converters: open = 100, close = 0
+        // For gza-core-libs: open = 100, close = 0
         // ubisys J1 will report 255 if lift or tilt positions are not known, so skip that.
         const metaInvert = model.meta?.coverInverted;
         const invert = metaInvert ? !options.invert_cover : options.invert_cover;

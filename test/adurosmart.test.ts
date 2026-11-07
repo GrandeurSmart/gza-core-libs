@@ -1,5 +1,5 @@
 import {describe, expect, it, vi} from "vitest";
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import {definitions} from "../src/devices/adurosmart";
 import {prepareDefinition} from "../src/index";
 import type {Definition, Fz, KeyValueAny} from "../src/lib/types";

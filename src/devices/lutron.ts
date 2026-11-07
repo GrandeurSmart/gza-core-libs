@@ -14,7 +14,7 @@ const fzLocal = {
         options: [exposes.options.simulated_brightness()],
         convert: (model, msg, publish, options, meta) => {
             // Map null to 255
-            // https://github.com/Koenkk/zigbee2mqtt/issues/28450
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/28450
             const newMsg = {...msg, data: {...msg.data, level: Number.isNaN(msg.data.level) ? 255 : msg.data.level}};
             return fz.command_move_to_level.convert(model, newMsg, publish, options, meta);
         },

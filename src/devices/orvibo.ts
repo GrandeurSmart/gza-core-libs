@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as exposes from "../lib/exposes";
@@ -227,7 +227,7 @@ const orviboSwitchRewiring = (args: OrviboSwitchRewiringArgs): ModernExtend => {
                         .withDescription(
                             "Relay id which set sceneid will change to off when scene is recalled. Set to 0 if no relay is affected by the scene.",
                         ),
-                ) // TODO: We should just use scenes, however we can not set them up yet via front-end as it does not support endpoints. [See feature request](https://github.com/nurikk/zigbee2mqtt-frontend/issues/2393).
+                ) // TODO: We should just use scenes, however we can not set them up yet via front-end as it does not support endpoints. [See feature request](https://github.com/nurikk/gza-frontend/issues/2393).
                 .withFeature(
                     e
                         .numeric("relaynumber", ea.SET)
@@ -395,7 +395,7 @@ export const definitions: DefinitionWithExtend[] = [
         model: "DD10Z",
         vendor: "ORVIBO",
         description: "Smart spotlight",
-        // https://github.com/Koenkk/zigbee2mqtt/issues/13123#issuecomment-1198793749
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/13123#issuecomment-1198793749
         meta: {disableDefaultResponse: true},
         toZigbee: [tzLocal.DD10Z_brightness],
         extend: [m.light({powerOnBehavior: false, colorTemp: {range: [153, 370], startup: false}})],

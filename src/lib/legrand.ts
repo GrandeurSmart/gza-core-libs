@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as tz from "../converters/toZigbee";
 import * as m from "../lib/modernExtend";
 import type {DummyDevice, Fz, KeyValueAny, KeyValueString, OnEvent, Tz, Zh} from "../lib/types";

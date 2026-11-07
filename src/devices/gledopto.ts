@@ -140,7 +140,7 @@ const tzLocal1 = {
             }
 
             if (!Array.isArray(meta.mapped) && (meta.mapped.model === "GL-S-007ZS" || meta.mapped.model === "GL-C-009")) {
-                // https://github.com/Koenkk/zigbee2mqtt/issues/2757
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/2757
                 // Device doesn't support ON with moveToLevelWithOnOff command
                 if (typeof meta.message.state === "string" && meta.message.state.toLowerCase() === "on") {
                     await tz.on_off.convertSet(entity, key, "ON", meta);
@@ -163,7 +163,7 @@ const tzLocal1 = {
             }
 
             // Gledopto devices turn ON when they are OFF and color is set.
-            // https://github.com/Koenkk/zigbee2mqtt/issues/3509
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/3509
             const state = {state: "ON"};
 
             const result = await tz.light_colortemp.convertSet(entity, key, value, meta);
@@ -191,7 +191,7 @@ const tzLocal1 = {
             }
 
             // Gledopto devices turn ON when they are OFF and color is set.
-            // https://github.com/Koenkk/zigbee2mqtt/issues/3509
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/3509
             const state = {state: "ON"};
             const result = await tz.light_color.convertSet(entity, key, value, meta);
             if (result) {
@@ -290,7 +290,7 @@ const tzLocal = {
     } satisfies Tz.Converter,
     glspi206p_light: {
         // Everything is sent in a single request, bursts of requests can hang the MCU
-        // https://github.com/Koenkk/zigbee2mqtt/issues/32754
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/32754
         key: ["state", "brightness", "color", "color_temp", "transition"],
         convertSet: async (entity, key, value, meta) => {
             const {message, state} = meta;
@@ -372,7 +372,7 @@ function gledoptoOnOff(args?: m.OnOffArgs) {
 function gledoptoConfigureReadModelID(): ModernExtend {
     const configure: Configure[] = [
         async (device, coordinatorEndpoint, definition) => {
-            // https://github.com/Koenkk/zigbee-herdsman-converters/issues/3016#issuecomment-1027726604
+            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/3016#issuecomment-1027726604
             const endpoint = device.endpoints[0];
             const oldModel = device.modelID;
             const newModel = (await endpoint.read("genBasic", ["modelId"])).modelId;
@@ -504,7 +504,7 @@ export const definitions: DefinitionWithExtend[] = [
         ],
         model: "GL-C-007-1ID", // 1 ID controls white and color together
         // Only enable disableDefaultResponse for the second fingerprint:
-        // https://github.com/Koenkk/zigbee2mqtt/issues/3813#issuecomment-694922037
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/3813#issuecomment-694922037
         meta: {disableDefaultResponse: (entity) => !!entity.getDevice().getEndpoint(12)},
         vendor: "Gledopto",
         description: "Zigbee LED Controller RGBW (1 ID)",
@@ -591,7 +591,7 @@ export const definitions: DefinitionWithExtend[] = [
     {
         fingerprint: [
             // Although the device announces modelID GL-C-007, this is clearly a GL-C-008
-            // https://github.com/Koenkk/zigbee2mqtt/issues/3525
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/3525
             {
                 type: "Router",
                 manufacturerName: "GLEDOPTO",
@@ -620,7 +620,7 @@ export const definitions: DefinitionWithExtend[] = [
         extend: [gledoptoLight({colorTemp: {range: undefined}, color: true})],
         exposes: [e.light_brightness_colorxy().withEndpoint("rgb"), e.light_brightness_colortemp([158, 495]).withEndpoint("cct")],
         // Only enable disableDefaultResponse for the second fingerprint:
-        // https://github.com/Koenkk/zigbee-herdsman-converters/issues/1315#issuecomment-645331185
+        // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/1315#issuecomment-645331185
         meta: {disableDefaultResponse: (entity) => !!entity.getDevice().getEndpoint(12)},
         endpoint: (device) => {
             return {rgb: 11, cct: 15};
@@ -659,7 +659,7 @@ export const definitions: DefinitionWithExtend[] = [
         vendor: "Gledopto",
         ota: true,
         description: "Zigbee LED Controller RGB (pro)",
-        // Supports color: https://github.com/Koenkk/zigbee2mqtt/issues/24091
+        // Supports color: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/24091
         extend: [m.light({color: {modes: ["xy", "hs"], enhancedHue: true}}), m.identify(), gledoptoConfigureReadModelID()],
     },
     {
@@ -777,9 +777,9 @@ export const definitions: DefinitionWithExtend[] = [
         description: "Zigbee 5W GU10 Bulb RGBW",
         extend: [gledoptoLight({color: true})],
         endpoint: (device) => {
-            // https://github.com/Koenkk/zigbee2mqtt/issues/5169
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/5169
             if (device.getEndpoint(12)) return {default: 12};
-            // https://github.com/Koenkk/zigbee2mqtt/issues/5681
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/5681
             return {default: 11};
         },
     },

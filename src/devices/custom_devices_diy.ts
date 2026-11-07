@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
@@ -215,7 +215,7 @@ export const fzLocal = {
             let humidity = msg.data.measuredValue / 100.0;
             humidity = calibrateAndPrecisionRoundOptions(humidity, options, "humidity");
 
-            // https://github.com/Koenkk/zigbee2mqtt/issues/798
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/798
             // Sometimes the sensor publishes non-realistic vales, it should only publish message
             // in the 0 - 100 range, don't produce messages beyond these values.
             if (humidity >= 0 && humidity <= 100) {
@@ -1364,7 +1364,7 @@ export const definitions: DefinitionWithExtend[] = [
      * This mirrors the ZHA quirk in zhaquirks/elecram/ramses_esp.py 1:1.
      * All MQTT bridging logic is handled by the external extension
      * ramses-esp-bridge.mjs — this definition only registers the custom clusters
-     * so zigbee-herdsman can encode/decode their frames correctly.
+     * so gza-core can encode/decode their frames correctly.
      */
     {
         zigbeeModel: ["Ramses_esp32c6"],

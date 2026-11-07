@@ -47,7 +47,7 @@ export const definitions: DefinitionWithExtend[] = [
         fromZigbee: [fz.command_on, fz.command_off_with_effect, fz.command_stop, fz.command_move],
         exposes: [e.action(["on", "off", "stop", "brightness_stop", "brightness_move_up", "brightness_move_down"]), e.action_group()],
         toZigbee: [],
-        // Device does not support battery: https://github.com/Koenkk/zigbee2mqtt/issues/5928
+        // Device does not support battery: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/5928
     },
     {
         zigbeeModel: ["ZLL-DimmableLigh"],
@@ -58,7 +58,7 @@ export const definitions: DefinitionWithExtend[] = [
     },
     {
         fingerprint: [
-            // https://github.com/Koenkk/zigbee2mqtt/issues/8027#issuecomment-904783277
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/8027#issuecomment-904783277
             {
                 modelID: "ZLL-ColorTempera",
                 manufacturerName: "Trust International B.V.\u0000",
@@ -83,7 +83,7 @@ export const definitions: DefinitionWithExtend[] = [
     },
     {
         fingerprint: [
-            // https://github.com/Koenkk/zigbee2mqtt/issues/8027#issuecomment-904783277
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/8027#issuecomment-904783277
             {
                 modelID: "ZLL-ExtendedColo",
                 manufacturerName: "Trust International B.V.\u0000",

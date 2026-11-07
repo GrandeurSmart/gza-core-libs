@@ -168,7 +168,7 @@ export const definitions: DefinitionWithExtend[] = [
         configure: async (device, coordinatorEndpoint) => {
             await reporting.bind(device.getEndpoint(1), coordinatorEndpoint, ["genOnOff", "genLevelCtrl"]);
             await reporting.bind(device.getEndpoint(2), coordinatorEndpoint, ["genOnOff", "genLevelCtrl"]);
-            // Don't do: await reporting.onOff(endpoint); https://github.com/Koenkk/zigbee2mqtt/issues/6041
+            // Don't do: await reporting.onOff(endpoint); https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6041
         },
     },
     {
@@ -199,7 +199,7 @@ export const definitions: DefinitionWithExtend[] = [
         version: "0.0.2",
         description: "Zigbee 3.0 LED-bulb, RGBW LED",
         // Configure reporting for color fails
-        // https://github.com/Koenkk/zigbee2mqtt/issues/32345
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/32345
         extend: [m.light({colorTemp: {range: [153, 500], startup: false}, color: true, effect: false, powerOnBehavior: false})],
         configure: async (device, coordinatorEndpoint) => {
             const endpoint = device.getEndpoint(1);

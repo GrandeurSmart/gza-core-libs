@@ -48,7 +48,7 @@ function electricityMeterPoll(): ModernExtend {
         option: exposes.options.measurement_poll_interval(),
         poll: async (device) => {
             // This device doesn't support reporting correctly.
-            // https://github.com/Koenkk/zigbee-herdsman-converters/pull/1270
+            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/1270
             const endpoint = device.getEndpoint(1);
             await endpoint.read("haElectricalMeasurement", ["rmsVoltage", "rmsCurrent", "activePower"]);
             await endpoint.read("seMetering", ["currentSummDelivered", "multiplier", "divisor"]);

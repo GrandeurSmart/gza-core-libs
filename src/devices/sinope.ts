@@ -1,5 +1,5 @@
-import {Zcl} from "zigbee-herdsman";
-import type {ZclArray} from "zigbee-herdsman/dist/zspec/zcl/definition/tstype";
+import {Zcl} from "gza-core";
+import type {ZclArray} from "gza-core/dist/zspec/zcl/definition/tstype";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as constants from "../lib/constants";
@@ -1153,7 +1153,7 @@ export const definitions: DefinitionWithExtend[] = [
             await reporting.currentSummDelivered(endpoint, {min: 60, max: 300, change: 10});
             await reporting.readEletricalMeasurementMultiplierDivisors(endpoint);
             // Some firmwares (e.g. TH1123ZB-C4) don't support reporting these attributes
-            // https://github.com/Koenkk/zigbee2mqtt/issues/32734
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/32734
             await utils.ignoreUnsupportedAttribute(async () => await reporting.activePower(endpoint, {min: 10, change: 5}), "activePower");
             await utils.ignoreUnsupportedAttribute(async () => await reporting.rmsCurrent(endpoint, {min: 10, change: 50}), "rmsCurrent");
             await utils.ignoreUnsupportedAttribute(async () => await reporting.rmsVoltage(endpoint, {min: 10, change: 50}), "rmsVoltage");
@@ -1641,7 +1641,7 @@ export const definitions: DefinitionWithExtend[] = [
             try {
                 await reporting.thermostatKeypadLockMode(endpoint);
             } catch {
-                // Not all support this: https://github.com/Koenkk/zigbee2mqtt/issues/3760
+                // Not all support this: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/3760
             }
 
             await endpoint.configureReporting<"manuSpecificSinope", ManuSpecificSinope>("manuSpecificSinope", [
@@ -1894,7 +1894,7 @@ export const definitions: DefinitionWithExtend[] = [
                 "maxHeatSetpointLimit",
                 "minHeatSetpointLimit",
             ]);
-            // zigbee-herdsman rejects mixing manufacturer-specific and standard attributes in one read
+            // gza-core rejects mixing manufacturer-specific and standard attributes in one read
             await endpoint.read<"hvacThermostat", SinopeHvacThermostat>(
                 "hvacThermostat",
                 ["sinopeBacklight", "sinopeMainCycleOutput", "sinopeAuxCycleOutput"],

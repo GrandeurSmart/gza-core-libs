@@ -49,7 +49,7 @@ export const definitions: DefinitionWithExtend[] = [
     },
     {
         // v1 doesn't support electricity measurements
-        // https://github.com/Koenkk/zigbee2mqtt/issues/21449
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/21449
         fingerprint: [{manufacturerName: "Samotech", modelID: "Dimmer-Switch-ZB3.0"}],
         model: "SM323_v1",
         vendor: "Samotech",

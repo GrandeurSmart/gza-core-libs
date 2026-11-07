@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as fz from "../converters/fromZigbee";
 import {modernExtend as ewelinkModernExtend} from "../lib/ewelink";
 import * as exposes from "../lib/exposes";
@@ -176,7 +176,7 @@ export const definitions: DefinitionWithExtend[] = [
                 await device.getEndpoint(1).bind("genOnOff", coordinatorEndpoint);
             } catch {
                 // This might fail because there are some repeaters which advertise to support genOnOff but don't support it.
-                // https://github.com/Koenkk/zigbee2mqtt/issues/19865
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/19865
                 logger.debug("Failed to bind genOnOff for SA-003-Zigbee", NS);
             }
         },

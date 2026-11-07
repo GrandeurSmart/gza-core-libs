@@ -1,5 +1,5 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import {findByDevice} from "../src/index";
 import {fromZigbee, lumiModernExtend, numericAttributes2Payload, type TrvScheduleConfig, toZigbee, trv, w500Ntc} from "../src/lib/lumi";
 import * as globalStore from "../src/lib/store";

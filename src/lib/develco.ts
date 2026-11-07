@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import {presets as e, access as ea} from "./exposes";
 import {deviceAddCustomCluster, deviceTemperature, type NumericArgs, numeric, setupAttributes, temperature} from "./modernExtend";
 import type {Configure, Expose, Fz, KeyValue, ModernExtend, Tz} from "./types";

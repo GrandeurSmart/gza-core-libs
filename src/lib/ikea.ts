@@ -1,6 +1,6 @@
 import {gt as semverGt, gte as semverGte, lt as semverLt, valid as semverValid} from "semver";
 
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as tz from "../converters/toZigbee";
 import * as constants from "../lib/constants";
 import {access, binary, options, presets} from "../lib/exposes";
@@ -120,10 +120,10 @@ export function ikeaLight(args?: Omit<m.LightArgs, "colorTemp"> & {colorTemp?: t
 
     // Never use a transition when transitioning to OFF as this turns on the light when sending OFF twice
     // when the bulb has firmware > 1.0.012.
-    // https://github.com/Koenkk/zigbee2mqtt/issues/19211
-    // https://github.com/Koenkk/zigbee2mqtt/issues/22030#issuecomment-2292063140
+    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/19211
+    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/22030#issuecomment-2292063140
     // Some old softwareBuildID are not a valid semver, e.g. `1.1.1.0-5.7.2.0`
-    // https://github.com/Koenkk/zigbee2mqtt/issues/23863
+    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/23863
     result.meta = {
         ...result.meta,
         noOffTransitionWhenOff: (entity) => {
@@ -205,7 +205,7 @@ export function ikeaBattery(): ModernExtend {
 export function ikeaConfigureStyrbar(): ModernExtend {
     const configure: Configure[] = [
         async (device, coordinatorEndpoint, definition) => {
-            // https://github.com/Koenkk/zigbee2mqtt/issues/15725
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/15725
             if (device.softwareBuildID && semverValid(device.softwareBuildID, true) && semverGte(device.softwareBuildID, "2.4.0", true)) {
                 const endpoint = device.getEndpoint(1);
                 await reporting.bind(endpoint, coordinatorEndpoint, ["genOnOff", "genLevelCtrl", "genScenes"]);
@@ -221,8 +221,8 @@ export function ikeaConfigureRemote(): ModernExtend {
         async (device, coordinatorEndpoint, definition) => {
             if (device.softwareBuildID) {
                 // Firmware 2.3.075 >= only supports binding to endpoint, before only to group
-                // - https://github.com/Koenkk/zigbee2mqtt/issues/2772#issuecomment-577389281
-                // - https://github.com/Koenkk/zigbee2mqtt/issues/7716
+                // - https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/2772#issuecomment-577389281
+                // - https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/7716
                 const endpoint = device.getEndpoint(1);
                 const version = device.softwareBuildID.split(".").map((n) => Number(n));
                 const bindTarget =
@@ -659,7 +659,7 @@ export function tradfriCommandsLevelCtrl(): ModernExtend {
 
 export function styrbarCommandOn(): ModernExtend {
     // The STYRBAR sends an on +- 500ms after the arrow release. We don't want to send the ON action in this case.
-    // https://github.com/Koenkk/zigbee2mqtt/issues/13335
+    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/13335
     const exposes: Expose[] = [presets.action(["on"])];
 
     const fromZigbee = [
@@ -1142,7 +1142,7 @@ const willUnfreeze = (key: string, value: unknown) => {
 
 // Certain IKEA lights will freeze when given a brightness or temperature change with a transition
 // We track if a light is frozen and if so, before issuing further commands, we send a command known to unfreeze the light
-// https://github.com/Koenkk/zigbee2mqtt/issues/18574
+// https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/18574
 
 const trackFreezing = (next: Tz.Converter["convertSet"]) => {
     const converter: Tz.Converter["convertSet"] = async (entity, key, value, meta) => {
@@ -1245,7 +1245,7 @@ export const ikeaModernExtend = {
      * Remote reads the appVersion from the bound device (coordinator with default bindings) when toggle_hold is triggered.
      *
      * Low versions cause it to drop arrow hold/release commands, in favor of repeated arrow click commands.
-     * https://github.com/Koenkk/zigbee2mqtt/issues/32109
+     * https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/32109
      *
      * (Presumably old bulbs don't support the continuous cycling commands -> remote keeps backward compatibility)
      */

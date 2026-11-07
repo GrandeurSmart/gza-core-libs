@@ -1,6 +1,6 @@
-import type {Models as ZHModels} from "zigbee-herdsman";
-import {Zcl} from "zigbee-herdsman";
-import type {ClusterCommandKeys, ClusterOrRawAttributeKeys, ClusterOrRawPayload, TCustomCluster} from "zigbee-herdsman/dist/controller/tstype";
+import type {Models as ZHModels} from "gza-core";
+import {Zcl} from "gza-core";
+import type {ClusterCommandKeys, ClusterOrRawAttributeKeys, ClusterOrRawPayload, TCustomCluster} from "gza-core/dist/controller/tstype";
 import {access as ea} from "../lib/exposes";
 import {logger} from "../lib/logger";
 import * as m from "../lib/modernExtend";

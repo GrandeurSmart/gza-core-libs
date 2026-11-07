@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as exposes from "../lib/exposes";
@@ -336,7 +336,7 @@ const plugwiseExtend = {
                 type: ["attributeReport", "readResponse"],
                 convert: (model, msg, publish, options, meta) => {
                     if (msg.data.productCode !== undefined) {
-                        // productCode is an OCTET_STR; zigbee-herdsman delivers it as a Buffer or string.
+                        // productCode is an OCTET_STR; gza-core delivers it as a Buffer or string.
                         const raw = msg.data.productCode;
                         const value = Buffer.isBuffer(raw) ? raw.toString("utf8") : String(raw);
                         return {product_variant: value};
@@ -493,7 +493,7 @@ export const definitions: DefinitionWithExtend[] = [
         description: "Tom thermostatic radiator valve",
         extend: [plugwiseExtend.plugwiseHvacThermostatCluster()],
         fromZigbee: [fz.temperature, fz.battery, fzLocal.plugwise_radiator_valve],
-        // system_mode and occupied_heating_setpoint is not supported: https://github.com/Koenkk/zigbee2mqtt.io/pull/1666
+        // system_mode and occupied_heating_setpoint is not supported: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation.io/pull/1666
         toZigbee: [
             tz.thermostat_pi_heating_demand,
             tzLocal.plugwise_valve_position,

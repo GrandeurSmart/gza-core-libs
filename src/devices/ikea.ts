@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 
 import {repInterval} from "../lib/constants";
 import {
@@ -563,7 +563,7 @@ export const definitions: DefinitionWithExtend[] = [
     {
         fingerprint: [
             {
-                // https://github.com/Koenkk/zigbee2mqtt/issues/30211#issuecomment-3660923636
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/30211#issuecomment-3660923636
                 modelID: "",
                 manufacturerName: "",
                 hardwareVersion: 1,
@@ -628,7 +628,7 @@ export const definitions: DefinitionWithExtend[] = [
     {
         fingerprint: [
             {
-                // https://github.com/Koenkk/zigbee2mqtt/issues/30211#issuecomment-3696471655
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/30211#issuecomment-3696471655
                 modelID: "",
                 manufacturerName: "",
                 hardwareVersion: 1,
@@ -891,7 +891,7 @@ export const definitions: DefinitionWithExtend[] = [
         configure: async (device) => {
             const endpoint = device.getEndpoint(1);
             // Enable reporting of powerDivisor, needs to change dynamically with the amount of power
-            // For details, see: https://github.com/Koenkk/zigbee2mqtt/issues/23961#issuecomment-2366733453
+            // For details, see: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/23961#issuecomment-2366733453
             await endpoint.configureReporting("haElectricalMeasurement", [
                 {attribute: "acPowerDivisor", minimumReportInterval: 10, maximumReportInterval: repInterval.MAX, reportableChange: 1},
             ]);
@@ -1024,7 +1024,7 @@ export const definitions: DefinitionWithExtend[] = [
             tradfriCommandsOnOff(),
             tradfriCommandsLevelCtrl(),
             // No genScenes cluster
-            // https://github.com/Koenkk/zigbee2mqtt/issues/28161
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/28161
             ikeaArrowClick({bind: false}),
             ikeaBattery(),
             ikeaModernExtend.handleAppVersionReadRequest(),
@@ -1032,7 +1032,7 @@ export const definitions: DefinitionWithExtend[] = [
         ota: true,
     },
     {
-        // https://github.com/Koenkk/zigbee2mqtt/issues/30325
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/30325
         zigbeeModel: ["09B9"],
         model: "E2489",
         vendor: "IKEA",
@@ -1047,7 +1047,7 @@ export const definitions: DefinitionWithExtend[] = [
         ],
     },
     {
-        // https://github.com/Koenkk/zigbee2mqtt/issues/30321
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/30321
         zigbeeModel: ["09BA"],
         model: "E2490",
         vendor: "IKEA",

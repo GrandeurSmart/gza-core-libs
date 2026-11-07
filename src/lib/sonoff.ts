@@ -1,4 +1,4 @@
-import type {ClusterOrRawAttributeKeys, TCustomCluster} from "zigbee-herdsman/dist/controller/tstype";
+import type {ClusterOrRawAttributeKeys, TCustomCluster} from "gza-core/dist/controller/tstype";
 import * as exposes from "./exposes";
 import {logger} from "./logger";
 import type {DefinitionExposesFunction, Fz, KeyValue, ModernExtend, Zh} from "./types";

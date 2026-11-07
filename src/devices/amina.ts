@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as constants from "../lib/constants";
 import * as exposes from "../lib/exposes";
 import {logger} from "../lib/logger";

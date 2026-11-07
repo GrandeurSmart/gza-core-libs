@@ -201,8 +201,8 @@ export const definitions: DefinitionWithExtend[] = [
     },
     {
         // Some require coverInverted:
-        // - https://github.com/Koenkk/zigbee2mqtt/issues/15101#issuecomment-1356787490
-        // - https://github.com/Koenkk/zigbee2mqtt/issues/16090
+        // - https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/15101#issuecomment-1356787490
+        // - https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/16090
         fingerprint: [
             {modelID: " Shutter switch with neutral\u0000\u0000\u0000", softwareBuildID: "001a"},
             {
@@ -401,7 +401,7 @@ export const definitions: DefinitionWithExtend[] = [
                 await reporting.apparentPower(endpoint);
             } catch {
                 // Some version/firmware don't seem to support this.
-                // https://github.com/Koenkk/zigbee2mqtt/issues/16732
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/16732
             }
         },
     },

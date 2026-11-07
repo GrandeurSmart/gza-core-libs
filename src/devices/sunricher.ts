@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as wally from "../devices/wally";
@@ -2492,7 +2492,7 @@ export const definitions: DefinitionWithExtend[] = [
                 await reporting.thermostatKeypadLockMode(endpoint);
             } catch {
                 // Fails for some
-                // https://github.com/Koenkk/zigbee2mqtt/issues/15025
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/15025
                 logger.debug("Failed to setup keypadLockout reporting", NS);
             }
 
@@ -2507,7 +2507,7 @@ export const definitions: DefinitionWithExtend[] = [
                 ]);
             } catch {
                 // Fails for some
-                // https://github.com/Koenkk/zigbee2mqtt/issues/29833
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/29833
                 logger.debug("Failed to setup occupancy reporting", NS);
             }
 
@@ -2838,7 +2838,7 @@ export const definitions: DefinitionWithExtend[] = [
                 await reporting.thermostatKeypadLockMode(endpoint);
             } catch {
                 // Fails for some
-                // https://github.com/Koenkk/zigbee2mqtt/issues/15025
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/15025
                 logger.debug("Failed to setup keypadLockout reporting", NS);
             }
 

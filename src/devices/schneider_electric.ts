@@ -1,7 +1,7 @@
-import {Zcl} from "zigbee-herdsman";
-import type {PartialClusterOrRawAttributes} from "zigbee-herdsman/dist/controller/tstype";
-import {COORDINATOR_ADDRESS} from "zigbee-herdsman/dist/zspec";
-import type {GpdManufAttributeReport} from "zigbee-herdsman/dist/zspec/zcl/definition/tstype";
+import {Zcl} from "gza-core";
+import type {PartialClusterOrRawAttributes} from "gza-core/dist/controller/tstype";
+import {COORDINATOR_ADDRESS} from "gza-core/dist/zspec";
+import type {GpdManufAttributeReport} from "gza-core/dist/zspec/zcl/definition/tstype";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as constants from "../lib/constants";
@@ -1365,7 +1365,7 @@ function cctfr6400HvacReadAttribute(attrId: number): Cctfr6400ReadAttribute | un
     }
 }
 
-// Since zigbee-herdsman 10.0.3 device reads are no longer answered from the
+// Since gza-core 10.0.3 device reads are no longer answered from the
 // coordinator attribute cache; everything except genTime/genBasic gets
 // UNSUPPORTED_ATTRIBUTE. The CCTFR6400 is a thermostat *client*: it polls the
 // attributes above every ~5 seconds while its screen is awake and needs real
@@ -1378,7 +1378,7 @@ function cctfr6400InstallCustomReadResponse(device: Zh.Device): void {
     }
     device.customReadResponse = (frame, endpoint) => {
         if (!frame.isCluster("hvacThermostat")) {
-            // genBasic/genTime reads are answered by zigbee-herdsman itself.
+            // genBasic/genTime reads are answered by gza-core itself.
             return false;
         }
         const attributes: Partial<Record<Cctfr6400ReadAttribute, number>> = {};
@@ -1386,7 +1386,7 @@ function cctfr6400InstallCustomReadResponse(device: Zh.Device): void {
             const name = cctfr6400HvacReadAttribute(item.attrId);
             const value = name === undefined ? undefined : endpoint.getClusterAttributeValue("hvacThermostat", name);
             if (typeof value !== "number") {
-                // Unknown attribute or no cached value yet: let zigbee-herdsman
+                // Unknown attribute or no cached value yet: let gza-core
                 // answer the whole frame with UNSUPPORTED_ATTRIBUTE instead of
                 // sending a partial response.
                 return false;
@@ -1395,7 +1395,7 @@ function cctfr6400InstallCustomReadResponse(device: Zh.Device): void {
         }
         // Measured on the wire: the device targets these reads at coordinator
         // endpoint 3 and expects the response to come from that endpoint, so
-        // mirror it (like the default zigbee-herdsman read response path does).
+        // mirror it (like the default gza-core read response path does).
         const options: {srcEndpoint: number; manufacturerCode?: number} = {srcEndpoint: 3};
         if (frame.header.manufacturerCode !== undefined) {
             options.manufacturerCode = frame.header.manufacturerCode;
@@ -2120,7 +2120,7 @@ export const definitions: DefinitionWithExtend[] = [
         extend: [
             m.onOff({powerOnBehavior: false}),
             // Illuminance doesn't require scale
-            // https://github.com/Koenkk/zigbee2mqtt/issues/30580#issuecomment-3742159287
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/30580#issuecomment-3742159287
             m.illuminance({scale: (v) => v}),
             m.temperature(),
             m.iasZoneAlarm({zoneType: "occupancy", zoneAttributes: ["alarm_2"]}),

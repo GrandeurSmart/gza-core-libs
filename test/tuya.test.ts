@@ -1,5 +1,5 @@
 import {describe, expect, it, vi} from "vitest";
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import {findByDevice, type Tz} from "../src/index";
 import * as legacy from "../src/lib/legacy";
 import * as tuya from "../src/lib/tuya";
@@ -319,10 +319,10 @@ describe("lib/tuya", () => {
 
         it.each([
             // captured on TS0601 / _TZE284_x8diwkqb, 68.783 A was reported as 3.247 A
-            // https://github.com/Koenkk/zigbee-herdsman-converters/issues/12927
+            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/12927
             {voltage: 1196, current: 68783, power: 8216, expected: {voltage_l1: 119.6, current_l1: 68.783, power_l1: 8216}},
             // captured on TS0601 / _TZE284_x8diwkqb with a 5.5 kW and a 7.5 kW heater running
-            // https://github.com/Koenkk/zigbee-herdsman-converters/issues/12927
+            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/12927
             {voltage: 1190, current: 69610, power: 8270, expected: {voltage_l1: 119, current_l1: 69.61, power_l1: 8270}},
             {voltage: 1195, current: 65951, power: 7867, expected: {voltage_l1: 119.5, current_l1: 65.951, power_l1: 7867}},
             // just past the wrap point, previously reported as 0.0 A / 0.001 A
@@ -333,16 +333,16 @@ describe("lib/tuya", () => {
         });
 
         it("keeps current consistent with power and voltage under high load", () => {
-            // https://github.com/Koenkk/zigbee-herdsman-converters/issues/12927
+            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/12927
             const {voltage_l1, current_l1, power_l1} = decode("l1", 1190, 69610, 8270) as Record<string, number>;
             expect(power_l1).toBeCloseTo(voltage_l1 * current_l1, -2);
         });
 
         it.each([
             // _TZE200_nslr42tt, two clamps on the same ~19 W load, one of them reversed
-            // https://github.com/Koenkk/zigbee2mqtt/issues/18603#issuecomment-2267514694
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/18603#issuecomment-2267514694
             // Same capture used to identify the 0x99999a offset (0x19999a gave 8388588 W):
-            // https://github.com/Koenkk/zigbee2mqtt/issues/32995#issuecomment-5516351597
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/32995#issuecomment-5516351597
             {dp: 6, phase: "a", data: [9, 37, 0, 0, 143, 0, 0, 19], expected: {voltage_a: 234.1, current_a: 0.143, power_a: 19}},
             {dp: 8, phase: "c", data: [9, 38, 0, 0, 146, 153, 153, 134], expected: {voltage_c: 234.2, current_c: 0.146, power_c: -20}},
             // _TZE200_nslr42tt with firmware that encodes negative power as plain 24-bit two's
@@ -359,16 +359,16 @@ describe("lib/tuya", () => {
 
         it.each([
             // values shown by the old 16 bit decoder (39125, 39124, 39123 W), full 24 bit field reconstructed
-            // https://github.com/Koenkk/zigbee2mqtt/issues/18603#issuecomment-2277697295
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/18603#issuecomment-2277697295
             {raw: 0x9998d5, expected: -197},
             {raw: 0x9998d4, expected: -198},
             {raw: 0x9998d3, expected: -199},
             // 39317 W shown by the old 16 bit decoder for a reversed clamp on a 5 W load
-            // https://github.com/Koenkk/zigbee2mqtt/issues/18603#issuecomment-2276888584
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/18603#issuecomment-2276888584
             {raw: 0x999995, expected: -5},
             // regression: was reported as 8388588 W with the 0x19999a offset
-            // https://github.com/Koenkk/zigbee2mqtt/issues/32995
-            // https://github.com/Koenkk/zigbee2mqtt/issues/32995#issuecomment-5516351597
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/32995
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/32995#issuecomment-5516351597
             {raw: 0x999986, expected: -20},
             {raw: 0x99999a, expected: 0},
             {raw: 0x800000, expected: -1677722},
@@ -573,7 +573,7 @@ describe("lib/tuya", () => {
     });
 
     describe("TS004F knob configure (ZG-101ZD)", () => {
-        // https://github.com/Koenkk/zigbee2mqtt/issues/31917
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/31917
         const unsupported = () => new Error("ZCL command genBasic.read(...) failed (Status 'UNSUPPORTED_ATTRIBUTE')");
 
         it("ignores UNSUPPORTED_ATTRIBUTE on the magic packet and tuyaOperationMode write", async () => {
@@ -599,7 +599,7 @@ describe("lib/tuya", () => {
     });
 
     describe("TS004F button configure (ZG-101ZL)", () => {
-        // https://github.com/Koenkk/zigbee2mqtt/issues/31917
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/31917
         it("ignores UNSUPPORTED_ATTRIBUTE on the tuyaOperationMode write", async () => {
             const device = mockDevice({modelID: "ZG-101ZL", manufacturerName: "HOBEIAN", endpoints: [{ID: 1}]}, "EndDevice");
             const definition = await findByDevice(device);
@@ -628,7 +628,7 @@ describe("lib/tuya", () => {
         });
 
         it("writes ME201WZ liquid_depth_max 1.12 as 112", async () => {
-            // https://github.com/Koenkk/zigbee2mqtt/issues/33224
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/33224
             const device = mockDevice({modelID: "TS0601", manufacturerName: "_TZE284_kyyu8rbj", endpoints: [{ID: 1}]});
             const definition = await findByDevice(device);
             expect(definition.model).toStrictEqual("ME201WZ");

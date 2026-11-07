@@ -1,5 +1,5 @@
-import {Zcl} from "zigbee-herdsman";
-import type {TPartialClusterAttributes} from "zigbee-herdsman/dist/zspec/zcl/definition/clusters-types";
+import {Zcl} from "gza-core";
+import type {TPartialClusterAttributes} from "gza-core/dist/zspec/zcl/definition/clusters-types";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as constants from "../lib/constants";

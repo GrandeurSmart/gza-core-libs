@@ -1,8 +1,8 @@
 import {expect, vi} from "vitest";
-import {Zcl} from "zigbee-herdsman";
-import {Device, Endpoint} from "zigbee-herdsman/dist/controller/model";
-import {InterviewState} from "zigbee-herdsman/dist/controller/model/device";
-import type {DeviceType} from "zigbee-herdsman/dist/controller/tstype";
+import {Zcl} from "gza-core";
+import {Device, Endpoint} from "gza-core/dist/controller/model";
+import {InterviewState} from "gza-core/dist/controller/model/device";
+import type {DeviceType} from "gza-core/dist/controller/tstype";
 import * as tz from "../src/converters/toZigbee";
 import {findByDevice} from "../src/index";
 import type {Definition, DefinitionMeta, Fz, Zh} from "../src/lib/types";

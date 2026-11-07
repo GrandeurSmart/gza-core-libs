@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import {gte as semverGte, valid as semverValid} from "semver";
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as constants from "../lib/constants";
@@ -26,7 +26,7 @@ const manufacturerOptions = {
     /*
      * Ubisys doesn't accept a manufacturerCode on some commands
      * This bug has been reported, but it has not been fixed:
-     * https://github.com/Koenkk/zigbee-herdsman/issues/52
+     * https://github.com/GrandeurSmart/zigbee-herdsman/issues/52
      */
     ubisys: {manufacturerCode: Zcl.ManufacturerCode.UBISYS_TECHNOLOGIES_GMBH},
     // @ts-expect-error ignore

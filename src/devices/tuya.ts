@@ -1,6 +1,6 @@
 import {TextDecoder, TextEncoder} from "node:util";
-import {Zcl} from "zigbee-herdsman";
-import {DataType} from "zigbee-herdsman/dist/zspec/zcl";
+import {Zcl} from "gza-core";
+import {DataType} from "gza-core/dist/zspec/zcl";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as libColor from "../lib/color";
@@ -785,7 +785,7 @@ const sixGangIndicatorDatapoints: Tuya.MetaTuyaDataPoints = [
     ),
 ];
 
-// TS0601_cover_1 variants with a slat angle (0-180°) on DP21, https://github.com/Koenkk/zigbee2mqtt/issues/27188
+// TS0601_cover_1 variants with a slat angle (0-180°) on DP21, https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/27188
 const ts0601Cover1TiltManufacturers = ["_TZE204_wzre8hu2"];
 
 function setupSpm01v25Polling(device: Zh.Device, intervalSeconds = 10) {
@@ -988,7 +988,7 @@ const tzLocal = {
                         // We convert the former into the latter.
                         const c = libColor.Color.fromConverterArg(meta.message.color);
                         if (c.isRGB()) {
-                            // https://github.com/Koenkk/zigbee2mqtt/issues/13421#issuecomment-1426044963
+                            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/13421#issuecomment-1426044963
                             c.hsv = c.rgb.gammaCorrected().toXY().toHSV();
                         }
                         const color = c.hsv;
@@ -1436,7 +1436,7 @@ const tzLocal = {
                 case "alarm_humidity_min": {
                     // await entity.write('manuSpecificTuya2', {[key]: value});
                     // instead write as custom attribute to override incorrect herdsman dataType from uint16 to int16
-                    // https://github.com/Koenkk/zigbee-herdsman/blob/v0.13.191/src/zcl/definition/cluster.ts#L4235
+                    // https://github.com/GrandeurSmart/zigbee-herdsman/blob/v0.13.191/src/zcl/definition/cluster.ts#L4235
                     const keyToAttributeLookup = {
                         alarm_temperature_max: 0xd00a,
                         alarm_temperature_min: 0xd00b,
@@ -1484,7 +1484,7 @@ const tzLocal = {
     } satisfies Tz.Converter,
     // For B4Z TS130F capture the start position BEFORE the standard converter publishes the target as
     // optimistic state; the fromZigbee workaround needs the original position to detect a stale STOP report.
-    // https://github.com/Koenkk/zigbee-herdsman-converters/pull/12887
+    // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/12887
     // biome-ignore lint/style/useNamingConvention: existing
     TS130F_cover_position_tilt: {
         ...tz.cover_position_tilt,
@@ -1565,7 +1565,7 @@ const fzLocal = {
     // The MCU expects mcuSyncTime in raw Unix seconds (8 bytes: UTC + local),
     // followed by a DP 17 write ~500 ms later that commits the new time to the LCD.
     // Without the DP 17 commit the MCU silently ignores the sync and the clock stays at 00:xx.
-    // See: https://github.com/Koenkk/zigbee2mqtt/issues/29627
+    // See: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/29627
     zt08ClockSync: {
         cluster: "manuSpecificTuya",
         type: ["commandMcuSyncTime"],
@@ -1644,8 +1644,8 @@ const fzLocal = {
         cluster: "genPowerCfg",
         type: ["attributeReport", "readResponse"],
         convert: (model, msg, publish, options, meta) => {
-            // https://github.com/Koenkk/zigbee2mqtt/issues/11470
-            // https://github.com/Koenkk/zigbee-herdsman-converters/pull/8246
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/11470
+            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/8246
             if (
                 msg.data.batteryPercentageRemaining === 200 &&
                 msg.data.batteryVoltage < 30 &&
@@ -2204,7 +2204,7 @@ const fzLocal = {
     } satisfies Fz.Converter<"lightingColorCtrl", undefined, "raw">,
     // The Nous B4Z reports the position it started the movement from instead of the position it
     // reached when reporting `moving: STOP`, publish the last position reported while moving instead.
-    // https://github.com/Koenkk/zigbee-herdsman-converters/pull/12887
+    // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/12887
     // biome-ignore lint/style/useNamingConvention: existing
     TS130F_cover_position_tilt: {
         ...fz.cover_position_tilt,
@@ -3087,7 +3087,7 @@ export const definitions: DefinitionWithExtend[] = [
             tuya.whitelabel("Nedis", "ZBDS10WT", "Smoke sensor", ["_TYZB01_wqcac7lo"]),
         ],
         // Configure battery % fails
-        // https://github.com/Koenkk/zigbee2mqtt/issues/22421
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/22421
         extend: [
             m.battery({percentageReporting: false}),
             m.iasZoneAlarm({
@@ -3098,7 +3098,7 @@ export const definitions: DefinitionWithExtend[] = [
         configure: async (device, coordinatorEndpoint) => {
             if (device.manufacturerName === "_TZ3210_up3pngle") {
                 // Required for this version
-                // https://github.com/Koenkk/zigbee-herdsman-converters/pull/8004
+                // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/8004
                 const endpoint = device.getEndpoint(1);
                 await reporting.bind(endpoint, coordinatorEndpoint, ["genPowerCfg"]);
                 await reporting.batteryPercentageRemaining(endpoint);
@@ -3204,7 +3204,7 @@ export const definitions: DefinitionWithExtend[] = [
                 // value, but is usually incorrect. For example, a coin battery tested
                 // with a load tester may show 80%, but report 2.5V / 1%. This voltage
                 // calculation matches what ZHA does by default.
-                // https://github.com/Koenkk/zigbee2mqtt/discussions/17337
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/discussions/17337
                 // https://github.com/zigpy/zha-device-handlers/blob/c6ed94a52a469e72b32ece2a92d528060c7fd034/zhaquirks/__init__.py#L195-L228
                 voltageToPercentage: "3V_1500_2800",
             },
@@ -5167,16 +5167,16 @@ export const definitions: DefinitionWithExtend[] = [
                 color: true,
             }),
         ],
-        // https://github.com/Koenkk/zigbee2mqtt/issues/30584
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/30584
         meta: {
-            applyRedFix: true, // https://github.com/Koenkk/zigbee-herdsman-converters/issues/11467
+            applyRedFix: true, // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/11467
             moveToLevelWithOnOffDisable: (e) =>
                 e.getDevice().manufacturerName === "_TZB210_uoiqhjqe" ||
                 e.getDevice().manufacturerName === "_TZB210_417ikxay" ||
                 e.getDevice().manufacturerName === "_TZB210_qzsxaqqe" ||
-                e.getDevice().manufacturerName === "_TZB210_u3ri0968" || // https://github.com/Koenkk/zigbee2mqtt/issues/31733
-                e.getDevice().manufacturerName === "_TZB210_rs0ufzwg" || // https://github.com/Koenkk/zigbee2mqtt/issues/31872
-                e.getDevice().manufacturerName === "_TZ3210_mja6r5ix", // https://github.com/Koenkk/zigbee2mqtt/issues/32428
+                e.getDevice().manufacturerName === "_TZB210_u3ri0968" || // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/31733
+                e.getDevice().manufacturerName === "_TZB210_rs0ufzwg" || // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/31872
+                e.getDevice().manufacturerName === "_TZ3210_mja6r5ix", // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/32428
         },
         toZigbee: [tzLocal.TS0505B_1_transitionFixesOnOffBrightness],
         configure: (device, coordinatorEndpoint) => {
@@ -5186,7 +5186,7 @@ export const definitions: DefinitionWithExtend[] = [
         },
     },
     {
-        // https://github.com/Koenkk/zigbee2mqtt/issues/32729
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/32729
         fingerprint: tuya.fingerprint("TS0505B", ["_TZ3210_it1u8ahz"]),
         model: "TS0505B_2",
         vendor: "Tuya",
@@ -5366,7 +5366,7 @@ export const definitions: DefinitionWithExtend[] = [
         model: "TS0202_1",
         vendor: "Tuya",
         description: "Motion sensor",
-        // Requires alarm_1_with_timeout https://github.com/Koenkk/zigbee2mqtt/issues/2818#issuecomment-776119586
+        // Requires alarm_1_with_timeout https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/2818#issuecomment-776119586
         fromZigbee: [fz.ias_occupancy_alarm_1_with_timeout, fz.battery],
         toZigbee: [],
         exposes: [e.occupancy(), e.battery_low(), e.battery(), e.battery_voltage()],
@@ -5413,7 +5413,7 @@ export const definitions: DefinitionWithExtend[] = [
                 await reporting.batteryPercentageRemaining(endpoint);
                 await reporting.batteryVoltage(endpoint);
             } catch {
-                /* Fails for some https://github.com/Koenkk/zigbee2mqtt/issues/13708 */
+                /* Fails for some https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/13708 */
             }
         },
     },
@@ -5770,9 +5770,9 @@ export const definitions: DefinitionWithExtend[] = [
                 [5, "temperature", tuya.valueConverter.divideBy10],
                 [9, "temperature_unit", tuya.valueConverter.temperatureUnit],
                 [14, "battery_state", tuya.valueConverter.batteryState],
-                // https://github.com/Koenkk/zigbee-herdsman-converters/pull/8449
+                // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/8449
                 // [15, "battery", tuya.valueConverterBasic.scale(6, 60, 0, 100)], //device reports back false scaling
-                // https://github.com/Koenkk/zigbee2mqtt/issues/26215#issuecomment-3466490289
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/26215#issuecomment-3466490289
                 [15, "battery", tuya.valueConverter.raw],
             ],
         },
@@ -6264,7 +6264,7 @@ export const definitions: DefinitionWithExtend[] = [
                 [141, "state", tuya.valueConverter.onOff, {skip: tuya.skip.stateOnAndBrightnessPresent}],
                 [142, "brightness", tuya.valueConverter.scale0_254to0_1000],
                 // Doesn't seem to work
-                // https://github.com/Koenkk/zigbee2mqtt/issues/26526#issuecomment-2749559071
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/26526#issuecomment-2749559071
                 // [143, "min_brightness", tuya.valueConverter.scale0_254to0_1000],
                 // [144, "max_brightness", tuya.valueConverter.scale0_254to0_1000],
             ],
@@ -8146,7 +8146,7 @@ export const definitions: DefinitionWithExtend[] = [
                 // value, but is usually incorrect. For example, a coin battery tested
                 // with a load tester may show 80%, but report 2.5V / 1%. This voltage
                 // calculation matches what ZHA does by default.
-                // https://github.com/Koenkk/zigbee2mqtt/discussions/17337
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/discussions/17337
                 // https://github.com/zigpy/zha-device-handlers/blob/c6ed94a52a469e72b32ece2a92d528060c7fd034/zhaquirks/__init__.py#L195-L228
                 voltageToPercentage: "3V_1500_2800",
             },
@@ -8253,8 +8253,8 @@ export const definitions: DefinitionWithExtend[] = [
         /*
          * reporting.batteryPercentageRemaining removed as it was causing devices to fall of the network
          * every 1 hour, with light flashing when it happened, extremely short battery life, 2 presses for
-         * action to register: https://github.com/Koenkk/zigbee2mqtt/issues/8072
-         * Initially wrapped in a try catch: https://github.com/Koenkk/zigbee2mqtt/issues/6313
+         * action to register: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/8072
+         * Initially wrapped in a try catch: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6313
          */
     },
     {
@@ -8274,8 +8274,8 @@ export const definitions: DefinitionWithExtend[] = [
         /*
          * reporting.batteryPercentageRemaining removed as it was causing devices to fall of the network
          * every 1 hour, with light flashing when it happened, extremely short battery life, 2 presses for
-         * action to register: https://github.com/Koenkk/zigbee2mqtt/issues/8072
-         * Initially wrapped in a try catch: https://github.com/Koenkk/zigbee2mqtt/issues/6313
+         * action to register: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/8072
+         * Initially wrapped in a try catch: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6313
          */
     },
     {
@@ -8298,8 +8298,8 @@ export const definitions: DefinitionWithExtend[] = [
         /*
          * reporting.batteryPercentageRemaining removed as it was causing devices to fall of the network
          * every 1 hour, with light flashing when it happened, extremely short battery life, 2 presses for
-         * action to register: https://github.com/Koenkk/zigbee2mqtt/issues/8072
-         * Initially wrapped in a try catch: https://github.com/Koenkk/zigbee2mqtt/issues/6313
+         * action to register: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/8072
+         * Initially wrapped in a try catch: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6313
          */
     },
     {
@@ -8321,8 +8321,8 @@ export const definitions: DefinitionWithExtend[] = [
         /*
          * reporting.batteryPercentageRemaining removed as it was causing devices to fall of the network
          * every 1 hour, with light flashing when it happened, extremely short battery life, 2 presses for
-         * action to register: https://github.com/Koenkk/zigbee2mqtt/issues/8072
-         * Initially wrapped in a try catch: https://github.com/Koenkk/zigbee2mqtt/issues/6313
+         * action to register: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/8072
+         * Initially wrapped in a try catch: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6313
          */
     },
     {
@@ -8369,8 +8369,8 @@ export const definitions: DefinitionWithExtend[] = [
         /*
          * reporting.batteryPercentageRemaining removed as it was causing devices to fall of the network
          * every 1 hour, with light flashing when it happened, extremely short battery life, 2 presses for
-         * action to register: https://github.com/Koenkk/zigbee2mqtt/issues/8072
-         * Initially wrapped in a try catch: https://github.com/Koenkk/zigbee2mqtt/issues/6313
+         * action to register: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/8072
+         * Initially wrapped in a try catch: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6313
          */
     },
     {
@@ -8445,7 +8445,7 @@ export const definitions: DefinitionWithExtend[] = [
             }
             for (const ep of [1, 2, 3, 4]) {
                 // Not all variants have all endpoints
-                // https://github.com/Koenkk/zigbee2mqtt/issues/15730#issuecomment-1364498358
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/15730#issuecomment-1364498358
                 if (device.getEndpoint(ep)) {
                     await reporting.bind(device.getEndpoint(ep), coordinatorEndpoint, ["genOnOff"]);
                 }
@@ -8506,7 +8506,7 @@ export const definitions: DefinitionWithExtend[] = [
             await reporting.bind(endpoint, coordinatorEndpoint, ["genPowerCfg"]);
             for (const ep of [1, 2, 3, 4, 5, 6]) {
                 // Not all variants have all endpoints
-                // https://github.com/Koenkk/zigbee2mqtt/issues/15730#issuecomment-1364498358
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/15730#issuecomment-1364498358
                 if (device.getEndpoint(ep)) {
                     await reporting.bind(device.getEndpoint(ep), coordinatorEndpoint, ["genOnOff"]);
                 }
@@ -8904,7 +8904,7 @@ export const definitions: DefinitionWithExtend[] = [
             await tuya.configureMagicPacket(device, coordinatorEndpoint);
             const endpoint = device.getEndpoint(1);
             /*
-            https://github.com/Koenkk/zigbee2mqtt/issues/27090
+            https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/27090
             INVALID_DATA_TYPE error for _TZ3000_xkap8wtb, appVersion:162 softwareBuildID: 0122052017
             */
             if (
@@ -9401,7 +9401,7 @@ export const definitions: DefinitionWithExtend[] = [
             "_TZ3000_mhhxxjrs",
             "_TZ3000_iv4eq7eh",
             "_TZ3000_mzcp0of6",
-            "_TZ3210_aksyshpw", // https://github.com/Koenkk/zigbee2mqtt/issues/32391
+            "_TZ3210_aksyshpw", // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/32391
             "_TZ3000_bu47m8pv",
         ]),
         model: "TS0003_switch_module_2",
@@ -9683,7 +9683,7 @@ export const definitions: DefinitionWithExtend[] = [
                 "_TZE204_odlldrxx",
                 "_TZE204_wzre8hu2",
                 "_TZE200_odlldrxx",
-                "_TZE200_m6lwazh9", // incomplete, see https://github.com/Koenkk/zigbee2mqtt/issues/31774
+                "_TZE200_m6lwazh9", // incomplete, see https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/31774
                 "_TZE204_zuq5xxib",
                 "_TZE284_zuq5xxib",
                 "_TZE200_swlgvdlh",
@@ -9867,7 +9867,7 @@ export const definitions: DefinitionWithExtend[] = [
                 [1, "state", tuya.valueConverter.coverAction],
                 [2, "position", tuya.valueConverter.coverPosition],
                 [3, "position", tuya.valueConverter.raw],
-                // motor_direction doesn't work: https://github.com/Koenkk/zigbee2mqtt/issues/18103
+                // motor_direction doesn't work: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/18103
                 // [5, 'motor_direction', tuya.valueConverterBasic.lookup({'normal': tuya.enum(0), 'reversed': tuya.enum(1)})],
                 [101, "battery", tuya.valueConverter.raw],
             ],
@@ -12039,7 +12039,7 @@ export const definitions: DefinitionWithExtend[] = [
         description: "Thermostatic radiator valve.",
         whiteLabel: [tuya.whitelabel("Moes", "TRV801Z", "Thermostatic radiator valve", ["_TZE204_qyr2m29i", "_TZE284_ltwbm23f"])],
         // _TZE204_qyr2m29i sometimes? requires 2000
-        // https://github.com/Koenkk/zigbee2mqtt/issues/30054
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/30054
         extend: [tuyaBase({dp: true, timeStart: "1970"})],
         exposes: [
             e.battery(),
@@ -12500,13 +12500,13 @@ export const definitions: DefinitionWithExtend[] = [
                 await reporting.rmsCurrent(endpoint, {change: 50});
                 await reporting.activePower(endpoint, {change: 10});
             } catch {
-                /* fails for some https://github.com/Koenkk/zigbee2mqtt/issues/11179
-                                and https://github.com/Koenkk/zigbee2mqtt/issues/16864 */
+                /* fails for some https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/11179
+                                and https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/16864 */
             }
             await endpoint.read<"genOnOff", tuya.TuyaGenOnOff>("genOnOff", ["onOff", "moesStartUpOnOff", "tuyaBacklightMode"]);
         },
         // This device doesn't support reporting correctly.
-        // https://github.com/Koenkk/zigbee-herdsman-converters/pull/1270
+        // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/1270
         exposes: [
             e.switch(),
             e.power(),
@@ -12613,7 +12613,7 @@ export const definitions: DefinitionWithExtend[] = [
             await reporting.bind(endpoint, coordinatorEndpoint, ["genOnOff", "haElectricalMeasurement", "seMetering"]);
 
             if (!["_TZ3000_okaz9tjs"].includes(device.manufacturerName)) {
-                // https://github.com/Koenkk/zigbee2mqtt/issues/29034
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/29034
                 await reporting.currentSummDelivered(endpoint);
                 await reporting.rmsVoltage(endpoint, {change: 5});
                 await reporting.rmsCurrent(endpoint, {change: 50});
@@ -12625,9 +12625,9 @@ export const definitions: DefinitionWithExtend[] = [
                 )
             ) {
                 // Gives INVALID_DATA_TYPE error for _TZ3000_0zfrhq4i (as well as a few others in issue 20028)
-                // https://github.com/Koenkk/zigbee2mqtt/discussions/19680#discussioncomment-7667035
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/discussions/19680#discussioncomment-7667035
                 // Don't do this for `_TZ3000_gjnozsaz` (was previously in the list, but removed after:
-                // https://github.com/Koenkk/zigbee2mqtt/issues/28729#issuecomment-3370261334
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/28729#issuecomment-3370261334
                 await reporting.activePower(endpoint, {change: 10});
             }
 
@@ -12648,7 +12648,7 @@ export const definitions: DefinitionWithExtend[] = [
             // factor and expose the correct multipliers/divisors via the haElectricalMeasurement cluster.
             // Try to read each attribute individually because some devices return UNSUPPORTED_ATTRIBUTE for a
             // subset, and reading them in bulk would cause one failure to abort the rest. Successful reads are
-            // cached by zigbee-herdsman and override the hardcoded values saved above.
+            // cached by gza-core and override the hardcoded values saved above.
             for (const attr of [
                 "acVoltageMultiplier",
                 "acVoltageDivisor",
@@ -12691,7 +12691,7 @@ export const definitions: DefinitionWithExtend[] = [
             "_TZ3000_rtcrrvia",
             "_TZ3000_ysiog9xi",
             "_TZ3000_o1jzcxou",
-            "_TZ3210_nhqka112", // https://github.com/Koenkk/zigbee2mqtt/issues/30889
+            "_TZ3210_nhqka112", // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/30889
             "_TZ3000_uyrhiafs",
         ]),
         model: "TS011F_plug_2",
@@ -13799,7 +13799,7 @@ export const definitions: DefinitionWithExtend[] = [
         configure: async (device, coordinatorEndpoint) => {
             await tuya.configureMagicPacket(device, coordinatorEndpoint);
             await reporting.bind(device.getEndpoint(1), coordinatorEndpoint, ["genOnOff"]);
-            // Reports itself as battery which is not correct: https://github.com/Koenkk/zigbee2mqtt/issues/6190
+            // Reports itself as battery which is not correct: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6190
             device.powerSource = "Mains (single phase)";
             device.save();
         },
@@ -13909,7 +13909,7 @@ export const definitions: DefinitionWithExtend[] = [
                     await reporting.bind(endpoint, coordinatorEndpoint, ["genOnOff"]);
                 }
             } catch {
-                // Fails for some: https://github.com/Koenkk/zigbee2mqtt/issues/4872
+                // Fails for some: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/4872
             }
             device.powerSource = "Mains (single phase)";
             device.save();
@@ -13946,7 +13946,7 @@ export const definitions: DefinitionWithExtend[] = [
                     await reporting.bind(endpoint, coordinatorEndpoint, ["genOnOff"]);
                 }
             } catch {
-                // Fails for some: https://github.com/Koenkk/zigbee2mqtt/issues/4872
+                // Fails for some: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/4872
             }
             device.powerSource = "Mains (single phase)";
             device.save();
@@ -14054,7 +14054,7 @@ export const definitions: DefinitionWithExtend[] = [
                     await reporting.bind(endpoint, coordinatorEndpoint, ["genOnOff"]);
                 }
             } catch {
-                // Fails for some: https://github.com/Koenkk/zigbee2mqtt/issues/4872
+                // Fails for some: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/4872
             }
             device.powerSource = "Mains (single phase)";
             device.save();
@@ -15068,8 +15068,8 @@ export const definitions: DefinitionWithExtend[] = [
                     4,
                     "preset",
                     tuya.valueConverterBasic.lookup((_, device) => {
-                        // https://github.com/Koenkk/zigbee2mqtt/issues/21353#issuecomment-1938328429
-                        // https://github.com/Koenkk/zigbee2mqtt/issues/28035
+                        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/21353#issuecomment-1938328429
+                        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/28035
                         if (device.manufacturerName === "_TZE204_lzriup1j" || device.manufacturerName === "_TZE204_gops3slb") {
                             return {
                                 auto: tuya.enum(1),
@@ -15102,7 +15102,7 @@ export const definitions: DefinitionWithExtend[] = [
                     104,
                     "working_day",
                     tuya.valueConverterBasic.lookup((_, device) => {
-                        // https://github.com/Koenkk/zigbee2mqtt/issues/23979
+                        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/23979
                         if (device.manufacturerName === "_TZE200_viy9ihs7") {
                             return {
                                 disabled: tuya.enum(0),
@@ -15372,7 +15372,7 @@ export const definitions: DefinitionWithExtend[] = [
         description: "Din smart relay (with power monitoring via polling)",
         vendor: "Tuya",
         // Device reports weird temperature value
-        // https://github.com/Koenkk/zigbee2mqtt/issues/32125
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/32125
         fromZigbee: [
             fz.on_off,
             fz.electrical_measurement,
@@ -16048,7 +16048,7 @@ export const definitions: DefinitionWithExtend[] = [
             const endpoint = device.getEndpoint(1);
             // Some firmwares (e.g. _TZ3000_gwkzibhs) reply UNSUPPORTED_ATTRIBUTE to the magic packet (0xfffe) read,
             // similar TS004F buttons do so for the tuyaOperationMode write; both work fine without it.
-            // https://github.com/Koenkk/zigbee2mqtt/issues/31917
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/31917
             await tuya.configureMagicPacket(device, coordinatorEndpoint);
             await utils.ignoreUnsupportedAttribute(async () => {
                 await endpoint.write<"genOnOff", tuya.TuyaGenOnOff>("genOnOff", {tuyaOperationMode: 1});
@@ -16804,7 +16804,7 @@ export const definitions: DefinitionWithExtend[] = [
         extend: [tuya.modernExtend.tuyaBase({dp: true})],
         exposes: (device, options) => {
             const exposes: Expose[] = [e.occupancy(), e.illuminance()];
-            // https://github.com/Koenkk/zigbee2mqtt.io/pull/4018
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation.io/pull/4018
             if (device.manufacturerName !== "_TZE200_ghynnvos") {
                 exposes.push(e.battery());
             }
@@ -16994,7 +16994,7 @@ export const definitions: DefinitionWithExtend[] = [
             tzLocal.ts110eCountdown,
         ],
         exposes: (device, options) => {
-            // https://github.com/Koenkk/zigbee2mqtt/issues/26791#issuecomment-2765734859
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/26791#issuecomment-2765734859
             const countdownValueStep = device.manufacturerName === "_TZ3210_ngqk6jia" ? 30 : 1;
             return [
                 e.light_brightness().withMinBrightness().withMaxBrightness(),
@@ -18317,7 +18317,7 @@ export const definitions: DefinitionWithExtend[] = [
         extend: [
             tuya.modernExtend.tuyaBase({dp: true}),
             {
-                // Device stops reporting unless polled, https://github.com/Koenkk/zigbee2mqtt/issues/30506
+                // Device stops reporting unless polled, https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/30506
                 onEvent: [
                     (event) => {
                         if (event.type === "stop") {
@@ -18561,7 +18561,7 @@ export const definitions: DefinitionWithExtend[] = [
         },
     },
     {
-        // incomplete / incorrect: https://github.com/Koenkk/zigbee-herdsman-converters/pull/12355
+        // incomplete / incorrect: https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/12355
         fingerprint: tuya.fingerprint("TS0601", ["_TZE204_ugekduaj", "_TZE200_ugekduaj"]),
         model: "SDM01",
         vendor: "Tuya",
@@ -21107,12 +21107,12 @@ export const definitions: DefinitionWithExtend[] = [
             tuya.whitelabel("Tuya", "YK-S03", "Smart pH and Chlorine Tester for Swimming Pool", ["_TZE200_d9mzkhoq"]),
             {model: "YY-1099L", vendor: "Tuya"},
         ],
-        // Don't query too often. Values are not always updated. https://github.com/Koenkk/zigbee2mqtt/issues/18704
+        // Don't query too often. Values are not always updated. https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/18704
         extend: [
             tuya.modernExtend.tuyaBase({
                 dp: true,
                 queryOnDeviceAnnounce: true,
-                // https://github.com/Koenkk/zigbee2mqtt/issues/23946#issuecomment-2941182834
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/23946#issuecomment-2941182834
                 queryIntervalSeconds: 10 * 60,
             }),
             m.poll({
@@ -21120,7 +21120,7 @@ export const definitions: DefinitionWithExtend[] = [
                 defaultIntervalSeconds: 30 * 60,
                 poll: async (device) => {
                     // Set backlight ever 30 mins, otherwise device stops updating.
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/23946#issuecomment-3176121660
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/23946#issuecomment-3176121660
                     const ep = device.getEndpoint(1);
                     await tuya.sendDataPointValue(ep, 105, 0, "dataRequest", 1);
                     await utils.sleep(2000);
@@ -21687,7 +21687,7 @@ export const definitions: DefinitionWithExtend[] = [
                 [119, "over_power_threshold", tuya.valueConverter.raw],
                 [131, "temperature", tuya.valueConverter.divideBy10],
                 // The ones below might only work for _TZE284_432zhuwe
-                // https://github.com/Koenkk/zigbee-herdsman-converters/pull/9747
+                // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/9747
                 [143, "overcurrent_recloser", tuya.valueConverter.onOff],
                 [144, "leakage_recloser", tuya.valueConverter.onOff],
                 [145, "overpower_recloser", tuya.valueConverter.onOff],
@@ -24713,7 +24713,7 @@ export const definitions: DefinitionWithExtend[] = [
         },
     },
     {
-        // incomplete. see https://github.com/Koenkk/zigbee-herdsman-converters/pull/11271
+        // incomplete. see https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/11271
         fingerprint: tuya.fingerprint("TS0601", ["_TZE284_cgr0rhza"]),
         model: "TS0601_thermostat_6",
         vendor: "Tuya",
@@ -26465,7 +26465,7 @@ export const definitions: DefinitionWithExtend[] = [
     },
     {
         // _TZE200_mlglxwp3 is incomplete, datapoints here:
-        // https://github.com/Koenkk/zigbee-herdsman-converters/pull/12014
+        // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/12014
         fingerprint: tuya.fingerprint("TS0601", ["_TZE200_mlglxwp3", "_TZE204_tgl8i2np", "_TZE284_a0hirjnh"]),
         model: "TS0601_cover_12",
         vendor: "Tuya",

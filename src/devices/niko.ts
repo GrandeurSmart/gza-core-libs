@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as exposes from "../lib/exposes";
@@ -162,7 +162,7 @@ const local = {
                     // NOTE: a single press = two separate values reported, 16 followed by 64
                     //       a hold/release cycle = three separate values, 16, 32, and 48
 
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/13737#issuecomment-1520002786
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/13737#issuecomment-1520002786
                     const buttonShift: {[key: string]: number} =
                         model.model === "552-721X1"
                             ? {

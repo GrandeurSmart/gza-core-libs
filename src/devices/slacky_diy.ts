@@ -1,5 +1,5 @@
-import {Zcl} from "zigbee-herdsman";
-import type {ClusterOrRawAttributeKeys, PartialClusterOrRawWriteAttributes} from "zigbee-herdsman/dist/controller/tstype";
+import {Zcl} from "gza-core";
+import type {ClusterOrRawAttributeKeys, PartialClusterOrRawWriteAttributes} from "gza-core/dist/controller/tstype";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as exposes from "../lib/exposes";

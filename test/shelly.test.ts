@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import {afterEach, describe, expect, it, vi} from "vitest";
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import {findByDevice} from "../src/index";
 import type {DefinitionExposesFunction, Expose, Fz, Tz} from "../src/lib/types";
 import {mockDevice} from "./utils";

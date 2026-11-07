@@ -1,5 +1,5 @@
 /**
- * This module's only purpose is to build the models index for zigbee-herdsman-converters.
+ * This module's only purpose is to build the models index for gza-core-libs.
  */
 
 import {readdirSync, writeFileSync} from "node:fs";

@@ -1,6 +1,6 @@
 import {beforeEach, describe, expect, it, vi} from "vitest";
-import type {Models as ZHModels} from "zigbee-herdsman";
-import {Zcl} from "zigbee-herdsman";
+import type {Models as ZHModels} from "gza-core";
+import {Zcl} from "gza-core";
 import {findByDevice} from "../src/index";
 import type {Definition, Tz} from "../src/lib/types";
 import {mockDevice} from "./utils";

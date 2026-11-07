@@ -15,7 +15,7 @@ function hasExpectedNyceIasState(state: {zoneState?: number; iasCieAddr?: string
     return state.zoneState === 1 && state.iasCieAddr?.toLowerCase() === coordinatorIeeeAddress.toLowerCase();
 }
 
-// NYCE NCZ-3011-HA fails IAS CIE address write during interview: https://github.com/Koenkk/zigbee2mqtt/issues/32480
+// NYCE NCZ-3011-HA fails IAS CIE address write during interview: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/32480
 // This is fixable in the configure step. Usually it is enough to read the iasState to finish the enrollment; but this code can also attempt to re-write it.
 async function ensureNyceIasEnrollment(endpoint: Zh.Endpoint, coordinatorEndpoint: Zh.Endpoint) {
     const coordinatorIeeeAddress = coordinatorEndpoint.deviceIeeeAddress;

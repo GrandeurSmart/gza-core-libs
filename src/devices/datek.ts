@@ -1,5 +1,5 @@
-import {Zcl} from "zigbee-herdsman";
-import type {ConfigureReportingItem} from "zigbee-herdsman/dist/controller/model/endpoint";
+import {Zcl} from "gza-core";
+import type {ConfigureReportingItem} from "gza-core/dist/controller/model/endpoint";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as constants from "../lib/constants";
@@ -229,7 +229,7 @@ const fzLocal = {
         convert: (model, msg, publish, options, meta) => {
             const result = fz.metering.convert(model, msg, publish, options, meta) as KeyValueAny;
             // Filter incorrect 0 energy values reported by the device:
-            // https://github.com/Koenkk/zigbee2mqtt/issues/7852
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/7852
             if (result && result.energy === 0) {
                 delete result.energy;
             }

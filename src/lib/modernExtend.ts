@@ -1,15 +1,15 @@
 import assert from "node:assert";
-import {Zcl} from "zigbee-herdsman";
-import type {Device} from "zigbee-herdsman/dist/controller/model";
+import {Zcl} from "gza-core";
+import type {Device} from "gza-core/dist/controller/model";
 import type {
     ClusterOrRawAttributeKeys,
     PartialClusterOrRawWriteAttributes,
     TCustomCluster,
     TCustomClusterPayload,
-} from "zigbee-herdsman/dist/controller/tstype";
-import type {TClusterPayload, TPartialClusterAttributes} from "zigbee-herdsman/dist/zspec/zcl/definition/clusters-types";
-import {DataType} from "zigbee-herdsman/dist/zspec/zcl/definition/enums";
-import type {Cluster} from "zigbee-herdsman/dist/zspec/zcl/definition/tstype";
+} from "gza-core/dist/controller/tstype";
+import type {TClusterPayload, TPartialClusterAttributes} from "gza-core/dist/zspec/zcl/definition/clusters-types";
+import {DataType} from "gza-core/dist/zspec/zcl/definition/enums";
+import type {Cluster} from "gza-core/dist/zspec/zcl/definition/tstype";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as constants from "../lib/constants";
@@ -219,7 +219,7 @@ export async function setupAttributes<Cl extends string | number, Custom extends
             for (const chunk of chunks) {
                 try {
                     // Don't fail configuration if reading this attribute fails
-                    // https://github.com/Koenkk/zigbee-herdsman-converters/pull/7074
+                    // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/7074
                     await endpoint.read<Cl, Custom>(
                         cluster,
                         // @ts-expect-error too dynamic to properly type
@@ -542,7 +542,7 @@ export function deviceTemperature(args: Partial<NumericArgs<"genDeviceTempCfg">>
         cluster: "genDeviceTempCfg",
         attribute: "currentTemperature",
         // Attribute does not support reporting according to the spec
-        // https://github.com/Koenkk/zigbee-herdsman-converters/issues/12199
+        // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/12199
         reporting: false, // {min: "5_MINUTES", max: "1_HOUR", change: 1},
         description: "Temperature of the device",
         unit: "°C",
@@ -849,7 +849,7 @@ export function iasArmCommandDefaultResponse(): ModernExtend {
         cluster: "ssIasAce",
         type: ["commandArm"],
         convert: (model, msg, publish, options, meta) => {
-            // Since arm command has a response zigbee-herdsman doesn't send a default response.
+            // Since arm command has a response gza-core doesn't send a default response.
             // This causes the remote to repeat the arm command, so send a default response here.
             msg.endpoint
                 .defaultResponse(0, 0, 1281, msg.meta.zclTransactionSequenceNumber)
@@ -891,7 +891,7 @@ export function customTimeResponse(start: "1970_UTC" | "2000_LOCAL"): ModernExte
     // number of seconds since 1st Jan 2000 00:00:00 UTC. This extend modifies that:
     // 1970_UTC: number of seconds since the Unix Epoch (1st Jan 1970 00:00:00 UTC)
     // 2000_LOCAL: seconds since 1 January in the local time zone.
-    // Disable the responses of zigbee-herdsman and respond here instead.
+    // Disable the responses of gza-core and respond here instead.
     const onEvent: OnEvent.Handler[] = [
         (event) => {
             if (event.type === "start" && !event.data.device.customReadResponse) {
@@ -1600,7 +1600,7 @@ export function lightingBallast(): ModernExtend {
 
 export function customLocalTemperatureCalibrationRange({min, max}: {min: number; max: number}): ModernExtend {
     // Some devices have a custom range for localTemperatureCalibration attribute.
-    // To find the range for a specific device: https://github.com/Koenkk/zigbee2mqtt/issues/30448#issuecomment-3707495349
+    // To find the range for a specific device: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/30448#issuecomment-3707495349
     return deviceAddCustomCluster("hvacThermostat", {
         name: "hvacThermostat",
         ID: 0x0201,

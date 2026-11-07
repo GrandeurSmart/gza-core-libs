@@ -5,4 +5,4 @@ allowBuilds:
     esbuild: true
 
 minimumReleaseAgeExclude:
-    - zigbee-herdsman
+    - gza-core

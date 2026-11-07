@@ -264,7 +264,7 @@ export const definitions: DefinitionWithExtend[] = [
             await reporting.rmsVoltage(endpoint, {change: 5});
             await reporting.rmsCurrent(endpoint, {change: 50});
             await reporting.activePower(endpoint, {change: 10});
-            // Energy reporting (currentSummDelivered) doesn't work; requires polling: https://github.com/Koenkk/zigbee2mqtt/issues/14356
+            // Energy reporting (currentSummDelivered) doesn't work; requires polling: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/14356
             endpoint.saveClusterAttributeKeyValue("haElectricalMeasurement", {acCurrentDivisor: 1000, acCurrentMultiplier: 1});
             endpoint.saveClusterAttributeKeyValue("seMetering", {divisor: 100, multiplier: 1});
             device.save();
@@ -566,7 +566,7 @@ export const definitions: DefinitionWithExtend[] = [
         vendor: "Lidl",
         description: "Livarno Lux light bar RGB+CCT (black/white)",
         extend: [tuya.modernExtend.tuyaLight({colorTemp: {range: [153, 500]}, color: {modes: ["hs"], applyRedFix: true}})],
-        // https://github.com/Koenkk/zigbee2mqtt/issues/32204
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/32204
         toZigbee: [tz.on_off, tuya.tz.led_control],
         fromZigbee: [fz.on_off, tuya.fz.led_controller, fz.brightness],
         configure: (device, coordinatorEndpoint) => {

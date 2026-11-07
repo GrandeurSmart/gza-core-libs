@@ -1,15 +1,15 @@
 import {beforeEach, vi} from "vitest";
-import {Adapter} from "zigbee-herdsman/dist/adapter/adapter";
-import {Database} from "zigbee-herdsman/dist/controller/database";
-import {Entity} from "zigbee-herdsman/dist/controller/model";
+import {Adapter} from "gza-core/dist/adapter/adapter";
+import {Database} from "gza-core/dist/controller/database";
+import {Entity} from "gza-core/dist/controller/model";
 
-vi.mock("zigbee-herdsman/dist/adapter/adapter", () => ({
+vi.mock("gza-core/dist/adapter/adapter", () => ({
     Adapter: {
         create: () => ({}),
     },
 }));
 
-vi.mock("zigbee-herdsman/dist/controller/database", () => ({
+vi.mock("gza-core/dist/controller/database", () => ({
     Database: {
         open: () => ({
             getEntriesIterator: () => [] as unknown[],

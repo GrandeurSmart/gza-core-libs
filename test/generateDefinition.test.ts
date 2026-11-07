@@ -1,5 +1,5 @@
 import {describe, expect, test, vi} from "vitest";
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import {findByDevice, generateExternalDefinitionSource} from "../src";
 import * as fz from "../src/converters/fromZigbee";
 import {repInterval} from "../src/lib/constants";
@@ -106,7 +106,7 @@ describe("GenerateDefinition", () => {
                 ],
             },
             externalDefinitionSource: `
-import * as m from 'zigbee-herdsman-converters/lib/modernExtend';
+import * as m from 'gza-core-libs/lib/modernExtend';
 
 export default {
     zigbeeModel: ['combo'],
@@ -146,7 +146,7 @@ export default {
                 ],
             },
             externalDefinitionSource: `
-import * as m from 'zigbee-herdsman-converters/lib/modernExtend';
+import * as m from 'gza-core-libs/lib/modernExtend';
 
 export default {
     zigbeeModel: ['combo'],
@@ -191,7 +191,7 @@ export default {
                 2: [["msTemperatureMeasurement", [reportingItem("measuredValue", 10, repInterval.HOUR, 100)]]],
             },
             externalDefinitionSource: `
-import * as m from 'zigbee-herdsman-converters/lib/modernExtend';
+import * as m from 'gza-core-libs/lib/modernExtend';
 
 export default {
     zigbeeModel: ['combo'],
@@ -261,7 +261,7 @@ export default {
             write: {},
             configureReporting: {},
             externalDefinitionSource: `
-import * as m from 'zigbee-herdsman-converters/lib/modernExtend';
+import * as m from 'gza-core-libs/lib/modernExtend';
 
 export default {
     zigbeeModel: ['combo'],
@@ -331,7 +331,7 @@ export default {
             write: {},
             configureReporting: {},
             externalDefinitionSource: `
-import * as m from 'zigbee-herdsman-converters/lib/modernExtend';
+import * as m from 'gza-core-libs/lib/modernExtend';
 
 export default {
     zigbeeModel: ['combo'],
@@ -418,7 +418,7 @@ export default {
             write: {},
             configureReporting: [],
             externalDefinitionSource: `
-import * as philips from 'zigbee-herdsman-converters/lib/philips';
+import * as philips from 'gza-core-libs/lib/philips';
 
 export default {
     zigbeeModel: ['combo'],
@@ -501,7 +501,7 @@ export default {
                 ],
             },
             externalDefinitionSource: `
-import * as m from 'zigbee-herdsman-converters/lib/modernExtend';
+import * as m from 'gza-core-libs/lib/modernExtend';
 
 export default {
     zigbeeModel: ['combo'],
@@ -561,7 +561,7 @@ export default {
                 ],
             },
             externalDefinitionSource: `
-import * as m from 'zigbee-herdsman-converters/lib/modernExtend';
+import * as m from 'gza-core-libs/lib/modernExtend';
 
 export default {
     zigbeeModel: ['dc'],

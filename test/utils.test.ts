@@ -1,5 +1,5 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
-import type {Device} from "zigbee-herdsman/dist/controller/model";
+import type {Device} from "gza-core/dist/controller/model";
 import type {Tz} from "../src/lib/types";
 import {
     batteryVoltageToPercentage,

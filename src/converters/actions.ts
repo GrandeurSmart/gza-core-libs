@@ -1,7 +1,7 @@
 import assert from "node:assert";
-import {type Controller, Zcl} from "zigbee-herdsman";
-import type {RawPayload} from "zigbee-herdsman/dist/controller/tstype";
-import type {CustomClusters} from "zigbee-herdsman/dist/zspec/zcl/definition/tstype";
+import {type Controller, Zcl} from "gza-core";
+import type {RawPayload} from "gza-core/dist/controller/tstype";
+import type {CustomClusters} from "gza-core/dist/zspec/zcl/definition/tstype";
 import {logger} from "../lib/logger";
 import * as utils from "../lib/utils";
 

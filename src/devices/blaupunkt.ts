@@ -21,7 +21,7 @@ export const definitions: DefinitionWithExtend[] = [
             try {
                 await reporting.brightness(endpoint);
             } catch {
-                // Some version don't support this: https://github.com/Koenkk/zigbee2mqtt/issues/4246
+                // Some version don't support this: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/4246
             }
         },
         exposes: [e.cover_position().setAccess("state", ea.ALL)],

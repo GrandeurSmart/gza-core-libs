@@ -51,7 +51,7 @@ export const definitions: DefinitionWithExtend[] = [
             try {
                 await reporting.batteryPercentageRemaining(endpoint);
             } catch {
-                /* Fails for some https://github.com/Koenkk/zigbee2mqtt/issues/13708*/
+                /* Fails for some https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/13708*/
             }
         },
     },

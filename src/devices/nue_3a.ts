@@ -156,7 +156,7 @@ export const definitions: DefinitionWithExtend[] = [
         extend: [m.deviceEndpoints({endpoints: {top: 11, bottom: 12}}), m.onOff({endpointNames: ["top", "bottom"], configureReporting: false})],
         configure: async (device, coordinatorEndpoint) => {
             // ConfigureReporting for onOff fails
-            // https://github.com/Koenkk/zigbee2mqtt/issues/20867
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/20867
             await reporting.bind(device.getEndpoint(11), coordinatorEndpoint, ["genOnOff"]);
             await reporting.bind(device.getEndpoint(12), coordinatorEndpoint, ["genOnOff"]);
         },

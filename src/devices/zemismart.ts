@@ -190,7 +190,7 @@ const fzLocal = {
             const result: KeyValueAny = {};
             const timeCoverSetMiddle = 60;
 
-            // https://github.com/Koenkk/zigbee-herdsman-converters/pull/1336
+            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/1336
             // Need to add time_close and time_open in your configuration.yaml after friendly_name (and set your time)
             if (options.time_close != null && options.time_open != null) {
                 if (!globalStore.hasValue(msg.endpoint, "position")) {
@@ -330,7 +330,7 @@ export const definitions: DefinitionWithExtend[] = [
             const endpoint = device.getEndpoint(1);
             await reporting.bind(endpoint, coordinatorEndpoint, ["closuresWindowCovering"]);
             // Configure reporting of currentPositionLiftPercentage always fails.
-            // https://github.com/Koenkk/zigbee2mqtt/issues/3216
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/3216
         },
     },
     {
@@ -554,7 +554,7 @@ export const definitions: DefinitionWithExtend[] = [
             if (device.getEndpoint(4)) await reporting.bind(device.getEndpoint(4), coordinatorEndpoint, ["genOnOff"]);
             if (device.getEndpoint(5)) await reporting.bind(device.getEndpoint(5), coordinatorEndpoint, ["genOnOff"]);
             if (device.getEndpoint(6)) await reporting.bind(device.getEndpoint(6), coordinatorEndpoint, ["genOnOff"]);
-            // Reports itself as battery which is not correct: https://github.com/Koenkk/zigbee2mqtt/issues/6190
+            // Reports itself as battery which is not correct: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6190
             device.powerSource = "Mains (single phase)";
             device.save();
         },

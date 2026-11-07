@@ -1,4 +1,4 @@
-import {getTimeClusterAttributes, Zcl} from "zigbee-herdsman";
+import {getTimeClusterAttributes, Zcl} from "gza-core";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as constants from "../lib/constants";
@@ -1575,7 +1575,7 @@ const fzLocal = {
         convert: (model, msg, publish, options, meta) => {
             // Device keeps reporting a acCurrentPowerValue after turning OFF.
             // Make sure power = 0 when turned OFF
-            // https://github.com/Koenkk/zigbee2mqtt/issues/28470
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/28470
             let result = fz.on_off.convert(model, msg, publish, options, meta) as KeyValueAny;
             if (msg.data.onOff === 0) {
                 result = {...result, power: 0, current: 0};
@@ -1633,7 +1633,7 @@ const fzLocal = {
         convert: (model, msg, publish, options, meta) => {
             const temperature = msg.data.measuredValue / 100.0;
 
-            // https://github.com/Koenkk/zigbee2mqtt/issues/13640
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/13640
             // SNZB-02 reports stranges values sometimes
             if (temperature > -33 && temperature < 100) {
                 const property = utils.postfixWithEndpointName("temperature", msg, model, meta);
@@ -1669,7 +1669,7 @@ const tzLocal = {
     on_off_fixed_on_time: {
         ...tz.on_off,
         convertSet: async (entity, key, value, meta) => {
-            // https://github.com/Koenkk/zigbee2mqtt/issues/27980
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/27980
             const localMeta = meta;
             if (localMeta.message.on_time != null) {
                 utils.assertNumber(localMeta.message.on_time, "on_time");
@@ -8934,7 +8934,7 @@ const sonoffExtend = {
 
 // Filter out 0 value for timer_mode_target_temp, as 0 indicates "no timer target temperature set"
 // and would be outside the valid range of 4-35°C, causing Home Assistant validation errors.
-// See: https://github.com/Koenkk/zigbee-herdsman-converters/issues/12847
+// See: https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/12847
 const trvzbTimerModeTempFzConvert: Fz.Converter<"customSonoffTrvzb", SonoffTrvzb, ["attributeReport", "readResponse"]>["convert"] = (
     model,
     msg,
@@ -8978,7 +8978,7 @@ export const definitions: DefinitionWithExtend[] = [
             // Unbind genPollCtrl to prevent device from sending checkin message.
             // Zigbee-herdsmans responds to the checkin message which causes the device
             // to poll slower.
-            // https://github.com/Koenkk/zigbee2mqtt/issues/11676
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/11676
             const endpoint = device.getEndpoint(1);
             if (endpoint.binds.some((b) => b.cluster.name === "genPollCtrl")) {
                 await device.getEndpoint(1).unbind("genPollCtrl", coordinatorEndpoint);
@@ -9005,7 +9005,7 @@ export const definitions: DefinitionWithExtend[] = [
             // Unbind genPollCtrl to prevent device from sending checkin message.
             // Zigbee-herdsmans responds to the checkin message which causes the device
             // to poll slower.
-            // https://github.com/Koenkk/zigbee2mqtt/issues/11676
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/11676
             const endpoint = device.getEndpoint(1);
             if (endpoint.binds.some((b) => b.cluster.name === "genPollCtrl")) {
                 await device.getEndpoint(1).unbind("genPollCtrl", coordinatorEndpoint);
@@ -9035,7 +9035,7 @@ export const definitions: DefinitionWithExtend[] = [
         extend: [m.onOff({powerOnBehavior: false, skipDuplicateTransaction: true, configureReporting: false})],
         configure: async (device, coordinatorEndpoint) => {
             // Device does not support configureReporting for onOff, therefore just bind here.
-            // https://github.com/Koenkk/zigbee2mqtt/issues/20618
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/20618
             const endpoint = device.getEndpoint(1);
             await reporting.bind(endpoint, coordinatorEndpoint, ["genOnOff"]);
         },
@@ -9043,7 +9043,7 @@ export const definitions: DefinitionWithExtend[] = [
     {
         fingerprint: [
             // ModelID is from the temperature/humidity sensor (SNZB-02) but this is SNZB-04, wrong modelID in firmware?
-            // https://github.com/Koenkk/zigbee-herdsman-converters/issues/1449
+            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/1449
             {
                 type: "EndDevice",
                 manufacturerName: "eWeLink",
@@ -9118,7 +9118,7 @@ export const definitions: DefinitionWithExtend[] = [
     {
         fingerprint: [
             // ModelID is from the button (SNZB-01) but this is SNZB-02, wrong modelID in firmware?
-            // https://github.com/Koenkk/zigbee2mqtt/issues/4338
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/4338
             {
                 type: "EndDevice",
                 manufacturerName: "eWeLink",
@@ -9180,7 +9180,7 @@ export const definitions: DefinitionWithExtend[] = [
                 await reporting.batteryVoltage(endpoint, {min: 3600, max: constants.repInterval.MAX});
                 await reporting.batteryPercentageRemaining(endpoint, {min: 3600, max: 65000});
             } catch (e) {
-                /* Not required for all: https://github.com/Koenkk/zigbee2mqtt/issues/5562 */
+                /* Not required for all: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/5562 */
                 logger.error(`Configure failed: ${e}`, NS);
             }
         },
@@ -11104,12 +11104,12 @@ export const definitions: DefinitionWithExtend[] = [
                 description: "Current",
                 unit: "A",
                 access: "STATE_GET",
-                // https://github.com/Koenkk/zigbee2mqtt/issues/28470#issuecomment-3369116710
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/28470#issuecomment-3369116710
                 reporting: {min: "10_SECONDS", max: "MAX", change: 2},
                 fzConvert: (model, msg, publish, options, meta) => {
                     // Device keeps reporting a acCurrentCurrentValue after turning OFF.
                     // Make sure power = 0 when turned OFF
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/28470
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/28470
                     if ("acCurrentCurrentValue" in msg.data) {
                         return {current: meta.state.state === "ON" ? msg.data.acCurrentCurrentValue / 1000 : 0};
                     }
@@ -11135,7 +11135,7 @@ export const definitions: DefinitionWithExtend[] = [
                 fzConvert: (model, msg, publish, options, meta) => {
                     // Device keeps reporting a acCurrentPowerValue after turning OFF.
                     // Make sure power = 0 when turned OFF
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/28470
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/28470
                     if ("acCurrentPowerValue" in msg.data) {
                         return {power: meta.state.state === "ON" ? msg.data.acCurrentPowerValue / 1000 : 0};
                     }
@@ -11232,12 +11232,12 @@ export const definitions: DefinitionWithExtend[] = [
                 description: "Current",
                 unit: "A",
                 access: "STATE_GET",
-                // https://github.com/Koenkk/zigbee2mqtt/issues/28470#issuecomment-3369116710
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/28470#issuecomment-3369116710
                 reporting: {min: "10_SECONDS", max: "MAX", change: 2},
                 fzConvert: (model, msg, publish, options, meta) => {
                     // Device keeps reporting a acCurrentCurrentValue after turning OFF.
                     // Make sure power = 0 when turned OFF
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/28470
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/28470
                     if ("acCurrentCurrentValue" in msg.data) {
                         return {current: meta.state.state === "ON" ? msg.data.acCurrentCurrentValue / 1000 : 0};
                     }
@@ -11263,7 +11263,7 @@ export const definitions: DefinitionWithExtend[] = [
                 fzConvert: (model, msg, publish, options, meta) => {
                     // Device keeps reporting a acCurrentPowerValue after turning OFF.
                     // Make sure power = 0 when turned OFF
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/28470
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/28470
                     if ("acCurrentPowerValue" in msg.data) {
                         return {power: meta.state.state === "ON" ? msg.data.acCurrentPowerValue / 1000 : 0};
                     }
@@ -12142,7 +12142,7 @@ export const definitions: DefinitionWithExtend[] = [
                 skipDuplicateTransaction: true,
                 configureReporting: false,
                 // homeassistant: {type: "valve"},
-                // needs https://github.com/Koenkk/zigbee2mqtt/pull/32367
+                // needs https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/pull/32367
             }),
             m.bindCluster({cluster: "genPollCtrl", clusterType: "input"}),
             sonoffExtend.swvznGenTimeCompatResponse(),
@@ -12302,7 +12302,7 @@ export const definitions: DefinitionWithExtend[] = [
                 skipDuplicateTransaction: true,
                 configureReporting: false,
                 // homeassistant: {type: "valve"},
-                // needs https://github.com/Koenkk/zigbee2mqtt/pull/32367
+                // needs https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/pull/32367
             }),
             m.bindCluster({cluster: "genPollCtrl", clusterType: "input"}),
             sonoffExtend.swvznGenTimeCompatResponse(),
@@ -12445,7 +12445,7 @@ export const definitions: DefinitionWithExtend[] = [
                 skipDuplicateTransaction: true,
                 configureReporting: false,
                 // homeassistant: {type: "valve"},
-                // needs https://github.com/Koenkk/zigbee2mqtt/pull/32367
+                // needs https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/pull/32367
             }),
             m.bindCluster({cluster: "genPollCtrl", clusterType: "input"}),
             sonoffExtend.swvznGenTimeCompatResponse(),
@@ -12739,12 +12739,12 @@ export const definitions: DefinitionWithExtend[] = [
                 description: "Current",
                 unit: "A",
                 access: "STATE_GET",
-                // https://github.com/Koenkk/zigbee2mqtt/issues/28470#issuecomment-3369116710
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/28470#issuecomment-3369116710
                 reporting: {min: "10_SECONDS", max: "MAX", change: 2},
                 fzConvert: (model, msg, publish, options, meta) => {
                     // Device keeps reporting a acCurrentCurrentValue after turning OFF.
                     // Make sure power = 0 when turned OFF
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/28470
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/28470
                     if ("acCurrentCurrentValue" in msg.data) {
                         const current = meta.state?.state === "ON" ? msg.data.acCurrentCurrentValue / 1000 : 0;
                         return {current, ac_current_current_value: current};
@@ -13896,7 +13896,7 @@ export const definitions: DefinitionWithExtend[] = [
                 fzConvert: (model, msg, publish, options, meta) => {
                     // Device keeps reporting a acCurrentPowerValue after turning OFF.
                     // Make sure power = 0 when turned OFF
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/28470
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/28470
                     if ("acCurrentPowerValue" in msg.data) {
                         const power = meta.state?.state === "ON" ? msg.data.acCurrentPowerValue / 1000 : 0;
                         return {power, ac_current_power_value: power};
@@ -13910,12 +13910,12 @@ export const definitions: DefinitionWithExtend[] = [
                 description: "Current",
                 unit: "A",
                 access: "STATE_GET",
-                // https://github.com/Koenkk/zigbee2mqtt/issues/28470#issuecomment-3369116710
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/28470#issuecomment-3369116710
                 reporting: {min: "10_SECONDS", max: "MAX", change: 2},
                 fzConvert: (model, msg, publish, options, meta) => {
                     // Device keeps reporting a acCurrentCurrentValue after turning OFF.
                     // Make sure power = 0 when turned OFF
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/28470
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/28470
                     if ("acCurrentCurrentValue" in msg.data) {
                         const current = meta.state?.state === "ON" ? msg.data.acCurrentCurrentValue / 1000 : 0;
                         return {current, ac_current_current_value: current};

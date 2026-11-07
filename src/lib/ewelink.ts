@@ -677,7 +677,7 @@ export const ewelinkModernExtend = {
     },
     ewelinkBattery: (): ModernExtend => {
         // 3600/7200 prevents disconnect
-        // https://github.com/Koenkk/zigbee2mqtt/issues/13600#issuecomment-1283827935
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/13600#issuecomment-1283827935
         return battery({
             voltage: true,
             voltageReporting: true,

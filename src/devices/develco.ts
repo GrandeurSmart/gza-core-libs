@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as constants from "../lib/constants";
@@ -369,7 +369,7 @@ const zhemi101MeterKind = (config: KeyValueAny): "energy" | "gas" | "water" | un
 const develco = {
     fz: {
         // Some Develco devices report strange values sometimes
-        // https://github.com/Koenkk/zigbee2mqtt/issues/13329
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/13329
         electrical_measurement: {
             ...fz.electrical_measurement,
             convert: (model, msg, publish, options, meta) => {
@@ -685,7 +685,7 @@ export const definitions: DefinitionWithExtend[] = [
         configure: async (device, coordinatorEndpoint) => {
             // Device also has genOnOff on endpoint 1, but that fails to setup, disable configureReporting in m.onOff above
             // and configure it for endpoint 2 here instead.
-            // https://github.com/Koenkk/zigbee2mqtt/issues/29548
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/29548
             await reporting.onOff(device.getEndpoint(2));
         },
     },
@@ -742,7 +742,7 @@ export const definitions: DefinitionWithExtend[] = [
         configure: async (device, coordinatorEndpoint) => {
             // Device also has genOnOff on endpoint 1, but that fails to setup, disable configureReporting in m.onOff above
             // and configure it for endpoint 2 here instead.
-            // https://github.com/Koenkk/zigbee2mqtt/issues/29548
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/29548
             await reporting.onOff(device.getEndpoint(2));
         },
     },
@@ -856,7 +856,7 @@ export const definitions: DefinitionWithExtend[] = [
             const endpoint = device.getEndpoint(35);
 
             // Device supports only 4 binds (otherwise you get TABLE_FULL error)
-            // https://github.com/Koenkk/zigbee2mqtt/issues/23684
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/23684
             //
             // Bindings of non-reportable clusters have been removed.
 
@@ -888,7 +888,7 @@ export const definitions: DefinitionWithExtend[] = [
         configure: async (device, coordinatorEndpoint) => {
             // Device also has genOnOff on endpoint 1, but that fails to setup, disable configureReporting in m.onOff above
             // and configure it for endpoint 2 here instead.
-            // https://github.com/Koenkk/zigbee2mqtt/issues/29548
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/29548
             await reporting.onOff(device.getEndpoint(2));
         },
     },
@@ -923,7 +923,7 @@ export const definitions: DefinitionWithExtend[] = [
             const endpoint = device.getEndpoint(35);
 
             // Device supports only 4 binds (otherwise you get TABLE_FULL error)
-            // https://github.com/Koenkk/zigbee2mqtt/issues/23684
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/23684
             //
             // Bindings of non-reportable clusters have been removed.
 
@@ -1096,7 +1096,7 @@ export const definitions: DefinitionWithExtend[] = [
             develcoModernExtend.addCustomClusterManuSpecificDevelcoIasZone(),
             develcoModernExtend.readGenBasicPrimaryVersions(),
             // Prevent excessive reports
-            // https://github.com/Koenkk/zigbee-herdsman-converters/pull/10081
+            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/10081
             develcoModernExtend.temperature({reporting: {min: 60, max: 3600, change: 100}}),
             m.illuminance({reporting: {min: 300, max: 3600, change: 100}}),
             m.battery({

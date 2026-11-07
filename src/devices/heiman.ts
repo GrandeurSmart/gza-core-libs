@@ -1,5 +1,5 @@
 import assert from "node:assert";
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as constants from "../lib/constants";
@@ -2055,7 +2055,7 @@ const tzLocal = {
         convertSet: async (entity, key, value, meta) => {
             const options = {
                 // Don't send a manufacturerCode (otherwise set in herdsman):
-                // https://github.com/Koenkk/zigbee-herdsman-converters/pull/2827
+                // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/2827
                 // @ts-expect-error ignore
                 manufacturerCode: null,
                 ...utils.getOptions(meta.mapped, entity),

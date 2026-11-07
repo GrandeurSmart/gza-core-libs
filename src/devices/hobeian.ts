@@ -28,7 +28,7 @@ const te = tuya.exposes;
 
 // Device reports the temperature in the selected temperature_unit instead of always in Celsius. Convert it back
 // so `temperature` (exposed with a fixed °C unit) stays consistent.
-// https://github.com/Koenkk/zigbee2mqtt/issues/32984
+// https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/32984
 const temperatureInSelectedUnit = {
     from: (value: number, meta: Fz.Meta) => {
         const raw = value / 10;
@@ -722,7 +722,7 @@ export const definitions: DefinitionWithExtend[] = [
         extend: [
             tuya.modernExtend.tuyaBase({dp: true}),
             // Besides dp, also uses standard illuminance cluster
-            // https://github.com/Koenkk/zigbee-herdsman-converters/issues/10897
+            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/10897
             m.illuminance({reporting: false}),
         ],
         exposes: [
@@ -1820,7 +1820,7 @@ export const definitions: DefinitionWithExtend[] = [
                 zoneType: "occupancy",
                 zoneAttributes: ["alarm_1"],
                 // No keepAlivetimeout for ZG-204Z
-                // https://github.com/Koenkk/zigbee2mqtt/issues/30676
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/30676
                 keepAliveTimeout: (d) => (d.modelID === "ZG-204Z" ? 0 : 125),
             }),
         ],
@@ -1886,7 +1886,7 @@ export const definitions: DefinitionWithExtend[] = [
             const endpoint = device.getEndpoint(1);
             // Some firmwares (e.g. _TZ3000_gwkzibhs) reply UNSUPPORTED_ATTRIBUTE to the magic packet (0xfffe) read,
             // similar TS004F buttons do so for the tuyaOperationMode write; both work fine without it.
-            // https://github.com/Koenkk/zigbee2mqtt/issues/31917
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/31917
             await tuya.configureMagicPacket(device, coordinatorEndpoint);
             await ignoreUnsupportedAttribute(async () => {
                 await endpoint.write<"genOnOff", tuya.TuyaGenOnOff>("genOnOff", {tuyaOperationMode: 1});
@@ -1905,7 +1905,7 @@ export const definitions: DefinitionWithExtend[] = [
     },
     {
         // Only the ones with applicationVersion 145 should be detected as this, e.g. applicationVersion 66 should be detected as ERS-10TZBVK-AA.
-        // https://github.com/Koenkk/zigbee2mqtt/issues/25053
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/25053
         fingerprint: [
             {
                 modelID: "TS004F",

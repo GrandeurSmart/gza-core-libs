@@ -76,7 +76,7 @@ jobs:
                       }
 
                       const prompt = [
-                          "You write pull request titles for zigbee-herdsman-converters, a library with Zigbee device definitions.",
+                          "You write pull request titles for gza-core-libs, a library with Zigbee device definitions.",
                           "Device definitions live in src/devices/<vendor>.ts and have fields like zigbeeModel, fingerprint, model, vendor, description and whiteLabel.",
                           "Determine the correct title for the pull request below using these rules:",
                           "1. Support for one or more new devices is added (a new definition object with a new `model`): `feat(add): MODEL`.",

@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as constants from "../lib/constants";
@@ -274,7 +274,7 @@ export const definitions: DefinitionWithExtend[] = [
         vendor: "SmartThings",
         description: "Outlet with power meter",
         // This plug only actively reports power. The voltage and current values are always 0, so we can ignore them.
-        // https://github.com/Koenkk/zigbee2mqtt/issues/5198
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/5198
         extend: [m.onOff(), m.electricityMeter({current: false, voltage: false})],
     },
     {
@@ -307,7 +307,7 @@ export const definitions: DefinitionWithExtend[] = [
             await reporting.bind(endpoint, coordinatorEndpoint, ["genOnOff", "haElectricalMeasurement"]);
             await reporting.onOff(endpoint);
             try {
-                // https://github.com/Koenkk/zigbee2mqtt/issues/11706
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/11706
                 await reporting.readEletricalMeasurementMultiplierDivisors(endpoint);
             } catch {
                 /* Fails for some*/

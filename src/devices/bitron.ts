@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import type {ThermostatRunningState, ThermostatSystemMode} from "../lib/constants";
@@ -233,7 +233,7 @@ export const definitions: DefinitionWithExtend[] = [
             try {
                 await reporting.currentSummReceived(endpoint);
             } catch {
-                /* fails for some: https://github.com/Koenkk/zigbee2mqtt/issues/13258 */
+                /* fails for some: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/13258 */
             }
             endpoint.saveClusterAttributeKeyValue("seMetering", {divisor: 10000, multiplier: 1});
         },

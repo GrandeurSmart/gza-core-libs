@@ -1,4 +1,4 @@
-import type {TClusterAttributeKeys} from "zigbee-herdsman/dist/zspec/zcl/definition/clusters-types";
+import type {TClusterAttributeKeys} from "gza-core/dist/zspec/zcl/definition/clusters-types";
 import {logger} from "./logger";
 import type {Tz, Zh} from "./types";
 import * as utils from "./utils";
@@ -23,7 +23,7 @@ export function readColorAttributes(
      * `supportsHueAndSaturation` indicates support for currentHue and currentSaturation
      * `supportsEnhancedHue` indicates support for enhancedCurrentHue
      *
-     * e.g. IKEA Tådfri LED1624G9 only supports XY (https://github.com/Koenkk/zigbee-herdsman-converters/issues/1340)
+     * e.g. IKEA Tådfri LED1624G9 only supports XY (https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/1340)
      *
      * Additionally when we get a "get payload", only request the fields included.
      */
@@ -109,7 +109,7 @@ export async function configure(device: Zh.Device, coordinatorEndpoint: Zh.Endpo
                 await readColorTempMinMax(endpoint);
             }
         } catch {
-            /* Fails for some, e.g. https://github.com/Koenkk/zigbee2mqtt/issues/5717 */
+            /* Fails for some, e.g. https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/5717 */
         }
     }
 }

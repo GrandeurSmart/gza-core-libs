@@ -1,5 +1,5 @@
 import {beforeEach, describe, expect, it} from "vitest";
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import {findByDevice} from "../src/index";
 import type {Definition, Expose, Fz, KeyValueAny, Tz} from "../src/lib/types";
 import {mockDevice} from "./utils";

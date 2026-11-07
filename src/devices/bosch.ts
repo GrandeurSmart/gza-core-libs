@@ -1,4 +1,4 @@
-import {Zcl, ZSpec} from "zigbee-herdsman";
+import {Zcl, ZSpec} from "gza-core";
 import * as fz from "../converters/fromZigbee";
 import {
     type BoschBmctCluster,
@@ -700,7 +700,7 @@ export const definitions: DefinitionWithExtend[] = [
         meta: {
             overrideHaDiscoveryPayload: (payload) => {
                 // Override climate discovery
-                // https://github.com/Koenkk/zigbee2mqtt/pull/23075#issue-2355829475
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/pull/23075#issue-2355829475
                 if (payload.mode_command_topic?.endsWith("/system_mode")) {
                     payload.mode_command_topic = payload.mode_command_topic.substring(0, payload.mode_command_topic.lastIndexOf("/system_mode"));
                     payload.mode_command_template =

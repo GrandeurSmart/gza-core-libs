@@ -1411,7 +1411,7 @@ export const definitions: DefinitionWithExtend[] = [
             await reporting.bind(endpoint, coordinatorEndpoint, ["genOnOff"]);
             try {
                 // Fails for some devices.
-                // https://github.com/Koenkk/zigbee2mqtt/issues/4598
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/4598
                 await reporting.onOff(endpoint);
             } catch {
                 /* empty */
@@ -1564,7 +1564,7 @@ export const definitions: DefinitionWithExtend[] = [
         extend: [tuya.modernExtend.tuyaBase({forceTimeUpdates: true})],
         configure: async (device, coordinatorEndpoint) => {
             await reporting.bind(device.getEndpoint(1), coordinatorEndpoint, ["genOnOff"]);
-            // Reports itself as battery which is not correct: https://github.com/Koenkk/zigbee2mqtt/issues/6190
+            // Reports itself as battery which is not correct: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6190
             device.powerSource = "Mains (single phase)";
             device.save();
         },
@@ -1593,7 +1593,7 @@ export const definitions: DefinitionWithExtend[] = [
         configure: async (device, coordinatorEndpoint) => {
             await reporting.bind(device.getEndpoint(1), coordinatorEndpoint, ["genOnOff"]);
             if (device.getEndpoint(2)) await reporting.bind(device.getEndpoint(2), coordinatorEndpoint, ["genOnOff"]);
-            // Reports itself as battery which is not correct: https://github.com/Koenkk/zigbee2mqtt/issues/6190
+            // Reports itself as battery which is not correct: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6190
             device.powerSource = "Mains (single phase)";
             device.save();
         },
@@ -1624,7 +1624,7 @@ export const definitions: DefinitionWithExtend[] = [
             await reporting.bind(device.getEndpoint(1), coordinatorEndpoint, ["genOnOff"]);
             if (device.getEndpoint(2)) await reporting.bind(device.getEndpoint(2), coordinatorEndpoint, ["genOnOff"]);
             if (device.getEndpoint(3)) await reporting.bind(device.getEndpoint(3), coordinatorEndpoint, ["genOnOff"]);
-            // Reports itself as battery which is not correct: https://github.com/Koenkk/zigbee2mqtt/issues/6190
+            // Reports itself as battery which is not correct: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6190
             device.powerSource = "Mains (single phase)";
             device.save();
         },
@@ -1657,7 +1657,7 @@ export const definitions: DefinitionWithExtend[] = [
             if (device.getEndpoint(2)) await reporting.bind(device.getEndpoint(2), coordinatorEndpoint, ["genOnOff"]);
             if (device.getEndpoint(3)) await reporting.bind(device.getEndpoint(3), coordinatorEndpoint, ["genOnOff"]);
             if (device.getEndpoint(4)) await reporting.bind(device.getEndpoint(4), coordinatorEndpoint, ["genOnOff"]);
-            // Reports itself as battery which is not correct: https://github.com/Koenkk/zigbee2mqtt/issues/6190
+            // Reports itself as battery which is not correct: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6190
             device.powerSource = "Mains (single phase)";
             device.save();
         },
@@ -1744,7 +1744,7 @@ export const definitions: DefinitionWithExtend[] = [
         description: "Thermostatic radiator valve",
         whiteLabel: [tuya.whitelabel("Sibling", "Powerswitch-ZK(W)", "Thermostatic radiator valve", ["_TZE200_qsoecqlk"])],
         // ota: true,
-        // OTA available but bricks device https://github.com/Koenkk/zigbee2mqtt/issues/18840
+        // OTA available but bricks device https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/18840
         extend: [tuya.modernExtend.tuyaBase({forceTimeUpdates: true, timeStart: "1970"})],
         fromZigbee: [fz.ignore_tuya_set_time, legacy.fz.moesS_thermostat],
         toZigbee: [
@@ -1986,7 +1986,7 @@ export const definitions: DefinitionWithExtend[] = [
             const endpoint = device.getEndpoint(1);
             await tuya.configureMagicPacket(device, coordinatorEndpoint);
             // HOBEIAN ZG-101ZL replies UNSUPPORTED_ATTRIBUTE to this write while already being in event mode.
-            // https://github.com/Koenkk/zigbee2mqtt/issues/31917
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/31917
             await utils.ignoreUnsupportedAttribute(async () => {
                 await endpoint.write<"genOnOff", tuya.TuyaGenOnOff>("genOnOff", {tuyaOperationMode: 1});
             }, "tuyaOperationMode write");
@@ -2467,7 +2467,7 @@ export const definitions: DefinitionWithExtend[] = [
     },
     {
         fingerprint: tuya.fingerprint("TS0601", ["_TZE284_qoi1aqxg", "_TZE2841000000_u68q868h"]),
-        // u68q868h is incomplete: https://github.com/Koenkk/zigbee2mqtt/issues/33147
+        // u68q868h is incomplete: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/33147
         model: "FWJZCEH18A001",
         vendor: "Moes",
         description: "Roller blind motor 17mm/25mm/28mm",

@@ -1,5 +1,5 @@
 import {describe, it} from "vitest";
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as fz from "../src/converters/fromZigbee";
 import {fzLocal} from "../src/devices/smartthings";
 import {repInterval} from "../src/lib/constants";

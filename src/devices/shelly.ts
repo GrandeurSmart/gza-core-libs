@@ -1,4 +1,4 @@
-import {Zcl, ZSpec} from "zigbee-herdsman";
+import {Zcl, ZSpec} from "gza-core";
 import * as fz from "../converters/fromZigbee";
 import type {Feature} from "../lib/exposes";
 import * as exposes from "../lib/exposes";
@@ -699,7 +699,7 @@ function calculateWeatherCondition(state: {[key: string]: number | boolean | und
 /**
  * The station reports the ZCL non-value marker (all bits set for the attribute type) when a
  * reading is unavailable - a gustSpeed of 0xffff was published as 6553.5 m/s and fed into the
- * calculations (https://github.com/Koenkk/zigbee2mqtt/issues/31048). Scale a raw value only
+ * calculations (https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/31048). Scale a raw value only
  * when it is a real reading, otherwise contribute nothing.
  */
 const ws90Scaled = (name: string, raw: unknown, invalid: number): {[key: string]: number} | undefined =>
@@ -3094,7 +3094,7 @@ export const definitions: DefinitionWithExtend[] = [
             m.electricityMeter({
                 endpointNames: ["1", "2", "3", "4"],
                 // Reduce reporting to prevent crashes
-                // https://github.com/Koenkk/zigbee2mqtt/issues/31183
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/31183
                 acFrequency: {change: 125},
                 current: {change: 60},
                 voltage: {change: 625},

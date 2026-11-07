@@ -1,5 +1,5 @@
-import {Zcl} from "zigbee-herdsman";
-import type {Cluster} from "zigbee-herdsman/dist/zspec/zcl/definition/tstype";
+import {Zcl} from "gza-core";
+import type {Cluster} from "gza-core/dist/zspec/zcl/definition/tstype";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as constants from "../lib/constants";
@@ -136,7 +136,7 @@ const sdevices = {
                 const result: KeyValueAny = {};
                 // Zigbee officially expects 'open' to be 0 and 'closed' to be 100 whereas
                 // HomeAssistant etc. work the other way round.
-                // For zigbee-herdsman-converters: open = 100, close = 0
+                // For gza-core-libs: open = 100, close = 0
                 const metaInvert = model.meta?.coverInverted;
                 const invert = metaInvert ? !options.invert_cover : options.invert_cover;
                 if (msg.data.currentPositionLiftPercentage !== undefined && msg.data.currentPositionLiftPercentage <= 100) {
@@ -1437,8 +1437,8 @@ export const definitions: DefinitionWithExtend[] = [
             /*
              * reporting.batteryPercentageRemaining removed as it was causing devices to fall of the network
              * every 1 hour, with light flashing when it happened, extremely short battery life, 2 presses for
-             * action to register: https://github.com/Koenkk/zigbee2mqtt/issues/8072
-             * Initially wrapped in a try catch: https://github.com/Koenkk/zigbee2mqtt/issues/6313
+             * action to register: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/8072
+             * Initially wrapped in a try catch: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6313
              */
         ],
     },

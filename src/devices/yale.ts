@@ -1,5 +1,5 @@
-import type {Types as ZHTypes} from "zigbee-herdsman";
-import {Zcl} from "zigbee-herdsman";
+import type {Types as ZHTypes} from "gza-core";
+import {Zcl} from "gza-core";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as exposes from "../lib/exposes";
@@ -189,7 +189,7 @@ const lockExtend = (meta = {}, lockStateOptions: Reporting.Override | false = nu
                 try {
                     await reporting.batteryAlarmState(endpoint);
                 } catch {
-                    // Fails for some: https://github.com/Koenkk/zigbee-herdsman-converters/pull/5414
+                    // Fails for some: https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/5414
                 }
             },
         ],

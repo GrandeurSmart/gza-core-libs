@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
@@ -206,7 +206,7 @@ export const definitions: DefinitionWithExtend[] = [
                 await reporting.readEletricalMeasurementMultiplierDivisors(endpoint);
             } catch {
                 // For some this fails so set manually
-                // https://github.com/Koenkk/zigbee2mqtt/issues/3575
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/3575
                 endpoint.saveClusterAttributeKeyValue("haElectricalMeasurement", {
                     acCurrentDivisor: 1000,
                     acCurrentMultiplier: 1,

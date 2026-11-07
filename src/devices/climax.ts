@@ -102,7 +102,7 @@ export const definitions: DefinitionWithExtend[] = [
             await reporting.bind(endpoint, coordinatorEndpoint, ["msTemperatureMeasurement", "msRelativeHumidity"]);
             await reporting.temperature(endpoint);
             // configureReporting.humidity(endpoint); not needed and fails
-            // https://github.com/Koenkk/zigbee-herdsman-converters/issues/1312
+            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/1312
         },
         exposes: [e.temperature(), e.humidity()],
     },

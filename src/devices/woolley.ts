@@ -50,7 +50,7 @@ export const definitions: DefinitionWithExtend[] = [
             if (event.type === "start") {
                 event.data.device.customReadResponse = (frame) => {
                     // Don't respond to genTime as device keeps spamming (returning `true` skips the default behavior).
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/29673
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/29673
                     return frame.isCluster("genTime");
                 };
             }

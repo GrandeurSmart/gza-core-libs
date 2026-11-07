@@ -1,8 +1,8 @@
-import type {Models as ZHModels} from "zigbee-herdsman";
+import type {Models as ZHModels} from "gza-core";
 
-import {Zcl} from "zigbee-herdsman";
-import {APPTYPE_NAME, APPTYPE_UNIT, BACNET_UNIT} from "zigbee-herdsman/dist/zspec/zcl/definition/consts";
-import type {Cluster} from "zigbee-herdsman/dist/zspec/zcl/definition/tstype";
+import {Zcl} from "gza-core";
+import {APPTYPE_NAME, APPTYPE_UNIT, BACNET_UNIT} from "gza-core/dist/zspec/zcl/definition/consts";
+import type {Cluster} from "gza-core/dist/zspec/zcl/definition/tstype";
 import type * as constants from "./constants";
 import type {HomeAssistant} from "./exposes";
 import {logger} from "./logger";
@@ -201,7 +201,7 @@ const OUTPUT_EXTENDERS: Extender[] = [
 
 function generateSource(definition: DefinitionWithZigbeeModel, generatedExtend: GeneratedExtend[]): string {
     const imports = [...new Set(generatedExtend.map((e) => e.lib ?? "modernExtend"))];
-    const importsStr = imports.map((e) => `import * as ${e === "modernExtend" ? "m" : e} from 'zigbee-herdsman-converters/lib/${e}';`).join("\n");
+    const importsStr = imports.map((e) => `import * as ${e === "modernExtend" ? "m" : e} from 'gza-core-libs/lib/${e}';`).join("\n");
     const meta = definition.meta ? `\n    meta: ${JSON.stringify(definition.meta)},` : "";
     return `${importsStr}
 
@@ -216,7 +216,7 @@ export default {
 }
 
 function generateGreenPowerSource(definition: DefinitionWithExtend, ieeeAddr: string): string {
-    return `import {genericGreenPower} from 'zigbee-herdsman-converters/lib/modernExtend';
+    return `import {genericGreenPower} from 'gza-core-libs/lib/modernExtend';
 
 export default {
     fingerprint: [{modelID: '${definition.model}', ieeeAddr: new RegExp('^${ieeeAddr}$')}],

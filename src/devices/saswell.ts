@@ -92,7 +92,7 @@ export const definitions: DefinitionWithExtend[] = [
                 .withLocalTemperature(ea.STATE)
                 .withSystemMode(["off", "heat", "auto"], ea.STATE_SET)
                 .withRunningState(["idle", "heat"], ea.STATE)
-                // Range is -6 - 6 and step 1: https://github.com/Koenkk/zigbee2mqtt/issues/11777
+                // Range is -6 - 6 and step 1: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/11777
                 .withLocalTemperatureCalibration(-6, 6, 1, ea.STATE_SET),
         ],
     },

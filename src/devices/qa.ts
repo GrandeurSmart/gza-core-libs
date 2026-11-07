@@ -201,7 +201,7 @@ export const definitions: DefinitionWithExtend[] = [
             await reporting.bind(device.getEndpoint(2), coordinatorEndpoint, ["genOnOff"]);
             await reporting.bind(device.getEndpoint(3), coordinatorEndpoint, ["genOnOff"]);
             await reporting.bind(device.getEndpoint(4), coordinatorEndpoint, ["genOnOff"]);
-            // Reports itself as battery which is not correct: https://github.com/Koenkk/zigbee2mqtt/issues/6190
+            // Reports itself as battery which is not correct: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6190
             device.powerSource = "Mains (single phase)";
             device.save();
         },
@@ -232,7 +232,7 @@ export const definitions: DefinitionWithExtend[] = [
             await reporting.bind(device.getEndpoint(4), coordinatorEndpoint, ["genOnOff"]);
             await reporting.bind(device.getEndpoint(5), coordinatorEndpoint, ["genOnOff"]);
             await reporting.bind(device.getEndpoint(6), coordinatorEndpoint, ["genOnOff"]);
-            // Reports itself as battery which is not correct: https://github.com/Koenkk/zigbee2mqtt/issues/6190
+            // Reports itself as battery which is not correct: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6190
             device.powerSource = "Mains (single phase)";
             device.save();
         },

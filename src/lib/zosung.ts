@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as m from "../lib/modernExtend";
 import * as exposes from "./exposes";
 import {logger} from "./logger";

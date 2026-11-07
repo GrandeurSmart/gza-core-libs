@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 
 import * as exposes from "../lib/exposes";
 import * as m from "../lib/modernExtend";
@@ -49,7 +49,7 @@ export const definitions: DefinitionWithExtend[] = [
             ],
         },
         configure: async (device) => {
-            // IAS enrollment is handled by zigbee-herdsman during interview.
+            // IAS enrollment is handled by gza-core during interview.
             await device.getEndpoint(1).read("ssIasZone", ["zoneStatus"]);
         },
     },

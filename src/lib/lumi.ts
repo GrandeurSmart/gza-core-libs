@@ -1,5 +1,5 @@
 import {Buffer} from "node:buffer";
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as exposes from "./exposes";
@@ -250,9 +250,9 @@ export const numericAttributes2Payload = async (
                     ["WXCJKG11LM", "WXCJKG12LM", "WXCJKG13LM", "MCCGQ13LM", "MCCGQ14LM", "GZCGQ01LM", "JY-GZ-01AQ", "CTP-R01"].includes(model.model)
                 ) {
                     // The temperature value is constant 25 °C and does not change, so we ignore it
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/11126
-                    // https://github.com/Koenkk/zigbee-herdsman-converters/pull/3585
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/13253
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/11126
+                    // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/3585
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/13253
                 } else {
                     assertNumber(value);
                     payload.device_temperature = value; // 0x03
@@ -306,7 +306,7 @@ export const numericAttributes2Payload = async (
                 break;
             case "10":
                 // Value 29146 is received for SSM-U02 sometimes here:
-                // https://github.com/Koenkk/zigbee2mqtt/issues/17961#issuecomment-1616170548
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/17961#issuecomment-1616170548
                 if (["SSM-U01", "DLKZMK11LM", "SSM-U02", "DLKZMK12LM"].includes(model.model) && (value === 1 || value === 2)) {
                     payload.switch_type = getFromLookup(value, {1: "toggle", 2: "momentary"});
                 }
@@ -327,7 +327,7 @@ export const numericAttributes2Payload = async (
                     // We don't know what the value means for these devices.
                 } else if (["ZNCLBL01LM", "PS-S04D"].includes(model.model)) {
                     // Overwrite version advertised by `genBasic` and `genOta` with correct version:
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/15745
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/15745
                     assertNumber(value);
                     meta.device.meta.lumiFileVersion = value;
                     meta.device.softwareBuildID = trv.decodeFirmwareVersionString(value);
@@ -383,17 +383,17 @@ export const numericAttributes2Payload = async (
                     ].includes(model.model)
                 ) {
                     // We don't know what the value means for these devices.
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/11126
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/12279
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/11126
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/12279
                     // For ZNJLBL01LM this is unreliable, cannot determine OPEN/CLOSE based on it
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/33001
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/33001
                 } else if (["RTCGQ15LM"].includes(model.model)) {
                     payload.occupancy = value;
                 } else if (["PS-S04D"].includes(model.model)) {
                     // Not the live presence: it stays 0 while the device reports presence via 0x0142, which would
                     // overwrite it whenever the 0x00F7 struct is read (fp300BatteryPoll). Presence comes from 0x0142.
                 } else if (["WSDCGQ01LM", "WSDCGQ11LM", "WSDCGQ12LM", "VOCKQJK11LM"].includes(model.model)) {
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/798
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/798
                     // Sometimes the sensor publishes non-realistic vales, filter these
                     // @ts-expect-error ignore
                     const temperature = Number.parseFloat(value) / 100.0;
@@ -406,7 +406,7 @@ export const numericAttributes2Payload = async (
                 } else if (["MCCGQ11LM", "MCCGQ14LM"].includes(model.model)) {
                     payload.contact = value === 0;
                 } else if (["SJCGQ11LM"].includes(model.model)) {
-                    // Ignore the message. It seems not reliable. See discussion here https://github.com/Koenkk/zigbee2mqtt/issues/12018
+                    // Ignore the message. It seems not reliable. See discussion here https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/12018
                     // payload.water_leak = value === 1;
                 } else if (["SJCGQ13LM"].includes(model.model)) {
                     payload.water_leak = value === 1;
@@ -456,12 +456,12 @@ export const numericAttributes2Payload = async (
                     payload[`state_${mapping}`] = value === 1 ? "ON" : "OFF";
                 } else if (["RTCGQ12LM", "RTCGQ14LM", "RTCGQ15LM"].includes(model.model)) {
                     // Sometimes RTCGQ14LM reports high illuminance values in the dark
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/12596
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/12596
                     assertNumber(value);
                     const illuminance = value > 65000 ? 0 : value;
                     payload.illuminance = illuminance;
                 } else if (["WSDCGQ01LM", "WSDCGQ11LM", "WSDCGQ12LM", "VOCKQJK11LM"].includes(model.model)) {
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/798
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/798
                     // Sometimes the sensor publishes non-realistic vales, filter these
                     // @ts-expect-error ignore
                     const humidity = Number.parseFloat(value) / 100.0;
@@ -539,7 +539,7 @@ export const numericAttributes2Payload = async (
                 if (["RTCGQ14LM"].includes(model.model)) {
                     payload.trigger_indicator = value === 1;
                 } else if (["ZNCLBL01LM"].includes(model.model)) {
-                    // https://github.com/Koenkk/zigbee-herdsman-converters/pull/11911
+                    // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/11911
                     const value1057 = typeof dataObject["1057"] === "number" ? dataObject["1057"] : undefined;
                     const storedRunning = globalStore.getValue(msg.endpoint, ZNCLBL01LM_RUNNING_STORE_KEY, undefined);
                     const payloadRunning = value1057 !== undefined && value1057 < 2;
@@ -661,7 +661,7 @@ export const numericAttributes2Payload = async (
                     // We don't know what the value means for these devices.
                 } else if (["ZNCLBL01LM"].includes(model.model)) {
                     // Overwrite version advertised by `genBasic` and `genOta` with correct version:
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/15745
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/15745
                     assertNumber(value);
                     meta.device.meta.lumiFileVersion = value;
                     meta.device.softwareBuildID = trv.decodeFirmwareVersionString(value);
@@ -903,7 +903,7 @@ export const numericAttributes2Payload = async (
                 if (["ZNCLBL01LM"].includes(model.model)) {
                     // This is the "target_state" attribute, which takes the following values: 0: 'OPEN', 1: 'CLOSE', 2: 'STOP'.
                     // It is not used because the values 0 and 1 are not always reported.
-                    // https://github.com/Koenkk/zigbee-herdsman-converters/pull/4307
+                    // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/4307
                 }
                 break;
             case "1057":
@@ -920,7 +920,7 @@ export const numericAttributes2Payload = async (
                         globalStore.clearValue(msg.endpoint, ZNCLBL01LM_TERMINAL_POSITION_STORE_KEY);
                     }
 
-                    // https://github.com/Koenkk/zigbee-herdsman-converters/pull/11911
+                    // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/11911
                     if (!payload.running && previousRunning !== false) {
                         // After stop, read the final position.
                         // Attr 107 can still be stale near the end.
@@ -2800,7 +2800,7 @@ export const lumiModernExtend = {
                         const endpoint = msg.endpoint.ID;
                         const value = msg.data.presentValue;
                         // Only the wireless buttons emit actions. Periodic stale reports are disabled in configure.
-                        // https://github.com/Koenkk/zigbee2mqtt/issues/33045
+                        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/33045
                         if (endpoint in buttonMap && typeof value === "number" && value in actionMap) {
                             return {action: `${actionMap[value]}_${buttonMap[endpoint]}`};
                         }
@@ -2998,7 +2998,7 @@ export const lumiModernExtend = {
     },
     lumiZigbeeOTA: (): ModernExtend => {
         // Many Lumi devices miss OTA on endpoint 1 even while supporting it.
-        // https://github.com/Koenkk/zigbee2mqtt/issues/10660
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/10660
         const result = modernExtend.quirkAddEndpointCluster({
             endpointID: 1,
             outputClusters: ["genOta"],
@@ -3535,7 +3535,7 @@ export const lumiModernExtend = {
     },
     fp300BatteryPoll: (): ModernExtend => {
         // FP300 firmware 0.0.0_6542 no longer pushes the 0x00F7 struct that carries the battery data
-        // (https://github.com/Koenkk/zigbee2mqtt/issues/32153), but it still answers an explicit read while awake.
+        // (https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/32153), but it still answers an explicit read while awake.
         // Rather than gating on a firmware version, track when the struct was last received and only read it back
         // once it goes stale: firmware that pushes the struct by itself keeps this poll dormant, and on affected
         // firmware the read response refreshes the timestamp, so reads self-regulate to ~structMaxAgeMs.
@@ -7228,7 +7228,7 @@ export const fromZigbee = {
         convert: (model, msg, publish, options, meta) => {
             const temperature = msg.data.measuredValue / 100.0;
 
-            // https://github.com/Koenkk/zigbee2mqtt/issues/798
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/798
             // Sometimes the sensor publishes non-realistic vales.
             if (temperature > -65 && temperature < 65) {
                 return {temperature};
@@ -7394,7 +7394,7 @@ export const fromZigbee = {
                             // with the correct version from the heartbeat.
                             // This is not reflected in the frontend unless the device is reconfigured
                             // or the whole service restarted.
-                            // See https://github.com/Koenkk/zigbee-herdsman-converters/pull/5363#discussion_r1081477047
+                            // See https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/5363#discussion_r1081477047
                             // @ts-expect-error ignore
                             meta.device.softwareBuildID = heartbeat.firmware_version;
                             delete heartbeat.firmware_version;
@@ -7409,7 +7409,7 @@ export const fromZigbee = {
                     case 0x0276: {
                         const buffer = value as Buffer;
                         // Buffer is empty first message after pairing
-                        // https://github.com/Koenkk/zigbee-herdsman-converters/issues/7128
+                        // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/7128
                         if (buffer.length) {
                             const schedule = trv.decodeSchedule(buffer);
                             result.schedule_settings = trv.stringifySchedule(schedule);
@@ -7548,7 +7548,7 @@ export const fromZigbee = {
                 }
 
                 // Sometimes RTCGQ14LM reports high illuminance values in the dark
-                // https://github.com/Koenkk/zigbee2mqtt/issues/12596
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/12596
                 const illuminance = msg.data.illuminance > 130536 ? 0 : msg.data.illuminance - 65536;
 
                 const payload = {occupancy: true, illuminance};
@@ -7564,7 +7564,7 @@ export const fromZigbee = {
         convert: (model, msg, publish, options, meta) => {
             if (model.model === "ZNCLDJ12LM" && msg.type === "attributeReport" && [0, 2].includes(msg.data.presentValue)) {
                 // Incorrect reports from the device, ignore (re-read by onEvent of ZNCLDJ12LM)
-                // https://github.com/Koenkk/zigbee-herdsman-converters/pull/1427#issuecomment-663862724
+                // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/1427#issuecomment-663862724
                 return;
             }
 
@@ -7773,7 +7773,7 @@ export const fromZigbee = {
         type: ["attributeReport", "readResponse"],
         convert: (model, msg, publish, options, meta) => {
             // also trigger movement, because there is no illuminance without movement
-            // https://github.com/Koenkk/zigbee-herdsman-converters/issues/1925
+            // https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/1925
             const newMsg = {...msg, type: "attributeReport" as const, data: {occupancy: 1}};
             const payload = fz.occupancy_with_timeout.convert(model, newMsg, publish, options, meta) as KeyValueAny;
             if (payload) {
@@ -7793,7 +7793,7 @@ export const fromZigbee = {
         convert: (model, msg, publish, options, meta) => {
             if (msg.data.occupancy !== 1) {
                 // In case of 0 no occupancy is reported.
-                // https://github.com/Koenkk/zigbee2mqtt/issues/467
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/467
                 return;
             }
 
@@ -9708,9 +9708,9 @@ export const toZigbee = {
 
                 if (!["ZNCLDJ11LM", "ZNCLBL01LM"].includes(meta.mapped.model)) {
                     // The code below is originally added for ZNCLDJ11LM (Koenkk/zigbee2mqtt#4585).
-                    // However, in Koenkk/zigbee-herdsman-converters#4039 it was replaced by reading
+                    // However, in Koenkk/gza-core-libs#4039 it was replaced by reading
                     // directly from currentPositionLiftPercentage, so that device is excluded.
-                    // For ZNJLBL01LM, in Koenkk/zigbee-herdsman-converters#4163 the position is read
+                    // For ZNJLBL01LM, in Koenkk/gza-core-libs#4163 the position is read
                     // through onEvent each time the motor stops, so it becomes redundant, and the
                     // device is excluded.
                     // The code is left here to avoid breaking compatibility, ideally all devices using
@@ -9758,7 +9758,7 @@ export const toZigbee = {
         },
         convertGet: async (entity, key, meta) => {
             if (!Array.isArray(meta.mapped) && "ZNJLBL01LM" === meta.mapped.model) {
-                // https://github.com/Koenkk/zigbee2mqtt/issues/23056
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/23056
                 logger.debug(`Not reading position of ZNJLBL01LM since device doesn't support it`, NS);
             } else if (!Array.isArray(meta.mapped) && ["ZNCLBL01LM"].includes(meta.mapped.model)) {
                 await entity.read("closuresWindowCovering", ["currentPositionLiftPercentage"]);
@@ -10021,7 +10021,7 @@ export const toZigbee = {
         convertSet: async (entity, key, value, meta) => {
             if (Array.isArray(meta.mapped)) throw new Error("Not supported for groups");
             if (["JTYJ-GD-01LM/BW", "JTQJ-BF-01LM/BW"].includes(meta.mapped.model)) {
-                // Timeout of 30 seconds + required (https://github.com/Koenkk/zigbee2mqtt/issues/2287)
+                // Timeout of 30 seconds + required (https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/2287)
                 const options = {...manufacturerOptions.lumi, timeout: 35000};
                 await entity.write("ssIasZone", {65521: {value: 0x03010000, type: 0x23}}, options);
             } else {
@@ -10072,7 +10072,7 @@ export const toZigbee = {
             value = value.toLowerCase();
             const lookup = {low: 0x04010000, medium: 0x04020000, high: 0x04030000};
 
-            // Timeout of 30 seconds + required (https://github.com/Koenkk/zigbee2mqtt/issues/2287)
+            // Timeout of 30 seconds + required (https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/2287)
             const options = {...manufacturerOptions.lumi, timeout: 35000};
             await entity.write("ssIasZone", {65521: {value: getFromLookup(value, lookup), type: 0x23}}, options);
             return {state: {sensitivity: value}};

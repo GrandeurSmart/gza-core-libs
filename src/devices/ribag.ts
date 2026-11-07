@@ -1,4 +1,4 @@
-import * as m from "zigbee-herdsman-converters/lib/modernExtend";
+import * as m from "gza-core-libs/lib/modernExtend";
 import type {DefinitionWithExtend} from "../lib/types";
 
 export const definitions: DefinitionWithExtend[] = [

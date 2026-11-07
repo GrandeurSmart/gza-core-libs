@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as exposes from "../lib/exposes";
@@ -89,7 +89,7 @@ async function configureAqaraH2EuShutterSwitch(device: Zh.Device, coordinatorEnd
         // Disable reporting for presentValue (max=0xFFFF = "shall not issue reports", ZCL).
         // Button presses are firmware-generated unsolicited reports and keep working;
         // an active reporting entry caused the hourly stale action replays.
-        // https://github.com/Koenkk/zigbee2mqtt/issues/32059
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/32059
         await endpoint.configureReporting("genMultistateInput", reporting.payload("presentValue", 0, 65535, 1));
         // Initialize Aqara's per-button multi-click setting on startup.
         await endpoint.read<"manuSpecificLumi", ManuSpecificLumi>("manuSpecificLumi", [aqaraH2EuShutterSwitchMultiClickAttribute], {
@@ -474,7 +474,7 @@ export const definitions: DefinitionWithExtend[] = [
                 const endpoint = device.endpoints[1];
                 await reporting.bind(endpoint, coordinatorEndpoint, ["genOnOff", "genPowerCfg"]);
             } catch {
-                // fails for some but device works as expected: https://github.com/Koenkk/zigbee2mqtt/issues/9136
+                // fails for some but device works as expected: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/9136
             }
         },
     },
@@ -2290,10 +2290,10 @@ export const definitions: DefinitionWithExtend[] = [
             await reporting.onOff(endpoint);
 
             // Not all plugs support electricity measurements:
-            // - https://github.com/Koenkk/zigbee2mqtt/issues/6861
-            // - https://github.com/Koenkk/zigbee-herdsman-converters/issues/1050#issuecomment-673111969
+            // - https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/6861
+            // - https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/1050#issuecomment-673111969
             // Voltage and current are not supported:
-            // - https://github.com/Koenkk/zigbee-herdsman-converters/issues/1050
+            // - https://github.com/GrandeurSmart/zigbee-herdsman-converters/issues/1050
             try {
                 await reporting.bind(endpoint, coordinatorEndpoint, ["haElectricalMeasurement"]);
                 await endpoint.read("haElectricalMeasurement", ["acPowerMultiplier", "acPowerDivisor"]);
@@ -3021,7 +3021,7 @@ export const definitions: DefinitionWithExtend[] = [
         configure: async (device, coordinatorEndpoint) => {
             const endpoint = device.getEndpoint(1);
             // Read correct version to replace version advertised by `genBasic` and `genOta`:
-            // https://github.com/Koenkk/zigbee2mqtt/issues/15745
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/15745
             await endpoint.read<"manuSpecificLumi", ManuSpecificLumi>("manuSpecificLumi", [0x00ee], {manufacturerCode: manufacturerCode});
             await endpoint.read("genPowerCfg", ["batteryPercentageRemaining"]);
             await endpoint.read<"manuSpecificLumi", ManuSpecificLumi>("manuSpecificLumi", [0x040b], {manufacturerCode: manufacturerCode});
@@ -3615,7 +3615,7 @@ export const definitions: DefinitionWithExtend[] = [
         model: "SSM-U01",
         vendor: "Aqara",
         description: "Single switch module T1 (with neutral)",
-        // Ignore energy metering reports, rely on aqara_opple: https://github.com/Koenkk/zigbee2mqtt/issues/10709
+        // Ignore energy metering reports, rely on aqara_opple: https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/10709
         fromZigbee: [
             fz.on_off,
             fz.device_temperature,
@@ -5150,7 +5150,7 @@ export const definitions: DefinitionWithExtend[] = [
             lumiChildLock({description: "Disables the socket 1 button", endpointName: "1"}),
             lumiChildLock({description: "Disables the socket 2 button", endpointName: "2"}),
             // access is STATE_SET rather than the default ALL: reading this attribute back was reported to
-            // fail on this device, see https://github.com/Koenkk/zigbee-herdsman-converters/pull/11123
+            // fail on this device, see https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/11123
             lumiOverloadProtection({valueMax: 3250, access: "STATE_SET"}),
             lumiLedIndicator(),
             lumiFlipIndicatorLight(),
@@ -5274,7 +5274,7 @@ export const definitions: DefinitionWithExtend[] = [
             m.bindCluster({endpointNames: ["up", "down"], cluster: "manuSpecificLumi", clusterType: "input"}),
             m.bindCluster({endpointNames: ["up"], cluster: "genOnOff", clusterType: "input"}),
             // Configuring reporting for current fails
-            // https://github.com/Koenkk/zigbee2mqtt/issues/27525
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/27525
             m.electricityMeter({voltage: false, current: {divisor: 1, multiplier: 1}, configureReporting: false}),
             lumiLedIndicator(),
             lumiFlipIndicatorLight(),
@@ -5391,7 +5391,7 @@ export const definitions: DefinitionWithExtend[] = [
             m.bindCluster({endpointNames: ["left", "left_down", "right", "right_down"], cluster: "manuSpecificLumi", clusterType: "input"}),
             m.bindCluster({endpointNames: ["left", "right"], cluster: "genOnOff", clusterType: "input"}),
             // Configuring reporting for current fails
-            // https://github.com/Koenkk/zigbee2mqtt/issues/27525
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/27525
             m.electricityMeter({voltage: false, current: {divisor: 1, multiplier: 1}, configureReporting: false}),
             lumiLedIndicator(),
             lumiFlipIndicatorLight(),

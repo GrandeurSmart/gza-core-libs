@@ -1,7 +1,7 @@
-import {Zcl} from "zigbee-herdsman";
-import type {ClusterOrRawPayload} from "zigbee-herdsman/dist/controller/tstype";
-import {BuffaloZclDataType} from "zigbee-herdsman/dist/zspec/zcl/definition/enums";
-import type {Parameter} from "zigbee-herdsman/dist/zspec/zcl/definition/tstype";
+import {Zcl} from "gza-core";
+import type {ClusterOrRawPayload} from "gza-core/dist/controller/tstype";
+import {BuffaloZclDataType} from "gza-core/dist/zspec/zcl/definition/enums";
+import type {Parameter} from "gza-core/dist/zspec/zcl/definition/tstype";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as exposes from "./exposes";

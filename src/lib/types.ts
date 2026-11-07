@@ -1,4 +1,4 @@
-import type {Models as ZHModels} from "zigbee-herdsman";
+import type {Models as ZHModels} from "gza-core";
 import type {
     ClusterCommandKeys,
     ClusterCommandResponseKeys,
@@ -6,10 +6,10 @@ import type {
     TCustomCluster,
     TCustomClusterPayload,
     ZigbeeOtaImageMeta,
-} from "zigbee-herdsman/dist/controller/tstype";
-import type {Header as ZHZclHeader, PowerSource as ZHZclPowerSource} from "zigbee-herdsman/dist/zspec/zcl";
-import type {TClusterAttributeKeys, TClusterPayload, TPartialClusterAttributes} from "zigbee-herdsman/dist/zspec/zcl/definition/clusters-types";
-import type {FrameControl} from "zigbee-herdsman/dist/zspec/zcl/definition/tstype";
+} from "gza-core/dist/controller/tstype";
+import type {Header as ZHZclHeader, PowerSource as ZHZclPowerSource} from "gza-core/dist/zspec/zcl";
+import type {TClusterAttributeKeys, TClusterPayload, TPartialClusterAttributes} from "gza-core/dist/zspec/zcl/definition/clusters-types";
+import type {FrameControl} from "gza-core/dist/zspec/zcl/definition/tstype";
 import type * as exposes from "./exposes";
 
 export interface Logger {

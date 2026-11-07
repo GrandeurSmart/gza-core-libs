@@ -1,6 +1,6 @@
 import {Buffer} from "node:buffer";
-import type {Models as ZHModels} from "zigbee-herdsman";
-import {Zcl} from "zigbee-herdsman";
+import type {Models as ZHModels} from "gza-core";
+import {Zcl} from "gza-core";
 import * as fz from "../converters/fromZigbee";
 import {repInterval} from "../lib/constants";
 import * as exposes from "../lib/exposes";

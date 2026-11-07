@@ -1,5 +1,5 @@
 import iconv from "iconv-lite";
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 import * as exposes from "../lib/exposes";
 import {logger} from "../lib/logger";
 import * as m from "../lib/modernExtend";

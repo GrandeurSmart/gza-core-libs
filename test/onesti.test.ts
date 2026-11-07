@@ -9,7 +9,7 @@ import {mockDevice} from "./utils";
 // The Onesti locks report two manufacturer specific attributes on closuresDoorLock:
 //   0x0100 (256) bitmap32: source, action and user slot of the last operation
 //   0x0101 (257) octet string: the digits of the PIN that was used
-// Neither is part of the cluster definition, so zigbee-herdsman leaves them keyed
+// Neither is part of the cluster definition, so gza-core leaves them keyed
 // by attribute ID, while the capability attributes below are keyed by name.
 // Raw values used here come from a NimlyPRO captured through ZHA and from the
 // reports in zigpy/zha-device-handlers#4881.
@@ -341,7 +341,7 @@ describe("Onesti Products AS locks", () => {
     });
 
     describe("lock capabilities", () => {
-        it("publishes the capability attributes zigbee-herdsman keys by name", () => {
+        it("publishes the capability attributes gza-core keys by name", () => {
             // numOfPinUsersSupported (0x0012), maxPinLen (0x0017) and minPinLen (0x0018)
             // are standard attributes, so they never arrive under their numeric IDs.
             expect(convert({numOfPinUsersSupported: 50, maxPinLen: 8, minPinLen: 4})).toStrictEqual({

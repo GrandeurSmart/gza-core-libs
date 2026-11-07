@@ -9,7 +9,7 @@ const e = exposes.presets;
 const ea = exposes.access;
 
 const bituo_fz = {
-    // To resolve the [https://github.com/Koenkk/zigbee2mqtt/issues/19705] issue, multiply all power attributes, except for powerFactor, by acPowerdivisor in advance.
+    // To resolve the [https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/19705] issue, multiply all power attributes, except for powerFactor, by acPowerdivisor in advance.
     // To avoid future adjustments of acPowerdivisor to 1 in the firmware, the power attributes are not directly multiplied by 1000.
     electrical_measurement: {
         ...fz.electrical_measurement,

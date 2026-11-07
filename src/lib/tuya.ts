@@ -1,5 +1,5 @@
-import {Zcl} from "zigbee-herdsman";
-import type {MiboxerZone} from "zigbee-herdsman/dist/zspec/zcl/definition/tstype";
+import {Zcl} from "gza-core";
+import type {MiboxerZone} from "gza-core/dist/zspec/zcl/definition/tstype";
 import * as fz from "../converters/fromZigbee";
 import * as tz from "../converters/toZigbee";
 import * as libColor from "../lib/color";
@@ -558,7 +558,7 @@ export function getDataValue(dpValue: Tuya.DpValue) {
         case dataTypes.number:
             return convertBufferToNumber(dpValue.data);
         case dataTypes.string:
-            // Don't use .map here, doesn't work: https://github.com/Koenkk/zigbee-herdsman-converters/pull/1799/files#r530377091
+            // Don't use .map here, doesn't work: https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/1799/files#r530377091
             for (let i = 0; i < dpValue.data.length; ++i) {
                 dataString += String.fromCharCode(dpValue.data[i]);
             }
@@ -1319,7 +1319,7 @@ export {tuyaOptions as options};
 export const skip = {
     // Prevent state from being published when already ON and brightness is also published.
     // This prevents 100% -> X% brightness jumps when the switch is already on
-    // https://github.com/Koenkk/zigbee2mqtt/issues/13800#issuecomment-1263592783
+    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/13800#issuecomment-1263592783
     stateOnAndBrightnessPresent: (meta: Tz.Meta) => {
         if (Array.isArray(meta.mapped)) throw new Error("Not supported");
         const convertedKey = meta.mapped.meta.multiEndpoint && meta.endpoint_name ? `state_${meta.endpoint_name}` : "state";
@@ -1708,7 +1708,7 @@ export const valueConverter = {
                 if (typeof v === "number") {
                     return converter.from(v, meta, options);
                 }
-                // https://github.com/Koenkk/zigbee-herdsman-converters/pull/13191
+                // https://github.com/GrandeurSmart/zigbee-herdsman-converters/pull/13191
                 // occasionally reports string instead of enum??
                 return v === "back" ? "reversed" : "normal";
             },
@@ -1764,8 +1764,8 @@ export const valueConverter = {
         // truncation of the 0x1999999a offset seen on the 32 bit total power in #18603,
         // and 0x999a (used before) is its low 16 bits.
         // Captured on _TZE200_nslr42tt: [9,38,0,0,146,153,153,134] -> 0x999986 -> -20 W
-        // https://github.com/Koenkk/zigbee2mqtt/issues/18603#issuecomment-2267514694
-        // https://github.com/Koenkk/zigbee2mqtt/issues/32995
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/18603#issuecomment-2267514694
+        // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/32995
         //
         // Other _TZE200_nslr42tt units send negative power as plain 24 bit two's
         // complement instead: [9,38,0,0,29,255,255,247] -> 0xfffff7 -> -9 W.
@@ -1855,7 +1855,7 @@ export const valueConverter = {
     power: {
         from: (v: number) => {
             // Support negative readings
-            // https://github.com/Koenkk/zigbee2mqtt/issues/18603
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/18603
             return v > 0x0fffffff ? (0x1999999c - v) * -1 : v;
         },
     },
@@ -2546,7 +2546,7 @@ export const valueConverter = {
                 if (v === "auto") return new Enum(0);
                 if (v === "manual") return new Enum(1);
                 if (v === "holiday") {
-                    // https://github.com/Koenkk/zigbee2mqtt/issues/20486
+                    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/20486
                     if (meta.device.manufacturerName === "_TZE200_mudxchsu") return new Enum(2);
                     return new Enum(3);
                 }
@@ -3499,7 +3499,7 @@ const tuyaTz = {
             const {message} = meta;
             if (message.state === "ON" || (typeof message.brightness === "number" && message.brightness > 1)) {
                 // Does not turn off with physical press when turned on with just moveToLevelWithOnOff, required on before.
-                // https://github.com/Koenkk/zigbee2mqtt/issues/15902#issuecomment-1382848150
+                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/15902#issuecomment-1382848150
                 await entity.command("genOnOff", "on", {}, utils.getOptions(meta.mapped, entity));
             }
             return await tz.light_onoff_brightness.convertSet(entity, key, value, meta);
@@ -4026,7 +4026,7 @@ const tuyaFz = {
             };
 
             // Wait 5 seconds before reporting a 0 value as this could be an invalid measurement.
-            // https://github.com/Koenkk/zigbee2mqtt/issues/16709#issuecomment-1509599046
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/16709#issuecomment-1509599046
             if (result) {
                 for (const key of ["power", "current", "voltage"]) {
                     if (key in result) {
@@ -4040,7 +4040,7 @@ const tuyaFz = {
                             const timer = setTimeout(() => {
                                 const payload = {[key]: value};
                                 // Device takes a lot of time to report power 0 in some cases. When current == 0 we can assume power == 0
-                                // https://github.com/Koenkk/zigbee2mqtt/discussions/19680#discussioncomment-7868445
+                                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/discussions/19680#discussioncomment-7868445
                                 if (key === "current") {
                                     payload.power = 0;
                                 }
@@ -4054,7 +4054,7 @@ const tuyaFz = {
             }
 
             // Device takes a lot of time to report power 0 in some cases. When the state is OFF we can assume power == 0
-            // https://github.com/Koenkk/zigbee2mqtt/discussions/19680#discussioncomment-7868445
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/discussions/19680#discussioncomment-7868445
             if (meta.state.state === "OFF") {
                 result.power = 0;
             }
@@ -4128,9 +4128,9 @@ const tuyaFz = {
         type: "commandTuyaAction",
         convert: (model, msg, publish, options, meta) => {
             if (utils.hasAlreadyProcessedMessage(msg, model)) return;
-            // Since it is a non standard ZCL command, no default response is send from zigbee-herdsman
+            // Since it is a non standard ZCL command, no default response is send from gza-core
             // Send the defaultResponse here, otherwise the second button click delays.
-            // https://github.com/Koenkk/zigbee2mqtt/issues/8149
+            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/8149
             return {action: "switch_scene", action_scene: msg.data.value};
         },
     } satisfies Fz.Converter<"genOnOff", TuyaGenOnOff, "commandTuyaAction">,

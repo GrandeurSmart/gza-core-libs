@@ -1,4 +1,4 @@
-import {Zcl} from "zigbee-herdsman";
+import {Zcl} from "gza-core";
 
 import * as fz from "../converters/fromZigbee";
 import * as constants from "../lib/constants";
@@ -159,7 +159,7 @@ export const definitions: DefinitionWithExtend[] = [
             const payloadPressure = [
                 {
                     // 0 = measuredValue, override dataType from int16 to uint16
-                    // https://github.com/Koenkk/zigbee-herdsman/pull/191/files?file-filters%5B%5D=.ts#r456569398
+                    // https://github.com/GrandeurSmart/zigbee-herdsman/pull/191/files?file-filters%5B%5D=.ts#r456569398
                     attribute: {ID: 0, type: Zcl.DataType.UINT16},
                     minimumReportInterval: 2,
                     maximumReportInterval: constants.repInterval.HOUR,

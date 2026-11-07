@@ -9,7 +9,7 @@ const e = exposes.presets;
 
 const fzLocal = {
     // ZB-1026 requires separate on/off converters since it re-uses the transaction number
-    // https://github.com/Koenkk/zigbee2mqtt/issues/12957
+    // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/12957
     // biome-ignore lint/style/useNamingConvention: ignored using `--suppress`
     ZB1026_command_on: {
         cluster: "genOnOff",
