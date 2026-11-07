@@ -227,7 +227,7 @@ const orviboSwitchRewiring = (args: OrviboSwitchRewiringArgs): ModernExtend => {
                         .withDescription(
                             "Relay id which set sceneid will change to off when scene is recalled. Set to 0 if no relay is affected by the scene.",
                         ),
-                ) // TODO: We should just use scenes, however we can not set them up yet via front-end as it does not support endpoints. [See feature request](https://github.com/GrandeurSmart/gza-frontend/issues/2393).
+                ) // TODO: We should just use scenes, however we can not set them up yet via front-end as it does not support endpoints. [See feature request](https://github.com/nurikk/zigbee2mqtt-frontend/issues/2393).
                 .withFeature(
                     e
                         .numeric("relaynumber", ea.SET)

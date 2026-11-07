@@ -4040,7 +4040,7 @@ const tuyaFz = {
                             const timer = setTimeout(() => {
                                 const payload = {[key]: value};
                                 // Device takes a lot of time to report power 0 in some cases. When current == 0 we can assume power == 0
-                                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/discussions/19680#discussioncomment-7868445
+                                // https://github.com/Koenkk/zigbee2mqtt/discussions/19680#discussioncomment-7868445
                                 if (key === "current") {
                                     payload.power = 0;
                                 }
@@ -4054,7 +4054,7 @@ const tuyaFz = {
             }
 
             // Device takes a lot of time to report power 0 in some cases. When the state is OFF we can assume power == 0
-            // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/discussions/19680#discussioncomment-7868445
+            // https://github.com/Koenkk/zigbee2mqtt/discussions/19680#discussioncomment-7868445
             if (meta.state.state === "OFF") {
                 result.power = 0;
             }

@@ -6,7 +6,7 @@ grandeursmart-zigbee-automation for the whole service.
 This branch, `gza-2.14.3`, is the **GZA 2.14.3 candidate** (base 26.125.0, commit `c18c32d94c77`). The default
 branch `gs` holds the version used by GZA 1.35.1.
 
-Maintained by Mainlogix Technology for GrandeurSmart. Report issues in this repository's GitHub Issues; for GZA as a whole, use grandeursmart-zigbee-automation.
+Maintained by Mainlogix Technology for GrandeurSmart. Report issues in this repository's GitHub Issues; for GZA as a whole, GS staff use grandeursmart-zigbee-automation (private).
 
 ## What it does in GZA
 - Matches each joining device to its definition (model, brand, firmware identifiers).
@@ -29,13 +29,10 @@ The gateway does not build from this branch. It runs a pinned base image with th
 (`libs-2.14.3.tgz`) mounted over it, and `gza-core-libs` is one of the packages in that overlay. The overlay is built
 byte for byte by grandeursmart-zigbee-automation `gza/build_libs.py`:
 
-```
-git clone --branch gza-2.14.3 https://github.com/GrandeurSmart/grandeursmart-zigbee-automation.git
-python3 grandeursmart-zigbee-automation/gza/build_libs.py /tmp/gza-build    # Python 3.9+, Node.js 24 on PATH
-```
+The build script is `gza/build_libs.py` in grandeursmart-zigbee-automation, a private GrandeurSmart repository (GS team access): `python3 gza/build_libs.py /tmp/gza-build` (Python 3.9+, Node.js 24 on PATH).
 
 - Pinned base image: `koenkk/zigbee2mqtt@sha256:f09106ecf103a8ab33cf96cae9d7eee56f1da0000682fa754cab37f02b530910` (linux/arm64).
-- Expected result: sha256 `b8a05f2befcb65224c00d1b3480349c48a929bdef51488c893a84faa90dc1b4b` (the script prints MATCH).
+- Expected result: sha256 `a5c5a935cb634dccb8e1002155b3c51179f0dfb0d56b99596ca0c0626b218fee` (the script prints MATCH).
 
 This branch is the matching source, for review and provenance.
 

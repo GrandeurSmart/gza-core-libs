@@ -3204,7 +3204,7 @@ export const definitions: DefinitionWithExtend[] = [
                 // value, but is usually incorrect. For example, a coin battery tested
                 // with a load tester may show 80%, but report 2.5V / 1%. This voltage
                 // calculation matches what ZHA does by default.
-                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/discussions/17337
+                // https://github.com/Koenkk/zigbee2mqtt/discussions/17337
                 // https://github.com/zigpy/zha-device-handlers/blob/c6ed94a52a469e72b32ece2a92d528060c7fd034/zhaquirks/__init__.py#L195-L228
                 voltageToPercentage: "3V_1500_2800",
             },
@@ -8146,7 +8146,7 @@ export const definitions: DefinitionWithExtend[] = [
                 // value, but is usually incorrect. For example, a coin battery tested
                 // with a load tester may show 80%, but report 2.5V / 1%. This voltage
                 // calculation matches what ZHA does by default.
-                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/discussions/17337
+                // https://github.com/Koenkk/zigbee2mqtt/discussions/17337
                 // https://github.com/zigpy/zha-device-handlers/blob/c6ed94a52a469e72b32ece2a92d528060c7fd034/zhaquirks/__init__.py#L195-L228
                 voltageToPercentage: "3V_1500_2800",
             },
@@ -12625,7 +12625,7 @@ export const definitions: DefinitionWithExtend[] = [
                 )
             ) {
                 // Gives INVALID_DATA_TYPE error for _TZ3000_0zfrhq4i (as well as a few others in issue 20028)
-                // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/discussions/19680#discussioncomment-7667035
+                // https://github.com/Koenkk/zigbee2mqtt/discussions/19680#discussioncomment-7667035
                 // Don't do this for `_TZ3000_gjnozsaz` (was previously in the list, but removed after:
                 // https://github.com/GrandeurSmart/grandeursmart-zigbee-automation/issues/28729#issuecomment-3370261334
                 await reporting.activePower(endpoint, {change: 10});

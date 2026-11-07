@@ -14,6 +14,6 @@ GS entries only. Base release notes: https://github.com/Koenkk/zigbee-herdsman-c
   repositories that do not exist). Links only; no code logic changed.
 - LICENSE and copyright notices unchanged; `package.json` keeps the original author and contributors, with
   Mainlogix Technology recorded as `gzaMaintainer`.
-- Shipped inside the GZA overlay `libs-2.14.3.tgz` (sha256 `b8a05f2befcb…`), built by
+- Shipped inside the GZA overlay `libs-2.14.3.tgz` (sha256 `a5c5a935cb63…`), built by
   grandeursmart-zigbee-automation `gza/build_libs.py`.
 - Status: candidate; merged only after the OS image first-boot test passes on the lab gateway.
