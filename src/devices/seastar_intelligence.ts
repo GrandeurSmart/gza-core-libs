@@ -1,20 +1,17 @@
-import {Definition} from '../lib/types';
-import {light} from '../lib/modernExtend';
+import * as m from "../lib/modernExtend";
+import type {DefinitionWithExtend} from "../lib/types";
 
-const definitions: Definition[] = [
+export const definitions: DefinitionWithExtend[] = [
     {
-        zigbeeModel: ['020B0B'],
-        model: '020B0B',
-        vendor: 'Fischer & Honsel',
-        description: 'LED Tischleuchte Beta Zig',
-        extend: [light({colorTemp: {range: [153, 370]}, color: true})],
+        zigbeeModel: ["020B0B"],
+        model: "020B0B",
+        vendor: "Fischer & Honsel",
+        description: "LED Tischleuchte Beta Zig",
+        extend: [m.light({colorTemp: {range: [153, 370]}, color: true})],
         endpoint: (device) => {
             // https://github.com/GrandeurSmart/gza-core-libs/issues/5463
-            const endpoint = device.endpoints.find((e) => e.inputClusters.includes(6)).ID;
-            return {'default': endpoint};
+            const endpoint = device.endpoints.find((e) => e.inputClusters.includes(6))?.ID ?? 1;
+            return {default: endpoint};
         },
     },
 ];
-
-export default definitions;
-module.exports = definitions;

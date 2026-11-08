@@ -1,15 +1,12 @@
-import {Definition} from '../lib/types';
-import {onOff} from '../lib/modernExtend';
+import * as m from "../lib/modernExtend";
+import type {DefinitionWithExtend} from "../lib/types";
 
-const definitions: Definition[] = [
+export const definitions: DefinitionWithExtend[] = [
     {
-        zigbeeModel: ['FB56-SKT17AC1.4'],
-        model: '67200BL',
-        description: 'Vetaar smart plug',
-        vendor: 'Anchor',
-        extend: [onOff()],
+        zigbeeModel: ["FB56-SKT17AC1.4"],
+        model: "67200BL",
+        description: "Vetaar smart plug",
+        vendor: "Anchor",
+        extend: [m.onOff()],
     },
 ];
-
-export default definitions;
-module.exports = definitions;

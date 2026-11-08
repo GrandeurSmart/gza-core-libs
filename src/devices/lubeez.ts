@@ -1,15 +1,12 @@
-import {Definition} from '../lib/types';
-import {light} from '../lib/modernExtend';
+import * as m from "../lib/modernExtend";
+import type {DefinitionWithExtend} from "../lib/types";
 
-const definitions: Definition[] = [
+export const definitions: DefinitionWithExtend[] = [
     {
-        zigbeeModel: ['LUBEEZ-12AB'],
-        model: '12AB',
-        vendor: 'Lubeez',
-        description: 'zigbee 3.0 AC dimmer',
-        extend: [light({configureReporting: true})],
+        zigbeeModel: ["LUBEEZ-12AB"],
+        model: "12AB",
+        vendor: "Lubeez",
+        description: "zigbee 3.0 AC dimmer",
+        extend: [m.light({configureReporting: true})],
     },
 ];
-
-export default definitions;
-module.exports = definitions;

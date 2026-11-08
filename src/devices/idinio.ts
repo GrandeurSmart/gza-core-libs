@@ -1,15 +1,12 @@
-import {Definition} from '../lib/types';
-import {light} from '../lib/modernExtend';
+import * as m from "../lib/modernExtend";
+import type {DefinitionWithExtend} from "../lib/types";
 
-const definitions: Definition[] = [
+export const definitions: DefinitionWithExtend[] = [
     {
-        fingerprint: [{modelID: 'Dimmer-Switch-ZB3.0', manufacturerName: 'idinio'}],
-        model: '0140302',
-        vendor: 'Idinio',
-        description: 'Zigbee LED foot dimmer',
-        extend: [light({configureReporting: true})],
+        fingerprint: [{modelID: "Dimmer-Switch-ZB3.0", manufacturerName: "idinio"}],
+        model: "0140302",
+        vendor: "Idinio",
+        description: "Zigbee LED foot dimmer",
+        extend: [m.light({configureReporting: true})],
     },
 ];
-
-export default definitions;
-module.exports = definitions;

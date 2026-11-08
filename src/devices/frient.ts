@@ -1,25 +1,84 @@
-import {Definition} from '../lib/types';
-import * as exposes from '../lib/exposes';
-import fz from '../converters/fromZigbee';
-import * as reporting from '../lib/reporting';
-const e = exposes.presets;
+import {develcoModernExtend} from "../lib/develco";
+import * as m from "../lib/modernExtend";
+import type {DefinitionWithExtend} from "../lib/types";
 
-const definitions: Definition[] = [
+// NOTE! Develco and Frient is the same company, therefore we use develco specific things in here.
+
+export const definitions: DefinitionWithExtend[] = [
     {
-        zigbeeModel: ['EMIZB-141'],
-        model: 'EMIZB-141',
-        vendor: 'frient',
-        description: 'Smart powermeter Zigbee bridge',
-        fromZigbee: [fz.metering, fz.battery],
-        toZigbee: [],
-        exposes: [e.battery(), e.power(), e.energy()],
-        configure: async (device, coordinatorEndpoint, logger) => {
-            const endpoint = device.getEndpoint(2);
-            await reporting.bind(endpoint, coordinatorEndpoint, ['seMetering', 'genPowerCfg']);
+        zigbeeModel: ["WISZB-131"],
+        model: "WISZB-131",
+        vendor: "Frient",
+        description: "Temperature and contact sensor",
+        extend: [m.battery(), m.iasZoneAlarm({zoneType: "contact", zoneAttributes: ["alarm_1", "battery_low"]}), m.temperature()],
+    },
+    {
+        zigbeeModel: ["EMIZB-141"],
+        model: "EMIZB-141",
+        vendor: "Frient",
+        description: "Electricity meter interface 2 LED",
+        extend: [
+            m.electricityMeter({cluster: "metering", power: {divisor: 1000, multiplier: 1}, energy: {divisor: 1000, multiplier: 1}}),
+            m.battery(),
+            develcoModernExtend.addCustomDevelcoSeMeteringCluster(),
+            develcoModernExtend.addCustomClusterManuSpecificDevelcoGenBasic(),
+            develcoModernExtend.readGenBasicPrimaryVersions(),
+            develcoModernExtend.pulseConfiguration(),
+            develcoModernExtend.currentSummation(),
+        ],
+        ota: true,
+    },
+    {
+        zigbeeModel: ["SMRZB-153"],
+        model: "SMRZB-153",
+        vendor: "Frient",
+        description: "Smart Cable - Power switch with power measurement",
+        extend: [m.onOff({configureReporting: false}), m.electricityMeter()],
+        ota: true,
+        endpoint: () => {
+            return {default: 2};
+        },
+    },
+    {
+        zigbeeModel: ["EMIZB-151"],
+        model: "EMIZB-151",
+        vendor: "Frient",
+        description: "Electricity Meter Interface 2 P1",
+        extend: [m.electricityMeter({threePhase: true, producedEnergy: true, tariffs: true})],
+        ota: true,
+        endpoint: (device) => ({default: 2}),
+    },
+    {
+        zigbeeModel: ["SIRZB-112"],
+        model: "SIRZB-112",
+        vendor: "Frient",
+        description: "Customizable siren",
+        extend: [
+            m.deviceEndpoints({endpoints: {"43": 43, default: 43}}),
+            m.battery(),
+            m.iasZoneAlarm({zoneType: "alarm", zoneAttributes: ["alarm_1", "alarm_2", "tamper", "battery_low"]}),
+            m.iasWarning(),
+        ],
+        ota: true,
+    },
+    {
+        zigbeeModel: ["SMRZB-342"],
+        model: "SMRZB-342",
+        vendor: "Frient",
+        description: "Smart DIN Relay 2",
+        extend: [
+            m.onOff({powerOnBehavior: false, configureReporting: false}),
+            m.electricityMeter({
+                voltage: {divisor: 100, multiplier: 1},
+                current: {divisor: 1000, multiplier: 1},
+                power: {divisor: 1, multiplier: 1},
+                energy: {divisor: 1000, multiplier: 1},
+            }),
+            m.deviceTemperature(),
+        ],
+        ota: true,
+        endpoint: () => {
+            return {default: 2};
         },
     },
 ];
-
-export default definitions;
-module.exports = definitions;
-

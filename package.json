@@ -1,17 +1,16 @@
 {
   "name": "gza-core-libs",
-  "version": "1.0.1",
+  "version": "26.125.0",
   "description": "Collection of device converters to be used with gza-core",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "packageManager": "pnpm@12.3.4",
+  "engines": {
+    "node": "^22.2.0 || ^24 || <=26.2"
+  },
   "files": [
-    "/index.js",
-    "/index.js.map",
-    "/index.d.ts",
-    "/index.d.ts.map",
-    "/converters",
-    "/lib",
-    "/devices",
+    "dist",
+    "pnpm-workspace.yaml",
     "CHANGELOG.md"
   ],
   "repository": {
@@ -19,7 +18,7 @@
     "url": "git+https://github.com/GrandeurSmart/gza-core-libs.git"
   },
   "keywords": [
-    "xiaomi",
+    "aqara",
     "tradfri",
     "hue",
     "wemo",
@@ -27,13 +26,16 @@
     "zigbee-shepherd"
   ],
   "scripts": {
-    "lint": "eslint .",
-    "test": "ZHC_TEST=true jest test",
-    "test-watch": "ZHC_TEST=true jest test --watch",
-    "clean": "rimraf index* devices lib converters tsconfig.tsbuildinfo",
-    "build": "tsc",
-    "build-watch": "tsc --watch",
-    "prepack": "npm run clean && npm run build"
+    "check": "biome check --error-on-warnings",
+    "check:w": "biome check --error-on-warnings --write",
+    "test": "vitest run --config ./test/vitest.config.mts",
+    "test:coverage": "vitest run --config ./test/vitest.config.mts --coverage",
+    "bench": "vitest bench --run --config ./test/vitest.config.mts",
+    "clean": "rimraf coverage dist tsconfig.tsbuildinfo models-index.json",
+    "build": "tsc && node dist/indexer.js",
+    "build:watch": "tsc-watch --onSuccess 'node dist/indexer.js'",
+    "prepack": "pnpm run clean && pnpm run build",
+    "prepare": "husky"
   },
   "author": "Koen Kanters",
   "license": "MIT",
@@ -42,28 +44,36 @@
   },
   "homepage": "https://github.com/GrandeurSmart/gza-core-libs",
   "dependencies": {
-    "axios": "^1.6.5",
-    "buffer-crc32": "^0.2.13",
-    "https-proxy-agent": "^7.0.2",
-    "semver": "^7.5.4",
-    "tar-stream": "^3.1.6",
-    "gza-core": "1.0.1"
+    "iconv-lite": "^0.7.3",
+    "semver": "^7.8.5",
+    "gza-core": "^11.1.1"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./converters/*": "./dist/converters/*.js",
+    "./devices/*": "./dist/devices/*.js",
+    "./lib/*": "./dist/lib/*.js",
+    "./package.json": "./package.json"
   },
   "devDependencies": {
-    "@types/buffer-crc32": "^0.2.4",
-    "@types/jest": "^29.5.11",
-    "@types/node": "^20.10.6",
-    "@types/tar-stream": "^3.1.3",
-    "@typescript-eslint/eslint-plugin": "^6.18.0",
-    "@typescript-eslint/parser": "^6.18.0",
-    "eslint": "^8.56.0",
-    "eslint-config-google": "^0.14.0",
-    "eslint-plugin-jest": "^27.6.1",
-    "fast-deep-equal": "*",
-    "jest": "^29.7.0",
-    "rimraf": "^5.0.5",
-    "ts-jest": "^29.1.1",
-    "ts-morph": "^21.0.1",
-    "typescript": "^5.3.3"
+    "@biomejs/biome": "^2.6.2",
+    "@types/node": "^26.6.5",
+    "@types/semver": "^7.8.0",
+    "@vitest/coverage-v8": "4.1.11",
+    "fast-deep-equal": "^3.1.3",
+    "husky": "^9.1.7",
+    "rimraf": "^6.1.3",
+    "ts-morph": "^28.0.0",
+    "tsc-watch": "^7.2.1",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11"
+  },
+  "gzaMaintainer": {
+    "name": "Mainlogix"
+  },
+  "gzaUpstream": {
+    "repository": "https://github.com/Koenkk/zigbee-herdsman-converters",
+    "tag": "v26.125.0",
+    "commit": "c18c32d94c77f683fa768618d1fd32b348fdd7b9"
   }
 }

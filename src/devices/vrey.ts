@@ -1,18 +1,13 @@
-import {Definition} from '../lib/types';
-import {onOff} from '../lib/modernExtend';
+import * as m from "../lib/modernExtend";
+import * as tuya from "../lib/tuya";
+import type {DefinitionWithExtend} from "../lib/types";
 
-const definitions: Definition[] = [
+export const definitions: DefinitionWithExtend[] = [
     {
-        fingerprint: [
-            {modelID: 'TS0001', manufacturerName: '_TYZB01_reyozfcg'},
-            {modelID: 'TS0001', manufacturerName: '_TYZB01_4vgantdz'},
-        ],
-        model: 'VR-X701U',
-        vendor: 'Vrey',
-        description: '1 gang switch',
-        extend: [onOff()],
+        fingerprint: tuya.fingerprint("TS0001", ["_TYZB01_reyozfcg", "_TYZB01_4vgantdz"]),
+        model: "VR-X701U",
+        vendor: "Vrey",
+        description: "1 gang switch",
+        extend: [m.onOff()],
     },
 ];
-
-export default definitions;
-module.exports = definitions;

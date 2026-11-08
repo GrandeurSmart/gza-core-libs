@@ -1,23 +1,30 @@
-import {Definition} from '../lib/types';
-import * as exposes from '../lib/exposes';
-import fz from '../converters/fromZigbee';
-import * as legacy from '../lib/legacy';
-const e = exposes.presets;
-const ea = exposes.access;
+import * as tuya from "../lib/tuya";
+import type {DefinitionWithExtend} from "../lib/types";
 
-const definitions: Definition[] = [
+const te = tuya.exposes;
+const tvc = tuya.valueConverter;
+
+export const definitions: DefinitionWithExtend[] = [
     {
-        fingerprint: [{modelID: 'TS0601', manufacturerName: '_TZE200_vrjkcam9'},
-            {modelID: 'TS0601', manufacturerName: '_TZE200_d0ypnbvn'},
-            {modelID: 'TS0601', manufacturerName: '_TZE204_d0ypnbvn'}],
-        model: 'PF-PM02D-TYZ',
-        vendor: 'IOTPerfect',
-        description: 'Smart water/gas valve',
-        exposes: [e.switch().setAccess('state', ea.STATE_SET)],
-        fromZigbee: [legacy.fz.tuya_switch, fz.ignore_time_read, fz.ignore_basic_report],
-        toZigbee: [legacy.tz.tuya_switch_state],
+        fingerprint: tuya.fingerprint("TS0601", [
+            "_TZE200_vrjkcam9",
+            "_TZE28C1000000_v5xjyphj",
+            "_TZE200_d0ypnbvn",
+            "_TZE204_v5xjyphj",
+            "_TZE204_d0ypnbvn",
+            "_TZE284_v5xjyphj",
+            "_TZE284_d0ypnbvn",
+        ]),
+        model: "PF-PM02D-TYZ",
+        vendor: "IOTPerfect",
+        description: "Smart water/gas valve",
+        extend: [tuya.modernExtend.tuyaBase({dp: true, queryOnConfigure: true})],
+        exposes: [te.switch(), te.fault()],
+        meta: {
+            tuyaDatapoints: [
+                [1, "state", tvc.onOff],
+                [26, "fault", tvc.fault],
+            ],
+        },
     },
 ];
-
-export default definitions;
-module.exports = definitions;
