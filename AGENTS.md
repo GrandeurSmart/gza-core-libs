@@ -27,7 +27,8 @@ rules file replaces them.
 - Work on branches. No force push, no change to the default branch `gs`, no merges and no tags without owner
   approval.
 - Pull requests stay draft until the OS image first-boot test passes on the lab gateway.
-- GitHub Actions stay disabled.
+- GitHub Actions: only the GS CI workflow (`.github/workflows/gs-ci.yml`), using GitHub-owned actions only. Upstream
+  workflows are not kept on GS branches.
 
 ## Build and test
 - This branch is source for review; the shipped overlay is built by grandeursmart-zigbee-automation
